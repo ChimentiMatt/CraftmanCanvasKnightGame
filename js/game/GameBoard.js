@@ -1,6 +1,6 @@
 GameBoard = function (params) {
-    params.width = 500;
-    params.height = 500;
+    params.width = 300;
+    params.height = 300;
     this.construct(params);
 };
 
@@ -13,10 +13,6 @@ GameBoard.prototype = {
     ],
     init: function() {
         this.initKnight();
-        
-        addEventListener('keydown', (event) => {
-            console.log(event)
-          })
     },
 
     initKnight: function() {
