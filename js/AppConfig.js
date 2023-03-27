@@ -95,7 +95,7 @@ AppConfig = {
 	Image: [
 		{id: "knight", src: "assets/images/knight.png"},
 		{id: "sword", src: "assets/images/sword.png"},
-
+		{id: "goblin", src: "assets/images/goblin.png"},
 	],
 	CUSTOMIZABLE: [
 		{
@@ -131,6 +131,7 @@ AppConfig = {
 
 		{src: "js/game/Knight.js"},
 		{src: "js/game/Sword.js"},
+		{src: "js/game/Goblin.js"},
 		{src: "js/game/Movements.js"},
 
 		{src: "js/game/Playable.js"},

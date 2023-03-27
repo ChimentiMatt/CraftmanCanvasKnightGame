@@ -86,6 +86,20 @@ Movements.prototype = {
             }
         }
     },
+    
+    knightSwordCollision: function() {
+        let sword = CMP.DispatchGet({type: "GetSword"})
+        let goblin = CMP.DispatchGet({type: "GetGoblin"})
+        // console.log(goblin.x, sword.x)
+        if (goblin.x >= sword.x - 8 && goblin.x <= sword.x + 8){
+            if (goblin.y >= sword.y - 8 && goblin.y <= sword.y + 8){
+                if (this.inSwing){
+                    console.log('hit')
+                    alert('hit')
+                }
+            }
+        }
+    },
 
     // handleMouseMove() {
     //     onmousemove = function(e){
@@ -107,9 +121,10 @@ Movements.prototype = {
     // },
 
     onUpdate: function({delta}){
+        this.knightSwordCollision();
+        this.movement();
         // this.handleMouseMove();
         // this.updateSwordLocation();
-        this.movement();
     },
 }
 extend("Movements", "CMP.DisplayObjectContainer");
