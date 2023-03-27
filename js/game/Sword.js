@@ -1,11 +1,11 @@
-Knight = function (params) {
+Sword = function (params) {
     params.width = 8;
     params.height = 8;
     this.construct(params);
     this.init();
 };
 
-Knight.prototype = {
+Sword.prototype = {
     // backgroundColor: 'teal',
     pressedUp: 0,
     pressedDown: 0,
@@ -16,12 +16,18 @@ Knight.prototype = {
         this.knight = this.addChild(new CMP.SizedSprite({
             width: 8,
             height: 8,
-            image: 'knight',
-            x: this.percentageOfWidth(-0.1),
+            image: 'sword',
+            x: this.percentageOfWidth(0.5),
             y: this.percentageOfHeight(0.5),
+            rotation: 0,
             // scale: 30.75
         }))
     },
 
+    SwingSword: function() {
+  
+    },
+
+ 
 }
-extend("Knight", "CMP.DisplayObjectContainer");
+extend("Sword", "CMP.DisplayObjectContainer");

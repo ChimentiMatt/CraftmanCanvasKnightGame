@@ -13,6 +13,14 @@ GameBoard.prototype = {
     ],
     init: function() {
         this.initKnight();
+        this.initSword();
+        this.movements = this.addChild(new Movements({gameboard: this}))
+
+
+        CMP.ListenSet("GetSword", this.GetSword.bind(this));
+        CMP.ListenSet("GetKnight", this.GetKnight.bind(this));
+
+
     },
 
     initKnight: function() {
@@ -21,9 +29,24 @@ GameBoard.prototype = {
             y: this.percentageOfWidth(0.5),
             gameboard: this
         }))
-        console.log(this.knight, 'knight')
     },
-    
+
+    initSword: function() {
+        this.sword = this.addChild(new Sword({
+            x: this.percentageOfWidth(0.5),
+            y: this.percentageOfWidth(0.5),
+            gameboard: this
+        }))
+    },
+
+    GetSword: function() {
+        return this.sword;
+    },
+
+    GetKnight: function() {
+        return this.knight;
+    },
+
 
     layout: {
         useMinScale: false,
