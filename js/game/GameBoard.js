@@ -8,6 +8,7 @@ GameBoard.prototype = {
     backgroundColor: 'red',
     alpha: 0.1,
     goblins: [],
+    expOrbs: [],
     spawnTick: 0,
     spawnInterval: 100,
 
@@ -17,20 +18,24 @@ GameBoard.prototype = {
     ],
 
     init: function() {
+        CMP.ListenSet("GetGameBoard", this.GetGameBoard.bind(this));
+        CMP.ListenSet("GetSword", this.GetSword.bind(this));
+        CMP.ListenSet("GetKnight", this.GetKnight.bind(this));
+        CMP.ListenSet("GetGoblin", this.GetGoblin.bind(this));
+        CMP.ListenSet("GetHealth", this.GetHealth.bind(this));
+        CMP.ListenSet("GetExperienceGage", this.GetExperienceGage.bind(this));
+
         this.addUpdate(this.onUpdate.bind(this));
         this.initKnight();
         this.initSwords();
         this.initGoblins();
         this.initHealth();
+        this.initExperienceGage();
         this.movements = this.addChild(new Movements({gameboard: this}));
         this.collisions = this.addChild(new Collisions({gameboard: this}));
         this.attack = this.addChild(new Attack({gameboard: this}));
 
-        CMP.ListenSet("GetSword", this.GetSword.bind(this));
-        CMP.ListenSet("GetKnight", this.GetKnight.bind(this));
-        CMP.ListenSet("GetGoblin", this.GetGoblin.bind(this));
-        CMP.ListenSet("GetHealth", this.GetHealth.bind(this));
-        CMP.ListenSet("GetGameBoard", this.GetGameBoard.bind(this));
+        
     },
 
     initKnight: function() {
@@ -107,12 +112,36 @@ GameBoard.prototype = {
             x: this.percentageOfWidth(0.5),
             y: this.percentageOfHeight(0.95),
             lineWidth: 290,
-            text: '5',
+            text: 'health: 5',
             textAlign: "center",
             textBaseline: "middle",
             font: "5pt arial",
             color: "black"
         }));
+    },
+
+    initExperienceGage: function() {
+        this.experienceGage = this.addChild(new CMP.Text({
+            x: this.percentageOfWidth(0.5),
+            y: this.percentageOfHeight(0.02),
+            lineWidth: 290,
+            text: `exp: ${this.knight.experience}`,
+            textAlign: "center",
+            textBaseline: "middle",
+            font: "5pt arial",
+            color: "black"
+        }));
+    },
+
+    dropExpOrb: function(x, y) {
+        let gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
+
+        let expOrb = this.addChild(new ExpOrb({
+            x: x,
+            y: y,
+            gameboard: this
+        }))
+        gameBoard.expOrbs.push(expOrb);
     },
 
 
@@ -130,6 +159,10 @@ GameBoard.prototype = {
 
     GetHealth: function() {
         return this.healthText;
+    },
+
+    GetExperienceGage: function() {
+        return this.experienceGage;
     },
 
     GetGameBoard: function() {

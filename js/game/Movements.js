@@ -56,29 +56,29 @@ Movements.prototype = {
         let swords = CMP.DispatchGet({type: "GetSword"})
         let knight = CMP.DispatchGet({type: "GetKnight"})
             if (this.pressedUp === 1){
-                knight.y -= 1;
+                knight.y -= knight.movementSpeed;
                 for (let i = 0; i < swords.length; i++){
-                    swords[i].y -= 1;
+                    swords[i].y -= knight.movementSpeed;
                 }
             }
             if (this.pressedDown === 1){
-                knight.y += 1;
+                knight.y += knight.movementSpeed
                 for (let i = 0; i < swords.length; i++){
-                    swords[i].y += 1
+                    swords[i].y += knight.movementSpeed
                 }
             }
             if (this.pressedRight === 1){
-                knight.scaleX = 1,
-                knight.x += 1;
+                knight.scaleX = 1;
+                knight.x += knight.movementSpeed;
                 for (let i = 0; i < swords.length; i++){
-                    swords[i].x += 1
+                    swords[i].x += knight.movementSpeed
                 }
             }
             if (this.pressedLeft === 1){
                 knight.scaleX = -1,
-                knight.x -= 1;
+                knight.x -= knight.movementSpeed;
                 for (let i = 0; i < swords.length; i++){
-                    swords[i].x -= 1
+                    swords[i].x -= knight.movementSpeed
                 }
             }
     },
@@ -149,13 +149,8 @@ Movements.prototype = {
     // },
 
     onUpdate: function({delta}){
-        // this.knightSwordCollision();
         this.movement();
         this.moveTowardsKnight(delta);
-        // this.collisionMonsterToKnight();
-
-
-        // this.gravity(delta);
     },
 }
 extend("Movements", "CMP.DisplayObjectContainer");
