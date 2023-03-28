@@ -9,9 +9,9 @@ Movements.prototype = {
     pressedDown: 0,
     pressedLeft: 0,
     pressedRight: 0,
-    inSwing: false,
     mouseX: 0,
     mouseY: 0,
+
     
     init: function() {
         this.addUpdate(this.onUpdate.bind(this));
@@ -53,78 +53,100 @@ Movements.prototype = {
     },
 
     movement: function() {
-        let sword = CMP.DispatchGet({type: "GetSword"})
+        let swords = CMP.DispatchGet({type: "GetSword"})
         let knight = CMP.DispatchGet({type: "GetKnight"})
-        if (!this.inSwing){
             if (this.pressedUp === 1){
                 knight.y -= 1;
-                sword.y -= 1;
+                for (let i = 0; i < swords.length; i++){
+                    swords[i].y -= 1;
+                }
             }
             if (this.pressedDown === 1){
                 knight.y += 1;
-                sword.y += 1
+                for (let i = 0; i < swords.length; i++){
+                    swords[i].y += 1
+                }
             }
             if (this.pressedRight === 1){
                 knight.x += 1;
-                sword.x += 1
+                for (let i = 0; i < swords.length; i++){
+                    swords[i].x += 1
+                }
             }
             if (this.pressedLeft === 1){
                 knight.x -= 1;
-                sword.x -= 1
+                for (let i = 0; i < swords.length; i++){
+                    swords[i].x -= 1
+                }
             }
-            if (this.pressedSpace === 1){
-                this.inSwing = true;
-                let sword = CMP.DispatchGet({type: "GetSword"})
-                sword.tweenTo({
-                    rotation: 120,
-                    y: sword.y + 3.9,
-                    x: sword.x + 1.1,
-                    duration: .2,
-                    rewind: true,
-                    onComplete: () => {this.inSwing = false}
-                })
-            }
-        }
     },
     
     knightSwordCollision: function() {
-        let sword = CMP.DispatchGet({type: "GetSword"})
+        let swords = CMP.DispatchGet({type: "GetSword"})
         let goblin = CMP.DispatchGet({type: "GetGoblin"})
-        // console.log(goblin.x, sword.x)
-        if (goblin.x >= sword.x - 8 && goblin.x <= sword.x + 8){
-            if (goblin.y >= sword.y - 8 && goblin.y <= sword.y + 8){
-                if (this.inSwing){
-                    console.log('hit')
-                    alert('hit')
+        let gameBoard = CMP.DispatchGet({type: "GetGameBoard"})
+
+        for (let i = 0; i < swords.length; i++){
+            if (goblin.x >= swords[i].x - 8 && goblin.x <= swords[i].x + 8){
+                if (goblin.y >= swords[i].y - 8 && goblin.y <= swords[i].y + 8){
+                    if (this.inSwing){
+                        console.log('kill')
+                        gameBoard.removeChild(goblin);
+                    }
                 }
             }
         }
     },
 
+    moveTowardsKnight(delta) {
+        let goblin = CMP.DispatchGet({type: "GetGoblin"})
+        let knight = CMP.DispatchGet({type: "GetKnight"})
+        if (goblin.y < knight.y){
+            goblin.y += delta * 0.01
+        }
+        if (goblin.y > knight.y){
+            goblin.y -= delta * 0.01
+        }
+        if (goblin.x < knight.x){
+            goblin.x += delta * 0.01
+        }
+        if (goblin.x > knight.x){
+            goblin.x -= delta * 0.01
+        }
+    },
+
+    collisionMonsterToKnight: function() {
+        let knight = CMP.DispatchGet({type: "GetKnight"})
+        let goblin = CMP.DispatchGet({type: "GetGoblin"})
+        let gameBoard = CMP.DispatchGet({type: "GetGameBoard"})
+
+        if (goblin.x -4 >= knight.x - 8 && goblin.x + 4 <= knight.x + 8){
+            if (goblin.y -4 >= knight.y - 8 && goblin.y + 4 <= knight.y + 8){
+                console.log('hit')
+                gameBoard.removeChild(goblin);
+            }
+        }
+    },
     // handleMouseMove() {
     //     onmousemove = function(e){
     //         // console.log("mouse location:", e.clientX, e.clientY)
     //         let sword = CMP.DispatchGet({type: "GetSword"})
-    //             console.log('now', sword.x, e.clientX)
+    //             console.log( sword.x, e.clientX)
     //             if (sword.x  >=  e.clientX){
     //                 console.log('greater')
+    //                 sword.x += 5
     //             }
     //     }
     // },
 
-    // updateSwordLocation() {
-    //     console.log('now', this.mouseX)
-    //     let sword = CMP.DispatchGet({type: "GetSword"})
-    //     if (sword.x + 300 >= this.mouseX){
-    //         console.log('now', this.mouseX)
-    //     }
-    // },
-
     onUpdate: function({delta}){
-        this.knightSwordCollision();
+        // this.knightSwordCollision();
         this.movement();
-        // this.handleMouseMove();
-        // this.updateSwordLocation();
+        this.moveTowardsKnight(delta);
+        // this.collisionMonsterToKnight();
+
+
+        // this.gravity(delta);
     },
 }
 extend("Movements", "CMP.DisplayObjectContainer");

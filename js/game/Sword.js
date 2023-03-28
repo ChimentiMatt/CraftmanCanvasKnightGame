@@ -13,21 +13,16 @@ Sword.prototype = {
     pressedRight: 0,
     
     init: function() {
-        this.knight = this.addChild(new CMP.SizedSprite({
+        this.sword = this.addChild(new CMP.SizedSprite({
             width: 8,
             height: 8,
             image: 'sword',
-            x: this.percentageOfWidth(0.5),
+            x: this.percentageOfWidth(1),
             y: this.percentageOfHeight(0.5),
             rotation: 0,
             // scale: 30.75
         }))
     },
-
-    SwingSword: function() {
-  
-    },
-
  
 }
 extend("Sword", "CMP.DisplayObjectContainer");

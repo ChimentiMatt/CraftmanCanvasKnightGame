@@ -133,6 +133,8 @@ AppConfig = {
 		{src: "js/game/Sword.js"},
 		{src: "js/game/Goblin.js"},
 		{src: "js/game/Movements.js"},
+		{src: "js/game/Collisions.js"},
+		{src: "js/game/Attack.js"},
 
 		{src: "js/game/Playable.js"},
 		{src: "js/game/Background.js"},

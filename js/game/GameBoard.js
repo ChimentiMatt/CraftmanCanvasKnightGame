@@ -13,28 +13,47 @@ GameBoard.prototype = {
     ],
     init: function() {
         this.initKnight();
-        this.initSword();
+        this.initSwords();
         this.initGoblin();
         this.movements = this.addChild(new Movements({gameboard: this}))
+        this.collisions = this.addChild(new Collisions({gameboard: this}))
+        this.attack = this.addChild(new Attack({gameboard: this}))
 
         CMP.ListenSet("GetSword", this.GetSword.bind(this));
         CMP.ListenSet("GetKnight", this.GetKnight.bind(this));
         CMP.ListenSet("GetGoblin", this.GetGoblin.bind(this));
+        CMP.ListenSet("GetGameBoard", this.GetGameBoard.bind(this));
     },
 
     initKnight: function() {
         this.knight = this.addChild(new Knight({
-            x: this.percentageOfWidth(0.5),
-            y: this.percentageOfHeight(0.5),
-            gameboard: this
+            // x: this.percentageOfWidth(0.5),
+            // y: this.percentageOfHeight(0.5),
+            x: 100,
+            y: 100,
+            gameboard: this,
         }))
     },
 
-    initSword: function() {
-        this.sword = this.addChild(new Sword({
-            x: this.percentageOfWidth(0.5),
-            y: this.percentageOfHeight(0.5),
-            gameboard: this
+    initSwords: function() {
+        this.swordRight = this.addChild(new Sword({
+            // x: this.percentageOfWidth(0.5),
+            // y: this.percentageOfHeight(0.5),
+            x: this.knight.x + 8,
+            y: this.knight.y - 2.5,
+            rotation: 90,
+            visible: true,
+            gameboard: this,
+        }))
+        this.swordLeft = this.addChild(new Sword({
+            // x: this.percentageOfWidth(0.5),
+            // y: this.percentageOfHeight(0.5),
+            x: this.knight.x - 8,
+            y: this.knight.y - 2.5,
+            rotation: 90,
+            scaleY: -1,
+            visible: true,
+            gameboard: this,
         }))
     },
 
@@ -51,7 +70,7 @@ GameBoard.prototype = {
 
 
     GetSword: function() {
-        return this.sword;
+        return [this.swordRight, this.swordLeft];
     },
 
     GetKnight: function() {
@@ -60,6 +79,10 @@ GameBoard.prototype = {
 
     GetGoblin: function() {
         return this.goblin;
+    },
+
+    GetGameBoard: function() {
+        return this;
     },
 
 

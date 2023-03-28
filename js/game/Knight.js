@@ -17,7 +17,7 @@ Knight.prototype = {
             width: 8,
             height: 8,
             image: 'knight',
-            x: this.percentageOfWidth(-0.1),
+            x: this.percentageOfWidth(0.5),
             y: this.percentageOfHeight(0.5),
             // scale: 30.75
         }))
