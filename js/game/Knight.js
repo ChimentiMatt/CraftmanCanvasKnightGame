@@ -6,12 +6,7 @@ Knight = function (params) {
 };
 
 Knight.prototype = {
-    // backgroundColor: 'teal',
-    pressedUp: 0,
-    pressedDown: 0,
-    pressedLeft: 0,
-    pressedRight: 0,
-    
+
     init: function() {
         this.knight = this.addChild(new CMP.SizedSprite({
             width: 8,

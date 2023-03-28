@@ -68,12 +68,14 @@ Movements.prototype = {
                 }
             }
             if (this.pressedRight === 1){
+                knight.scaleX = 1,
                 knight.x += 1;
                 for (let i = 0; i < swords.length; i++){
                     swords[i].x += 1
                 }
             }
             if (this.pressedLeft === 1){
+                knight.scaleX = -1,
                 knight.x -= 1;
                 for (let i = 0; i < swords.length; i++){
                     swords[i].x -= 1
@@ -104,16 +106,18 @@ Movements.prototype = {
 
         for (let i = 0; i < goblins.length; i++){
             if (goblins[i].y < knight.y){
-                goblins[i].y += delta * 0.01
+                goblins[i].y += delta * 0.01;
             }
             if (goblins[i].y > knight.y){
-                goblins[i].y -= delta * 0.01
+                goblins[i].y -= delta * 0.01;
             }
             if (goblins[i].x < knight.x){
-                goblins[i].x += delta * 0.01
+                goblins[i].x += delta * 0.01;
+                goblins[i].scaleX = 1;
             }
             if (goblins[i].x > knight.x){
-                goblins[i].x -= delta * 0.01
+                goblins[i].x -= delta * 0.01;
+                goblins[i].scaleX = -1;
             }
         }
     },

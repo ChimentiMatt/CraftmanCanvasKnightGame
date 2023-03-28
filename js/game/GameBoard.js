@@ -21,20 +21,20 @@ GameBoard.prototype = {
         this.initKnight();
         this.initSwords();
         this.initGoblins();
-        this.movements = this.addChild(new Movements({gameboard: this}))
-        this.collisions = this.addChild(new Collisions({gameboard: this}))
-        this.attack = this.addChild(new Attack({gameboard: this}))
+        this.initHealth();
+        this.movements = this.addChild(new Movements({gameboard: this}));
+        this.collisions = this.addChild(new Collisions({gameboard: this}));
+        this.attack = this.addChild(new Attack({gameboard: this}));
 
         CMP.ListenSet("GetSword", this.GetSword.bind(this));
         CMP.ListenSet("GetKnight", this.GetKnight.bind(this));
         CMP.ListenSet("GetGoblin", this.GetGoblin.bind(this));
+        CMP.ListenSet("GetHealth", this.GetHealth.bind(this));
         CMP.ListenSet("GetGameBoard", this.GetGameBoard.bind(this));
     },
 
     initKnight: function() {
         this.knight = this.addChild(new Knight({
-            // x: this.percentageOfWidth(0.5),
-            // y: this.percentageOfHeight(0.5),
             x: 100,
             y: 100,
             gameboard: this,
@@ -43,8 +43,6 @@ GameBoard.prototype = {
 
     initSwords: function() {
         this.swordRight = this.addChild(new Sword({
-            // x: this.percentageOfWidth(0.5),
-            // y: this.percentageOfHeight(0.5),
             x: this.knight.x + 8,
             y: this.knight.y + 1,
             rotation: 90,
@@ -86,24 +84,35 @@ GameBoard.prototype = {
             yLocation = this.height
         }
   
-
         this.spawnTick++;
         if (this.spawnTick >= this.spawnInterval){
             let goblin = this.addChild(new Goblin({
-                // x: this.percentageOfWidth(0.1),
-                // y: this.percentageOfHeight(0.1),
-                // x: 40,
-                // y: 40,
                 x: xLocation,
                 y: yLocation,
                 gameboard: this
-                
             }))
             this.goblins.push(goblin)
             this.spawnTick = 0;
 
+            if (this.spawnTick <100) { // make more goblins appear over time
+                this.spawnTick ++
+                // console.log('tick increase')
+            }
         }
 
+    },
+
+    initHealth: function() {
+        this.healthText = this.addChild(new CMP.Text({
+            x: this.percentageOfWidth(0.5),
+            y: this.percentageOfHeight(0.95),
+            lineWidth: 290,
+            text: '5',
+            textAlign: "center",
+            textBaseline: "middle",
+            font: "5pt arial",
+            color: "black"
+        }));
     },
 
 
@@ -117,6 +126,10 @@ GameBoard.prototype = {
 
     GetGoblin: function() {
         return this.goblins;
+    },
+
+    GetHealth: function() {
+        return this.healthText;
     },
 
     GetGameBoard: function() {
