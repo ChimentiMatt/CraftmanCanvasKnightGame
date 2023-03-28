@@ -17,7 +17,7 @@ Sword.prototype = {
             width: 8,
             height: 8,
             image: 'sword',
-            x: this.percentageOfWidth(1),
+            x: this.percentageOfWidth(.5),
             y: this.percentageOfHeight(0.5),
             rotation: 0,
             // scale: 30.75

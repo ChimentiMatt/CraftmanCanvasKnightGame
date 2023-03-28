@@ -10,17 +10,18 @@ Collisions.prototype = {
     
     knightSwordCollision: function() {
         let swords = CMP.DispatchGet({type: "GetSword"})
-        let goblin = CMP.DispatchGet({type: "GetGoblin"})
+        let goblins = CMP.DispatchGet({type: "GetGoblin"})
         let gameBoard = CMP.DispatchGet({type: "GetGameBoard"})
         let inSwing = CMP.DispatchGet({type: "GetInSwing"})
-        console.log(inSwing)
         
         for (let i = 0; i < swords.length; i++){
-            if (goblin.x >= swords[i].x - 8 && goblin.x <= swords[i].x + 8){
-                if (goblin.y >= swords[i].y - 8 && goblin.y <= swords[i].y + 8){
-                    if (inSwing){
-                        console.log('kill')
-                        gameBoard.removeChild(goblin);
+            for (let j = 0; j < goblins.length; j++){
+                if (goblins[j].x >= swords[i].x - 8 && goblins[j].x <= swords[i].x + 8){
+                    if (goblins[j].y >= swords[i].y - 8 && goblins[j].y <= swords[i].y + 8){
+                        if (inSwing){
+                            console.log('kill')
+                            gameBoard.removeChild(goblins[j]);
+                        }
                     }
                 }
             }
@@ -29,13 +30,15 @@ Collisions.prototype = {
 
     collisionMonsterToKnight: function() {
         let knight = CMP.DispatchGet({type: "GetKnight"})
-        let goblin = CMP.DispatchGet({type: "GetGoblin"})
+        let goblins = CMP.DispatchGet({type: "GetGoblin"})
         let gameBoard = CMP.DispatchGet({type: "GetGameBoard"})
 
-        if (goblin.x -4 >= knight.x - 8 && goblin.x + 4 <= knight.x + 8){
-            if (goblin.y -4 >= knight.y - 8 && goblin.y + 4 <= knight.y + 8){
-                console.log('hit')
-                gameBoard.removeChild(goblin);
+        for (let i = 0; i < goblins.length; i++){
+            if (goblins[i].x -4 >= knight.x - 8 && goblins[i].x + 4 <= knight.x + 8){
+                if (goblins[i].y -4 >= knight.y - 8 && goblins[i].y + 4 <= knight.y + 8){
+                    console.log('hit')
+                    gameBoard.removeChild(goblins[i]);
+                }
             }
         }
     },
@@ -43,8 +46,6 @@ Collisions.prototype = {
     onUpdate: function({delta}){
         this.knightSwordCollision();
         this.collisionMonsterToKnight();
-
-        // this.gravity(delta);
     },
 }
 extend("Collisions", "CMP.DisplayObjectContainer");

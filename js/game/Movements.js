@@ -99,31 +99,36 @@ Movements.prototype = {
     },
 
     moveTowardsKnight(delta) {
-        let goblin = CMP.DispatchGet({type: "GetGoblin"})
+        let goblins = CMP.DispatchGet({type: "GetGoblin"})
         let knight = CMP.DispatchGet({type: "GetKnight"})
-        if (goblin.y < knight.y){
-            goblin.y += delta * 0.01
-        }
-        if (goblin.y > knight.y){
-            goblin.y -= delta * 0.01
-        }
-        if (goblin.x < knight.x){
-            goblin.x += delta * 0.01
-        }
-        if (goblin.x > knight.x){
-            goblin.x -= delta * 0.01
+
+        for (let i = 0; i < goblins.length; i++){
+            if (goblins[i].y < knight.y){
+                goblins[i].y += delta * 0.01
+            }
+            if (goblins[i].y > knight.y){
+                goblins[i].y -= delta * 0.01
+            }
+            if (goblins[i].x < knight.x){
+                goblins[i].x += delta * 0.01
+            }
+            if (goblins[i].x > knight.x){
+                goblins[i].x -= delta * 0.01
+            }
         }
     },
 
     collisionMonsterToKnight: function() {
         let knight = CMP.DispatchGet({type: "GetKnight"})
-        let goblin = CMP.DispatchGet({type: "GetGoblin"})
+        let goblins = CMP.DispatchGet({type: "GetGoblin"})
         let gameBoard = CMP.DispatchGet({type: "GetGameBoard"})
 
-        if (goblin.x -4 >= knight.x - 8 && goblin.x + 4 <= knight.x + 8){
-            if (goblin.y -4 >= knight.y - 8 && goblin.y + 4 <= knight.y + 8){
-                console.log('hit')
-                gameBoard.removeChild(goblin);
+        for (let i = 0; i < goblins.length; i++){
+            if (goblins[i].x -4 >= knight.x - 8 && goblins[i].x + 4 <= knight.x + 8){
+                if (goblins[i].y -4 >= knight.y - 8 && goblins[i].y + 4 <= knight.y + 8){
+                    console.log('hit')
+                    gameBoard.removeChild(goblins[i]);
+                }
             }
         }
     },
