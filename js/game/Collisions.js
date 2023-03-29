@@ -57,7 +57,6 @@ Collisions.prototype = {
     knockBack: function(goblin, delta) {
         for (let i = 0; i < this.goblins.length; i++){
 
-
             if (goblin.x < this.knight.x){
                 goblin.x -= 1
             }

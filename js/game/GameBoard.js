@@ -10,7 +10,7 @@ GameBoard.prototype = {
     goblins: [],
     expOrbs: [],
     spawnTick: 0,
-    spawnInterval: 100,
+    spawnInterval: 30,
     paused: false,
 
     customAssets: [
@@ -39,6 +39,7 @@ GameBoard.prototype = {
         this.movements = this.addChild(new Movements({gameboard: this}));
         this.attack = this.addChild(new Attack({gameboard: this}));
         this.collisions = this.addChild(new Collisions({gameboard: this}));  
+        this.upgrades = this.addChild(new Upgrades({gameboard: this}));  
 
         this.addUpdate(this.onUpdate.bind(this));
     },
@@ -53,14 +54,16 @@ GameBoard.prototype = {
 
     initSwords: function() {
         this.swordRight = this.addChild(new Sword({
-            x: this.knight.x + 8,
+            name: 'sword left',
+            x: this.knight.x + 24,
             y: this.knight.y + 1,
             rotation: 90,
             visible: true,
             gameboard: this,
         }))
         this.swordLeft = this.addChild(new Sword({
-            x: this.knight.x - 8,
+            name: 'sword right',
+            x: this.knight.x - 24,
             y: this.knight.y + 1,
             rotation: 90,
             scaleY: -1,
@@ -71,6 +74,7 @@ GameBoard.prototype = {
 
     initSpear: function() {
         this.spear = this.addChild(new Spear({
+            name: 'spear',
             x: this.knight.x,
             y: this.knight.y - 22,
             visible: true,
@@ -111,7 +115,7 @@ GameBoard.prototype = {
             this.goblins.push(goblin)
             this.spawnTick = 0;
 
-            if (this.spawnTick <100) { // make more goblins appear over time
+            if (this.spawnTick < 100) { // make more goblins appear over time
                 this.spawnTick ++
                 // console.log('tick increase')
             }
@@ -190,7 +194,9 @@ GameBoard.prototype = {
     },
 
     onUpdate: function({delta}){
-        this.initGoblins()
+        if (!this.paused){
+            this.initGoblins()
+        }
     },
 
     layout: {

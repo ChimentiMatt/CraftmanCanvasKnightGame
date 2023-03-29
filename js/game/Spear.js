@@ -7,12 +7,11 @@ Spear = function (params) {
 
 Spear.prototype = {
     // backgroundColor: 'teal',
-
+    name: 'spear',
+    level: 0,
     equipped: false,
     attackInterval: 0,
     inSwing: false,
-    // attackSpeed: 200,
-    // attackDuration: 50,
     attackSpeed: 300,
     attackDuration: 50,
     xOffset: 8,
@@ -33,7 +32,6 @@ Spear.prototype = {
 
     AttackPattern: function() {
         if (this.equipped){
-
             this.attackInterval += 1;
             
             if (this.attackInterval === this.attackSpeed){

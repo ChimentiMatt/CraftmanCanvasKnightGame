@@ -98,6 +98,7 @@ AppConfig = {
 		{id: "spear", src: "assets/images/spear.png"},
 		{id: "goblin", src: "assets/images/goblin.png"},
 		{id: "exp", src: "assets/images/exp.png"},
+		{id: "pointer", src: "assets/images/pointer.png"},
 	],
 	CUSTOMIZABLE: [
 		{
@@ -140,6 +141,7 @@ AppConfig = {
 		{src: "js/game/Attack.js"},
 		{src: "js/game/ExpOrb.js"},
 		{src: "js/game/LevelUpScreen.js"},
+		{src: "js/game/Upgrades.js"},
 
 		{src: "js/game/Playable.js"},
 		{src: "js/game/Background.js"},

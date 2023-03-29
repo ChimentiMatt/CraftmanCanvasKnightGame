@@ -23,9 +23,5 @@ ExpOrb.prototype = {
         }))
     },
 
-    onUpdate: function({delta}){
-        this.levelUpCheck();
-    },
-
 }
 extend("ExpOrb", "CMP.DisplayObjectContainer");

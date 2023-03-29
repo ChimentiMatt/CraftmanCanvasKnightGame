@@ -9,7 +9,7 @@ Knight.prototype = {
     level: 0,
     experience: 0,
     health: 5,
-    movementSpeed: .4,
+    movementSpeed: .6,
 
     init: function() {
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
@@ -33,7 +33,7 @@ Knight.prototype = {
 
     levelUp: function() {
         this.gameBoard.paused = true;
-        console.log('level up')
+        // console.log('level up')
         
     },
 
