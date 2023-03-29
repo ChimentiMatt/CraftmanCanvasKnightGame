@@ -11,9 +11,15 @@ Movements.prototype = {
     pressedRight: 0,
     mouseX: 0,
     mouseY: 0,
-
     
     init: function() {
+        this.levelUpScreen = CMP.DispatchGet({type: "GetLevelUpScreen"});
+        this.swords = CMP.DispatchGet({type: "GetSword"})
+        this.knight = CMP.DispatchGet({type: "GetKnight"})
+        // this.goblin = CMP.DispatchGet({type: "GetGoblin"})
+        this.goblins = CMP.DispatchGet({type: "GetGoblin"})
+        this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"})
+
         this.addUpdate(this.onUpdate.bind(this));
         addEventListener('keydown', (event) => {
             if (event.code === 'ArrowUp'){
@@ -53,104 +59,78 @@ Movements.prototype = {
     },
 
     movement: function() {
-        let swords = CMP.DispatchGet({type: "GetSword"})
-        let knight = CMP.DispatchGet({type: "GetKnight"})
             if (this.pressedUp === 1){
-                knight.y -= knight.movementSpeed;
-                for (let i = 0; i < swords.length; i++){
-                    swords[i].y -= knight.movementSpeed;
+                this.knight.y -= this.knight.movementSpeed;
+                for (let i = 0; i < this.swords.length; i++){
+                    this.swords[i].y -= this.knight.movementSpeed;
                 }
             }
             if (this.pressedDown === 1){
-                knight.y += knight.movementSpeed
-                for (let i = 0; i < swords.length; i++){
-                    swords[i].y += knight.movementSpeed
+                this.knight.y += this.knight.movementSpeed
+                for (let i = 0; i < this.swords.length; i++){
+                    this.swords[i].y += this.knight.movementSpeed
                 }
             }
             if (this.pressedRight === 1){
-                knight.scaleX = 1;
-                knight.x += knight.movementSpeed;
-                for (let i = 0; i < swords.length; i++){
-                    swords[i].x += knight.movementSpeed
+                this.knight.scaleX = 1;
+                this.knight.x += this.knight.movementSpeed;
+                for (let i = 0; i < this.swords.length; i++){
+                    this.swords[i].x += this.knight.movementSpeed
                 }
             }
             if (this.pressedLeft === 1){
-                knight.scaleX = -1,
-                knight.x -= knight.movementSpeed;
-                for (let i = 0; i < swords.length; i++){
-                    swords[i].x -= knight.movementSpeed
+                this.knight.scaleX = -1,
+                this.knight.x -= this.knight.movementSpeed;
+                for (let i = 0; i < this.swords.length; i++){
+                    this.swords[i].x -= this.knight.movementSpeed
                 }
             }
-    },
-    
-    knightSwordCollision: function() {
-        let swords = CMP.DispatchGet({type: "GetSword"})
-        let goblin = CMP.DispatchGet({type: "GetGoblin"})
-        let gameBoard = CMP.DispatchGet({type: "GetGameBoard"})
-
-        for (let i = 0; i < swords.length; i++){
-            if (goblin.x >= swords[i].x - 8 && goblin.x <= swords[i].x + 8){
-                if (goblin.y >= swords[i].y - 8 && goblin.y <= swords[i].y + 8){
-                    if (this.inSwing){
-                        console.log('kill')
-                        gameBoard.removeChild(goblin);
-                    }
-                }
-            }
-        }
     },
 
     moveTowardsKnight(delta) {
-        let goblins = CMP.DispatchGet({type: "GetGoblin"})
-        let knight = CMP.DispatchGet({type: "GetKnight"})
-
-        for (let i = 0; i < goblins.length; i++){
-            if (goblins[i].y < knight.y){
-                goblins[i].y += delta * 0.01;
+        for (let i = 0; i < this.goblins.length; i++){
+            if (this.goblins[i].y < this.knight.y){
+                this.goblins[i].y += delta * 0.01;
             }
-            if (goblins[i].y > knight.y){
-                goblins[i].y -= delta * 0.01;
+            if (this.goblins[i].y > this.knight.y){
+                this.goblins[i].y -= delta * 0.01;
             }
-            if (goblins[i].x < knight.x){
-                goblins[i].x += delta * 0.01;
-                goblins[i].scaleX = 1;
+            if (this.goblins[i].x < this.knight.x){
+                this.goblins[i].x += delta * 0.01;
+                this.goblins[i].scaleX = 1;
             }
-            if (goblins[i].x > knight.x){
-                goblins[i].x -= delta * 0.01;
-                goblins[i].scaleX = -1;
+            if (this.goblins[i].x >this. knight.x){
+                this.goblins[i].x -= delta * 0.01;
+                this.goblins[i].scaleX = -1;
             }
         }
     },
 
     collisionMonsterToKnight: function() {
-        let knight = CMP.DispatchGet({type: "GetKnight"})
-        let goblins = CMP.DispatchGet({type: "GetGoblin"})
-        let gameBoard = CMP.DispatchGet({type: "GetGameBoard"})
-
-        for (let i = 0; i < goblins.length; i++){
-            if (goblins[i].x -4 >= knight.x - 8 && goblins[i].x + 4 <= knight.x + 8){
-                if (goblins[i].y -4 >= knight.y - 8 && goblins[i].y + 4 <= knight.y + 8){
+        for (let i = 0; i < this.goblins.length; i++){
+            if (this.goblins[i].x -4 >= this.knight.x - 8 && this.goblins[i].x + 4 <= this.knight.x + 8){
+                if (this.goblins[i].y -4 >= this.knight.y - 8 && this.goblins[i].y + 4 <= this.knight.y + 8){
                     console.log('hit')
-                    gameBoard.removeChild(goblins[i]);
+                    gameBoard.removeChild(this.goblins[i]);
                 }
             }
         }
     },
-    // handleMouseMove() {
-    //     onmousemove = function(e){
-    //         // console.log("mouse location:", e.clientX, e.clientY)
-    //         let sword = CMP.DispatchGet({type: "GetSword"})
-    //             console.log( sword.x, e.clientX)
-    //             if (sword.x  >=  e.clientX){
-    //                 console.log('greater')
-    //                 sword.x += 5
-    //             }
-    //     }
-    // },
+
+    menuControls: function() {
+        console.log('in menu')
+    },
 
     onUpdate: function({delta}){
-        this.movement();
-        this.moveTowardsKnight(delta);
+        let gameBoard = CMP.DispatchGet({type: "GetGameBoard"})
+        if (!gameBoard.paused){
+            this.movement();
+            this.moveTowardsKnight(delta);
+        }
+        else{
+            this.levelUpScreen.visible = true
+            this.menuControls();
+        }
     },
 }
 extend("Movements", "CMP.DisplayObjectContainer");

@@ -137,6 +137,7 @@ AppConfig = {
 		{src: "js/game/Collisions.js"},
 		{src: "js/game/Attack.js"},
 		{src: "js/game/ExpOrb.js"},
+		{src: "js/game/LevelUpScreen.js"},
 
 		{src: "js/game/Playable.js"},
 		{src: "js/game/Background.js"},

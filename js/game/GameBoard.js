@@ -11,6 +11,7 @@ GameBoard.prototype = {
     expOrbs: [],
     spawnTick: 0,
     spawnInterval: 100,
+    paused: false,
 
     customAssets: [
     ],
@@ -25,17 +26,21 @@ GameBoard.prototype = {
         CMP.ListenSet("GetHealth", this.GetHealth.bind(this));
         CMP.ListenSet("GetExperienceGage", this.GetExperienceGage.bind(this));
 
-        this.addUpdate(this.onUpdate.bind(this));
         this.initKnight();
         this.initSwords();
         this.initGoblins();
         this.initHealth();
         this.initExperienceGage();
-        this.movements = this.addChild(new Movements({gameboard: this}));
-        this.collisions = this.addChild(new Collisions({gameboard: this}));
-        this.attack = this.addChild(new Attack({gameboard: this}));
-
         
+        this.levelUpScreen = this.addChild(new LevelUpScreen({gameboard: this}));  
+        this.movements = this.addChild(new Movements({gameboard: this}));
+        this.attack = this.addChild(new Attack({gameboard: this}));
+        this.collisions = this.addChild(new Collisions({gameboard: this}));  
+
+        this.addUpdate(this.onUpdate.bind(this));
+
+
+
     },
 
     initKnight: function() {

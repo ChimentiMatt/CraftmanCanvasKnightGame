@@ -14,6 +14,8 @@ Goblin.prototype = {
 
     
     init: function() {
+        this.sword = CMP.DispatchGet({type: "GetSword"})
+
         this.goblin = this.addChild(new CMP.SizedSprite({
             width: 8,
             height: 8,
@@ -28,18 +30,15 @@ Goblin.prototype = {
     },
 
     knightSwordCollision: function() {
-        let sword = CMP.DispatchGet({type: "GetSword"})
         // console.log(this.goblin.x, sword.x)
-        if (this.goblin.x -4 >= sword.x - 8 && this.goblin.x + 4 <= sword.x + 8){
-            if (this.goblin.y -4 >= sword.y - 8 && this.goblin.y + 4 <= sword.y + 8){
+        if (this.goblin.x -4 >= this.sword.x - 8 && this.goblin.x + 4 <= this.sword.x + 8){
+            if (this.goblin.y -4 >= this.sword.y - 8 && this.goblin.y + 4 <= this.sword.y + 8){
                 console.log('hit')
             }
         }
     },
     
     onUpdate: function({delta}){
-        // this.handleMouseMove();
-        // this.updateSwordLocation();
         this.knightSwordCollision();
     },
 

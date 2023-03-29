@@ -11,25 +11,27 @@ Attack.prototype = {
 
     init: function() {
         this.addUpdate(this.onUpdate.bind(this));
+        this.swords = CMP.DispatchGet({type: "GetSword"});
+        this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
+
         CMP.ListenSet("GetInSwing", this.GetInSwing.bind(this));
     },
     
     swordAttackPattern: function() {
-        let swords = CMP.DispatchGet({type: "GetSword"})
+    
         this.attackInterval += 1;
-        // console.log(this.attackInterval)
 
         if (this.attackInterval === this.attackSpeed){
             this.inSwing = true;
-            for (let i = 0; i < swords.length; i++){
-                swords[i].visible = true;
+            for (let i = 0; i < this.swords.length; i++){
+                this.swords[i].visible = true;
             }
             this.attackInterval = 0;
         }
         else if (this.attackInterval === this.attackDuration){
             this.inSwing = false;
-            for (let i = 0; i < swords.length; i++){
-                swords[i].visible = false;
+            for (let i = 0; i < this.swords.length; i++){
+                this.swords[i].visible = false;
             }
         }
     },
@@ -39,7 +41,9 @@ Attack.prototype = {
     },
 
     onUpdate: function({delta}){
-        this.swordAttackPattern()
+        if (!this.gameBoard.paused){
+            this.swordAttackPattern()
+        }
     },
 }
 extend("Attack", "CMP.DisplayObjectContainer");

@@ -8,25 +8,28 @@ Collisions.prototype = {
 
     init: function() {
         this.addUpdate(this.onUpdate.bind(this));
+        this.knight = CMP.DispatchGet({type: "GetKnight"});
+        this.swords = CMP.DispatchGet({type: "GetSword"});
+        this.goblins = CMP.DispatchGet({type: "GetGoblin"});
+        this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
+        this.health =  CMP.DispatchGet({type: "GetHealth"});
+        this.experienceGage = CMP.DispatchGet({type: "GetExperienceGage"});
     },
 
     swordCollision: function() {
-        let knight = CMP.DispatchGet({type: "GetKnight"});
-        let swords = CMP.DispatchGet({type: "GetSword"});
-        let goblins = CMP.DispatchGet({type: "GetGoblin"});
-        let gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
         let inSwing = CMP.DispatchGet({type: "GetInSwing"});
         
-        for (let i = 0; i < swords.length; i++){
-            for (let j = 0; j < goblins.length; j++){
-                if (goblins[j].x >= swords[i].x - 8 && goblins[j].x <= swords[i].x + 8){
-                    if (goblins[j].y >= swords[i].y - 4 - 1 && goblins[j].y <= swords[i].y + 4 ){
+        for (let i = 0; i < this.swords.length; i++){
+            for (let j = 0; j < this.goblins.length; j++){
+                if (this.goblins[j].x >= this.swords[i].x - 8 && this.goblins[j].x <= this.swords[i].x + 8){
+                    if (this.goblins[j].y >= this.swords[i].y - 4 - 1 && this.goblins[j].y <= this.swords[i].y + 4 ){
+               
                         if (inSwing){
-                            gameBoard.removeChild(goblins[j]); // remove goblin from canvas
+                            this.gameBoard.removeChild(this.goblins[j]); // remove goblin from canvas
 
-                            gameBoard.dropExpOrb(goblins[j].x, goblins[j].y);
+                            this.gameBoard.dropExpOrb(this.goblins[j].x, this.goblins[j].y);
 
-                            goblins.splice(j, 1) // remove goblins from their array
+                            this.goblins.splice(j, 1) // remove goblins from their array
                         }
                     }
                 }
@@ -35,41 +38,33 @@ Collisions.prototype = {
     },
 
     collisionMonsterToKnight: function() {
-        let knight = CMP.DispatchGet({type: "GetKnight"});
-        let goblins = CMP.DispatchGet({type: "GetGoblin"});
-        let health = CMP.DispatchGet({type: "GetHealth"});
-        let gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
-
-        for (let i = 0; i < goblins.length; i++){
-            if (goblins[i].x -4 >= knight.x - 8 && goblins[i].x + 4 <= knight.x + 8){
-                if (goblins[i].y -4 >= knight.y - 12 && goblins[i].y + 4 <= knight.y + 12){
+        for (let i = 0; i < this.goblins.length; i++){
+            if (this.goblins[i].x -4 >= this.knight.x - 8 && this.goblins[i].x + 4 <= this.knight.x + 8){
+                if (this.goblins[i].y -4 >= this.knight.y - 12 && this.goblins[i].y + 4 <= this.knight.y + 12){
                     
-                    knight.health --;
-                    health.text = `health: ${knight.health}`;
-                    gameBoard.removeChild(goblins[i]);
-                    goblins.splice(i, 1) 
+                    this.knight.health --;
+                    this.health.text = `health: ${this.knight.health}`;
+                    this.gameBoard.removeChild(this.goblins[i]);
+                    this.goblins.splice(i, 1) 
 
-                    if (parseInt(health.text) < 1) this.gameOver()
+                    if (parseInt(this.health.text) < 1) this.gameOver()
                 }
             }
         }
     },
 
     collisionExpOrbs: function() {
-        let gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
-        let knight = CMP.DispatchGet({type: "GetKnight"});
-        let expOrbs = gameBoard.expOrbs
-        let experienceGage = CMP.DispatchGet({type: "GetExperienceGage"});
+        let expOrbs = this.gameBoard.expOrbs
 
         for (let i = 0; i < expOrbs.length; i++){
-            if (expOrbs[i].x -4 >= knight.x - 8 && expOrbs[i].x + 4 <= knight.x + 8){
-                if (expOrbs[i].y -4 >= knight.y - 12 && expOrbs[i].y + 4 <= knight.y + 12){
+            if (expOrbs[i].x -4 >= this.knight.x - 8 && expOrbs[i].x + 4 <= this.knight.x + 8){
+                if (expOrbs[i].y -4 >= this.knight.y - 12 && expOrbs[i].y + 4 <= this.knight.y + 12){
 
-                    gameBoard.removeChild(expOrbs[i]);
+                    this.gameBoard.removeChild(expOrbs[i]);
                     expOrbs.splice(i, 1) 
 
-                    knight.experience++;
-                    experienceGage.text = `exp: ${knight.experience}`
+                    this.knight.experience++;
+                    this.experienceGage.text = `exp: ${this.knight.experience}`
                 }
             }
         }

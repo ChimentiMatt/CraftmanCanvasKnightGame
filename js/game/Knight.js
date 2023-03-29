@@ -12,6 +12,7 @@ Knight.prototype = {
     movementSpeed: .4,
 
     init: function() {
+        this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
         this.addUpdate(this.onUpdate.bind(this));
 
         this.knight = this.addChild(new CMP.SizedSprite({
@@ -22,17 +23,19 @@ Knight.prototype = {
             y: this.percentageOfHeight(0.5),
             // scale: 30.75
         }))
+        console.log('gameb', this.gameBoard)
     },
 
     levelUpCheck: function() {
-        if (this.experience === 10){
+        if (this.experience === 2){
             this.levelUp();
         }
     },
 
     levelUp: function() {
-        // alert('level up')
+        this.gameBoard.paused = true;
         console.log('level up')
+        
     },
 
     onUpdate: function({delta}){
