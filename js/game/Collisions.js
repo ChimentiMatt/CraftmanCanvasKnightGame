@@ -4,6 +4,8 @@ Collisions = function (params) {
 };
 
 Collisions.prototype = {
+    collisionTick: 0,
+    invulnerableTime: 500,
     // health: 100,
 
     init: function() {
@@ -16,24 +18,70 @@ Collisions.prototype = {
         this.experienceGage = CMP.DispatchGet({type: "GetExperienceGage"});
     },
 
-    swordCollision: function() {
+    swordCollision: function(delta) {
         let inSwing = CMP.DispatchGet({type: "GetInSwing"});
-        
+  
         for (let i = 0; i < this.swords.length; i++){
             for (let j = 0; j < this.goblins.length; j++){
                 if (this.goblins[j].x >= this.swords[i].x - 8 && this.goblins[j].x <= this.swords[i].x + 8){
                     if (this.goblins[j].y >= this.swords[i].y - 4 - 1 && this.goblins[j].y <= this.swords[i].y + 4 ){
-               
-                        if (inSwing){
-                            this.gameBoard.removeChild(this.goblins[j]); // remove goblin from canvas
+                        if (inSwing){   
+                            if (!this.goblins[j].invulnerable)
+                            {
+                                setTimeout(() => {
+                                    this.goblins[j].invulnerable = false
+                                }, this.invulnerableTime)
 
-                            this.gameBoard.dropExpOrb(this.goblins[j].x, this.goblins[j].y);
+                                this.goblins[j].invulnerable = true;
+                                this.goblins[j].health--;
+                                this.knockBack(this.goblins[j]), delta;
 
-                            this.goblins.splice(j, 1) // remove goblins from their array
+                                if (this.goblins[j].health <= 0){
+                                    this.gameBoard.removeChild(this.goblins[j]); // remove goblin from canvas
+        
+                                    this.gameBoard.dropExpOrb(this.goblins[j].x, this.goblins[j].y);
+        
+                                    this.goblins.splice(j, 1) // remove goblins from their array
+                                }
+                            }
                         }
                     }
                 }
             }
+        }
+    },
+
+    knockBack: function(goblin, delta) {
+        for (let i = 0; i < this.goblins.length; i++){
+
+
+            if (goblin.x < this.knight.x){
+                goblin.x -= 2
+            }
+            if (goblin.x > this.knight.x){
+                goblin.x += 2
+            }
+            if (goblin.y < this.knight.y){
+                goblin.y -= .5
+            }
+            if (goblin.y > this.knight.y){
+                goblin.y += .5
+            }
+ 
+            // if (goblin.y < this.knight.y){
+            //     goblin.y += delta * 0.1;
+            // }
+            // if (goblin.y > this.knight.y){
+            //     goblin.y -= delta * 0.1;
+            // }
+            // if (goblin.x < this.knight.x){
+            //     goblin.x += delta * 0.1;
+            //     goblin.scaleX = 1;
+            // }
+            // if (goblin.x >this. knight.x){
+            //     goblin.x -= delta * 0.1;
+            //     goblin.scaleX = -1;
+            // }
         }
     },
 
@@ -75,9 +123,10 @@ Collisions.prototype = {
     },
 
     onUpdate: function({delta}){
-        this.swordCollision();
+        this.collisionTick++;
         this.collisionMonsterToKnight();
         this.collisionExpOrbs();
+        this.swordCollision(delta);
     },
 }
 extend("Collisions", "CMP.DisplayObjectContainer");

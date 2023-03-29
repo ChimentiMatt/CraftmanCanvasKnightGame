@@ -7,10 +7,7 @@ Goblin = function (params) {
 
 Goblin.prototype = {
     // backgroundColor: 'teal',
-    pressedUp: 0,
-    pressedDown: 0,
-    pressedLeft: 0,
-    pressedRight: 0,
+    health: 2,
 
     
     init: function() {
@@ -29,17 +26,9 @@ Goblin.prototype = {
 
     },
 
-    knightSwordCollision: function() {
-        // console.log(this.goblin.x, sword.x)
-        if (this.goblin.x -4 >= this.sword.x - 8 && this.goblin.x + 4 <= this.sword.x + 8){
-            if (this.goblin.y -4 >= this.sword.y - 8 && this.goblin.y + 4 <= this.sword.y + 8){
-                console.log('hit')
-            }
-        }
-    },
-    
+
     onUpdate: function({delta}){
-        this.knightSwordCollision();
+
     },
 
 }
