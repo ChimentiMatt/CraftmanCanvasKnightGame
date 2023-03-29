@@ -20,14 +20,17 @@ GameBoard.prototype = {
 
     init: function() {
         CMP.ListenSet("GetGameBoard", this.GetGameBoard.bind(this));
-        CMP.ListenSet("GetSword", this.GetSword.bind(this));
+        CMP.ListenSet("GetSwords", this.GetSwords.bind(this));
+        CMP.ListenSet("GetWeapons", this.GetWeapons.bind(this));
         CMP.ListenSet("GetKnight", this.GetKnight.bind(this));
         CMP.ListenSet("GetGoblin", this.GetGoblin.bind(this));
         CMP.ListenSet("GetHealth", this.GetHealth.bind(this));
         CMP.ListenSet("GetExperienceGage", this.GetExperienceGage.bind(this));
+        CMP.ListenSet("GetInSwingSword", this.GetInSwingSword.bind(this));
 
         this.initKnight();
         this.initSwords();
+        this.initSpear();
         this.initGoblins();
         this.initHealth();
         this.initExperienceGage();
@@ -38,9 +41,6 @@ GameBoard.prototype = {
         this.collisions = this.addChild(new Collisions({gameboard: this}));  
 
         this.addUpdate(this.onUpdate.bind(this));
-
-
-
     },
 
     initKnight: function() {
@@ -60,8 +60,6 @@ GameBoard.prototype = {
             gameboard: this,
         }))
         this.swordLeft = this.addChild(new Sword({
-            // x: this.percentageOfWidth(0.5),
-            // y: this.percentageOfHeight(0.5),
             x: this.knight.x - 8,
             y: this.knight.y + 1,
             rotation: 90,
@@ -71,6 +69,15 @@ GameBoard.prototype = {
         }))
     },
 
+    initSpear: function() {
+        this.spear = this.addChild(new Spear({
+            x: this.knight.x,
+            y: this.knight.y - 22,
+            visible: true,
+            gameboard: this,
+        }))
+
+    },
     
     initGoblins: function() {
         let quadrant = Math.floor(Math.random() * (3 - 0 + 1) + 0);
@@ -150,8 +157,16 @@ GameBoard.prototype = {
     },
 
 
-    GetSword: function() {
+    GetSwords: function() {
         return [this.swordRight, this.swordLeft];
+    },
+
+    GetWeapons: function() {
+        return [this.swordRight, this.swordLeft, this.spear];
+    },
+
+    GetInSwingSword: function() {
+        return this.swordRight.inSwing;
     },
 
     GetKnight: function() {

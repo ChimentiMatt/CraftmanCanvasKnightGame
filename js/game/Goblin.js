@@ -8,10 +8,10 @@ Goblin = function (params) {
 Goblin.prototype = {
     // backgroundColor: 'teal',
     health: 2,
+    invulnerable: false,
 
     
     init: function() {
-        this.sword = CMP.DispatchGet({type: "GetSword"})
 
         this.goblin = this.addChild(new CMP.SizedSprite({
             width: 8,

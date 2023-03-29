@@ -1,54 +1,56 @@
-Sword = function (params) {
-    params.width = 8;
-    params.height = 8;
+Spear = function (params) {
+    params.width = 4;
+    params.height = 33;
     this.construct(params);
     this.init();
 };
 
-Sword.prototype = {
+Spear.prototype = {
     // backgroundColor: 'teal',
-    equipped: true,
+
+    equipped: false,
     attackInterval: 0,
     inSwing: false,
-    attackSpeed: 200,
+    // attackSpeed: 200,
+    // attackDuration: 50,
+    attackSpeed: 300,
     attackDuration: 50,
     xOffset: 8,
-    yOffset: 4,
-
+    yOffset: 20,
+    
     init: function() {
-        this.sword = this.addChild(new CMP.SizedSprite({
-            width: 8,
-            height: 8,
-            image: 'sword',
+        this.spear = this.addChild(new CMP.SizedSprite({
+            width: 4,
+            height: 33,
+            image: 'spear',
             x: this.percentageOfWidth(.5),
             y: this.percentageOfHeight(0.5),
             rotation: 0,
+            visible: false,
             // scale: 30.75
         }))
     },
 
     AttackPattern: function() {
-        // console.log('swing', this.inSwing)
         if (this.equipped){
-            this.swords = CMP.DispatchGet({type: "GetSwords"});
-            this.attackInterval += 1;
 
+            this.attackInterval += 1;
+            
             if (this.attackInterval === this.attackSpeed){
                 this.inSwing = true;
-                
-                this.swords[0].visible = true;
-                this.swords[1].visible = true;
+                this.spear.visible = true;
                 this.attackInterval = 0;
             }
             else if (this.attackInterval === this.attackDuration){
                 this.inSwing = false;
-                this.swords[0].visible = false;
-                this.swords[1].visible = false;
+                this.spear.visible = false;
             }
         }
     },
 
-
+    GetInSwing: function() {
+        return this.inSwing;
+    },
  
 }
-extend("Sword", "CMP.DisplayObjectContainer");
+extend("Spear", "CMP.DisplayObjectContainer");

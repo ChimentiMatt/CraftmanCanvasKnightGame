@@ -14,9 +14,10 @@ Movements.prototype = {
     
     init: function() {
         this.levelUpScreen = CMP.DispatchGet({type: "GetLevelUpScreen"});
-        this.swords = CMP.DispatchGet({type: "GetSword"})
+        this.swords = CMP.DispatchGet({type: "GetSwords"})
+        this.weapons = CMP.DispatchGet({type: "GetWeapons"})
         this.knight = CMP.DispatchGet({type: "GetKnight"})
-        // this.goblin = CMP.DispatchGet({type: "GetGoblin"})
+
         this.goblins = CMP.DispatchGet({type: "GetGoblin"})
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"})
 
@@ -61,28 +62,28 @@ Movements.prototype = {
     movement: function() {
             if (this.pressedUp === 1){
                 this.knight.y -= this.knight.movementSpeed;
-                for (let i = 0; i < this.swords.length; i++){
-                    this.swords[i].y -= this.knight.movementSpeed;
+                for (let i = 0; i < this.weapons.length; i++){
+                    this.weapons[i].y -= this.knight.movementSpeed;
                 }
             }
             if (this.pressedDown === 1){
                 this.knight.y += this.knight.movementSpeed
-                for (let i = 0; i < this.swords.length; i++){
-                    this.swords[i].y += this.knight.movementSpeed
+                for (let i = 0; i < this.weapons.length; i++){
+                    this.weapons[i].y += this.knight.movementSpeed
                 }
             }
             if (this.pressedRight === 1){
                 this.knight.scaleX = 1;
                 this.knight.x += this.knight.movementSpeed;
-                for (let i = 0; i < this.swords.length; i++){
-                    this.swords[i].x += this.knight.movementSpeed
+                for (let i = 0; i < this.weapons.length; i++){
+                    this.weapons[i].x += this.knight.movementSpeed
                 }
             }
             if (this.pressedLeft === 1){
                 this.knight.scaleX = -1,
                 this.knight.x -= this.knight.movementSpeed;
-                for (let i = 0; i < this.swords.length; i++){
-                    this.swords[i].x -= this.knight.movementSpeed
+                for (let i = 0; i < this.weapons.length; i++){
+                    this.weapons[i].x -= this.knight.movementSpeed
                 }
             }
     },

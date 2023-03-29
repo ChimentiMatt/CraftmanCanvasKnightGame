@@ -11,21 +11,24 @@ Collisions.prototype = {
     init: function() {
         this.addUpdate(this.onUpdate.bind(this));
         this.knight = CMP.DispatchGet({type: "GetKnight"});
-        this.swords = CMP.DispatchGet({type: "GetSword"});
+        this.swords = CMP.DispatchGet({type: "GetSwords"});
+        this.weapons = CMP.DispatchGet({type: "GetWeapons"})
+
         this.goblins = CMP.DispatchGet({type: "GetGoblin"});
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
         this.health =  CMP.DispatchGet({type: "GetHealth"});
         this.experienceGage = CMP.DispatchGet({type: "GetExperienceGage"});
     },
 
-    swordCollision: function(delta) {
-        let inSwing = CMP.DispatchGet({type: "GetInSwing"});
-  
-        for (let i = 0; i < this.swords.length; i++){
+    weaponCollision: function(delta) {
+        // let inSwing = CMP.DispatchGet({type: "GetInSwingSword"});
+
+        for (let i = 0; i < this.weapons.length; i++){
             for (let j = 0; j < this.goblins.length; j++){
-                if (this.goblins[j].x >= this.swords[i].x - 8 && this.goblins[j].x <= this.swords[i].x + 8){
-                    if (this.goblins[j].y >= this.swords[i].y - 4 - 1 && this.goblins[j].y <= this.swords[i].y + 4 ){
-                        if (inSwing){   
+                if (this.goblins[j].x >= this.weapons[i].x - this.weapons[i].xOffset && this.goblins[j].x <= this.weapons[i].x + this.weapons[i].xOffset){
+                    if (this.goblins[j].y >= this.weapons[i].y - this.weapons[i].yOffset  && this.goblins[j].y <= this.weapons[i].y + this.weapons[i].yOffset ){
+                     
+                        if (this.weapons[i].inSwing){   
                             if (!this.goblins[j].invulnerable)
                             {
                                 setTimeout(() => {
@@ -56,10 +59,10 @@ Collisions.prototype = {
 
 
             if (goblin.x < this.knight.x){
-                goblin.x -= 2
+                goblin.x -= 1
             }
             if (goblin.x > this.knight.x){
-                goblin.x += 2
+                goblin.x += 1
             }
             if (goblin.y < this.knight.y){
                 goblin.y -= .5
@@ -67,21 +70,6 @@ Collisions.prototype = {
             if (goblin.y > this.knight.y){
                 goblin.y += .5
             }
- 
-            // if (goblin.y < this.knight.y){
-            //     goblin.y += delta * 0.1;
-            // }
-            // if (goblin.y > this.knight.y){
-            //     goblin.y -= delta * 0.1;
-            // }
-            // if (goblin.x < this.knight.x){
-            //     goblin.x += delta * 0.1;
-            //     goblin.scaleX = 1;
-            // }
-            // if (goblin.x >this. knight.x){
-            //     goblin.x -= delta * 0.1;
-            //     goblin.scaleX = -1;
-            // }
         }
     },
 
@@ -126,7 +114,7 @@ Collisions.prototype = {
         this.collisionTick++;
         this.collisionMonsterToKnight();
         this.collisionExpOrbs();
-        this.swordCollision(delta);
+        this.weaponCollision(delta);
     },
 }
 extend("Collisions", "CMP.DisplayObjectContainer");

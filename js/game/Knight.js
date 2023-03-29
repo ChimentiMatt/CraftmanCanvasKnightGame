@@ -23,7 +23,6 @@ Knight.prototype = {
             y: this.percentageOfHeight(0.5),
             // scale: 30.75
         }))
-        console.log('gameb', this.gameBoard)
     },
 
     levelUpCheck: function() {
