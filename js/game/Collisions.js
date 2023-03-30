@@ -27,14 +27,9 @@ Collisions.prototype = {
         let check3;
 
         for (let j = 0; j < this.goblins.length; j++){
-            check1 = this.weaponCollision(j, delta);
-            check2 = this.companionCollision(j, delta);
-            this.knightCollision(j)
-            // if (!check1){
-            //     if (!check2){
-            //     }
-            // }
-          
+                check1 = this.weaponCollision(j, delta);
+                check2 = this.companionCollision(j, delta);
+                this.knightCollision(j)
         }
     },
 
@@ -58,7 +53,7 @@ Collisions.prototype = {
     
                                 this.gameBoard.dropExpOrb(this.goblins[j].x, this.goblins[j].y);
     
-                                this.goblins.splice(j, 1) // remove goblins from their array
+                                // this.goblins.splice(j, 1) // remove goblins from their array
                                 return;
                             }
                             else{
@@ -89,7 +84,7 @@ Collisions.prototype = {
 
                             this.gameBoard.dropExpOrb(this.goblins[j].x, this.goblins[j].y);
 
-                            this.goblins.splice(j, 1) // remove goblins from their array
+                            // this.goblins.splice(j, 1) // remove goblins from their array
                             return;
                         }
                         else{
@@ -135,14 +130,15 @@ Collisions.prototype = {
     },
 
     collisionExpOrbs: function() {
-        let expOrbs = this.gameBoard.expOrbs
-
+        let expOrbs = this.gameBoard.expOrbs;
         for (let i = 0; i < expOrbs.length; i++){
+            
             if (expOrbs[i].x -4 >= this.knight.x - 8 && expOrbs[i].x + 4 <= this.knight.x + 8){
                 if (expOrbs[i].y -4 >= this.knight.y - 12 && expOrbs[i].y + 4 <= this.knight.y + 12){
-
+                    
                     this.gameBoard.removeChild(expOrbs[i]);
-                    expOrbs.splice(i, 1) 
+                    expOrbs[i].x = undefined; // stops infinite xp by making the collision check fail
+                    // expOrbs.splice(i, 1) 
 
                     this.knight.experience++;
                     this.experienceGage.text = `exp: ${this.knight.experience}`

@@ -15,7 +15,6 @@ Cat.prototype = {
     yOffset: 8,
     inAnimation: false,
 
-
     init: function() {
         this.addUpdate(this.onUpdate.bind(this));
         this.knight = CMP.DispatchGet({type: "GetKnight"})
@@ -49,7 +48,7 @@ Cat.prototype = {
         if (x < 0) x = 10;
         if (y < 0) y = 10;
 
-
+        
         this.tweenTo({
             delay: delay,
             duration: duration,
@@ -57,7 +56,7 @@ Cat.prototype = {
             y: y,
             onComplete: () => {this.inAnimation = false}
         });
-
+ 
     },
     
     onUpdate: function({delta}){

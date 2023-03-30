@@ -6,6 +6,9 @@ Upgrades = function (params) {
 };
 
 Upgrades.prototype = {
+    options: {
+        swords: ''
+    },
 
 
     init: function() {
@@ -17,12 +20,21 @@ Upgrades.prototype = {
     },
 
     generateChoices: function() {
-        // for(let i = 0; i < this.weapons.length; i++){
-        // }
-        this.levelUpScreen.choiceOne.text = this.weapons[0].name
-        this.levelUpScreen.choiceTwo.text = this.weapons[1].name
-        this.levelUpScreen.choiceThree.text = this.weapons[2].name
+        let swordLeftUpgrades = this.weapons[0].potentialUpgrades()
+        let swordRightUpgrades = this.weapons[0].potentialUpgrades()
+
+        console.log(swordLeftUpgrades[0][0].text)
+
+        let levelUpScreen =  CMP.DispatchGet({type: "GetLevelUpScreen"});
+        if (levelUpScreen !== undefined){
+
+            levelUpScreen.choiceOne.text = swordLeftUpgrades[0][0].text
+            levelUpScreen.choiceTwo.text = swordLeftUpgrades[0][1].text
+            levelUpScreen.choiceThree.text = swordRightUpgrades[0][0].text
+        }
     },
+
+
 
     GetUpgrades: function() {
         return this;

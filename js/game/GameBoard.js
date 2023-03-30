@@ -10,8 +10,9 @@ GameBoard.prototype = {
     goblins: [],
     expOrbs: [],
     spawnTick: 0,
-    spawnInterval: 20,
+    spawnInterval: 5,
     paused: false,
+    inLevelUpScreen: false,
 
     customAssets: [
     ],
@@ -37,8 +38,8 @@ GameBoard.prototype = {
         this.initHealth();
         this.initExperienceGage();
         
-        this.levelUpScreen = this.addChild(new LevelUpScreen({gameboard: this}));  
         this.movements = this.addChild(new Movements({gameboard: this}));
+        // this.levelUpScreen = this.addChild(new LevelUpScreen({gameboard: this}));  
         this.attack = this.addChild(new Attack({gameboard: this}));
         this.collisions = this.addChild(new Collisions({gameboard: this}));  
         this.upgrades = this.addChild(new Upgrades({gameboard: this}));  
@@ -56,7 +57,7 @@ GameBoard.prototype = {
 
     initSwords: function() {
         this.swordRight = this.addChild(new Sword({
-            name: 'sword left',
+            name: 'Sword Left',
             x: this.knight.x + 24,
             y: this.knight.y + 1,
             rotation: 90,
@@ -64,7 +65,7 @@ GameBoard.prototype = {
             gameboard: this,
         }))
         this.swordLeft = this.addChild(new Sword({
-            name: 'sword right',
+            name: 'Sword Right',
             x: this.knight.x - 24,
             y: this.knight.y + 1,
             rotation: 90,
@@ -171,6 +172,11 @@ GameBoard.prototype = {
         gameBoard.expOrbs.push(expOrb);
     },
 
+    createLevelUpScreen: function(){
+        this.levelUpScreen = this.addChild(new LevelUpScreen({gameboard: this}));  
+        this.inLevelUpScreen = true;
+
+    },
 
     GetSwords: function() {
         return [this.swordRight, this.swordLeft];

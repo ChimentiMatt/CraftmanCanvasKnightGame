@@ -27,14 +27,14 @@ Knight.prototype = {
     },
 
     levelUpCheck: function() {
-        if (this.experience === this.pointsNeededToLevel){
+        if (this.experience >= this.pointsNeededToLevel){
             this.levelUp();
         }
     },
 
     levelUp: function() {
         this.gameBoard.paused = true;
-        // console.log('level up')
+        // this.gameBoard.inLevelUpScreen = true;
         
     },
 

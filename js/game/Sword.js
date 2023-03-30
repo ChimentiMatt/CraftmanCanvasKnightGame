@@ -7,12 +7,12 @@ Sword = function (params) {
 
 Sword.prototype = {
     // backgroundColor: 'teal',
-    name: 'swords',
+    // name: 'swords',
     level: 0,
     equipped: true,
     attackInterval: 0,
     inSwing: false,
-    attackSpeed: 100,
+    attackSpeed: 150,
     attackDuration: 35,
     xOffset: 20,
     yOffset: 7,
@@ -49,6 +49,18 @@ Sword.prototype = {
             }
         }
     },
+
+    potentialUpgrades: function() {
+        let potentialUpgradesArray = []
+
+        if (this.attackSpeed > 100){
+            potentialUpgradesArray.push({text: this.name + ' Attack Speed', value: this.attackSpeed})
+        }
+        if (this.attackDuration < 100){
+            potentialUpgradesArray.push({text: this.name + ' Attack Duration', value: this.attackDuration})
+        }
+        return [potentialUpgradesArray]
+    }
 
 
  

@@ -6,6 +6,10 @@ LevelUpScreen = function (params) {
 
 LevelUpScreen.prototype = {
     backgroundColor: 'teal',
+    prompt: '',
+    choiceOne: '',
+    choiceTwo: '',
+    choiceThree: '',
 
     customAssets: [
     ],
@@ -14,7 +18,6 @@ LevelUpScreen.prototype = {
 
     init: function() {
         CMP.ListenSet("GetLevelUpScreen", this.GetLevelUpScreen.bind(this));
-        this.visible = false,
 
         this.prompt = this.addChild(new CMP.Text({
             x: this.percentageOfWidth(0.5),
@@ -65,10 +68,12 @@ LevelUpScreen.prototype = {
             width: 8,
             height: 8,
             image: 'pointer',
-            x: this.percentageOfWidth(.2),
+            x: this.percentageOfWidth(0),
             y: this.percentageOfHeight(0.5),
             // scale: 30.75
         }))
+
+        // console.log(this.pointer)
     },
 
     GetLevelUpScreen: function() {
@@ -81,6 +86,5 @@ LevelUpScreen.prototype = {
         scaleToWidth: .8,
         scaleToHeight: .8
     }
-    // layout: 'match'
 };
 extend("LevelUpScreen", "SceneObject");

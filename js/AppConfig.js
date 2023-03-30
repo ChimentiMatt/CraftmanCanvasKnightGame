@@ -147,7 +147,7 @@ AppConfig = {
 
 		{src: "js/game/Playable.js"},
 		{src: "js/game/Background.js"},
-		{src: "js/game/TutorialModal.js"},
+
 		{src: "js/game/GameBoard.js"},
 		{src: "js/game/Logo.js"},
 		{src: "js/game/CTA.js"},

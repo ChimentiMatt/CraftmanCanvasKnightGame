@@ -13,7 +13,6 @@ Movements.prototype = {
     pointerDown: 0,
     
     init: function() {
-        this.levelUpScreen = CMP.DispatchGet({type: "GetLevelUpScreen"});
         this.swords = CMP.DispatchGet({type: "GetSwords"})
         this.weapons = CMP.DispatchGet({type: "GetWeapons"})
         this.knight = CMP.DispatchGet({type: "GetKnight"})
@@ -60,24 +59,27 @@ Movements.prototype = {
 
 
           addEventListener('keydown', (event) => {
-                if (this.levelUpScreen.visible){
-                    if (event.code === 'ArrowUp'){
-                        if (this.pointerUp < 1 ){
-                            this.levelUpScreen.pointer.y -= 20;
-                            this.pointerUp++
-                        }
-                    }
-                    if (event.code === 'ArrowDown'){
-                        if (this.pointerUp > -1 ){
-                            this.levelUpScreen.pointer.y += 20;
-                            this.pointerUp--
-                        }
-                    }
-                    if (event.code === 'Space'){
-                
+            // console.log(this.gameBoard.inLevelUpScreen)
+            if (this.gameBoard.inLevelUpScreen){
+                let levelUpScreen = CMP.DispatchGet({type: "GetLevelUpScreen"});
+                if (event.code === 'ArrowUp'){
+                    if (this.pointerUp < 1 ){
+                        levelUpScreen.pointer.y -= 20;
+                        this.pointerUp++
                     }
                 }
-            })
+                if (event.code === 'ArrowDown'){
+                    if (this.pointerUp > -1 ){
+                        levelUpScreen.pointer.y += 20;
+                        this.pointerUp--
+                    }
+                }
+                if (event.code === 'Space'){
+            
+                }
+
+            }
+        })
     },
 
     movement: function() {
@@ -150,10 +152,13 @@ Movements.prototype = {
             this.moveTowardsKnight(delta);
         }
         else{
-            this.levelUpScreen.visible = true;
-            let upgrades = CMP.DispatchGet({type: "GetUpgrades"})
-            upgrades.generateChoices();
-            this.menuControls();
+            if (!this.gameBoard.inLevelUpScreen){
+                this.gameBoard.inLevelUpScreen = true;
+                this.gameBoard.createLevelUpScreen();
+                let upgrades = CMP.DispatchGet({type: "GetUpgrades"})
+                upgrades.generateChoices();
+                this.menuControls();
+            }
         }
     },
 }
