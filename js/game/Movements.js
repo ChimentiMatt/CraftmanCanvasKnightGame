@@ -18,7 +18,6 @@ Movements.prototype = {
         this.knight = CMP.DispatchGet({type: "GetKnight"})
         this.goblins = CMP.DispatchGet({type: "GetGoblin"})
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"})
-        // this.upgrades = CMP.DispatchGet({type: "GetUpgrades"})
 
         this.addUpdate(this.onUpdate.bind(this));
         addEventListener('keydown', (event) => {
@@ -36,6 +35,7 @@ Movements.prototype = {
             }
             if (event.code === 'Space'){
                 this.pressedSpace = 1;
+                // this.gameBoard.initCat()
             }
           })
 
@@ -59,23 +59,24 @@ Movements.prototype = {
 
 
           addEventListener('keydown', (event) => {
-            // console.log(this.gameBoard.inLevelUpScreen)
             if (this.gameBoard.inLevelUpScreen){
-                let levelUpScreen = CMP.DispatchGet({type: "GetLevelUpScreen"});
+                this.levelUpScreen = CMP.DispatchGet({type: "GetLevelUpScreen"});
+
                 if (event.code === 'ArrowUp'){
                     if (this.pointerUp < 1 ){
-                        levelUpScreen.pointer.y -= 20;
+                        this.levelUpScreen.pointer.y -= 20;
                         this.pointerUp++
                     }
                 }
                 if (event.code === 'ArrowDown'){
                     if (this.pointerUp > -1 ){
-                        levelUpScreen.pointer.y += 20;
+                        this.levelUpScreen.pointer.y += 20;
                         this.pointerUp--
                     }
                 }
                 if (event.code === 'Space'){
-            
+                    this.upgrades.selectChoice(this.pointerUp);
+                    this.pointerUp = 0;
                 }
 
             }
@@ -146,8 +147,10 @@ Movements.prototype = {
     },
 
     onUpdate: function({delta}){
-        let gameBoard = CMP.DispatchGet({type: "GetGameBoard"})
-        if (!gameBoard.paused){
+        this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"})
+        // console.log(this.gameBoard.paused)
+
+        if (!this.gameBoard.paused){
             this.movement();
             this.moveTowardsKnight(delta);
         }
@@ -155,8 +158,8 @@ Movements.prototype = {
             if (!this.gameBoard.inLevelUpScreen){
                 this.gameBoard.inLevelUpScreen = true;
                 this.gameBoard.createLevelUpScreen();
-                let upgrades = CMP.DispatchGet({type: "GetUpgrades"})
-                upgrades.generateChoices();
+                this.upgrades = CMP.DispatchGet({type: "GetUpgrades"})
+                this.upgrades.generateChoices();
                 this.menuControls();
             }
         }

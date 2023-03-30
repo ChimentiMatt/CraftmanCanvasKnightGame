@@ -13,7 +13,6 @@ Collisions.prototype = {
         this.knight = CMP.DispatchGet({type: "GetKnight"});
         this.swords = CMP.DispatchGet({type: "GetSwords"});
         this.weapons = CMP.DispatchGet({type: "GetWeapons"})
-        this.companions = CMP.DispatchGet({type: "GetCompanions"})
 
         this.goblins = CMP.DispatchGet({type: "GetGoblin"});
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
@@ -22,14 +21,16 @@ Collisions.prototype = {
     },
 
     collision: function(delta) {
-        let check1;
-        let check2;
-        let check3;
+        this.companions = CMP.DispatchGet({type: "GetCompanions"})
 
         for (let j = 0; j < this.goblins.length; j++){
-                check1 = this.weaponCollision(j, delta);
-                check2 = this.companionCollision(j, delta);
+
+                this.weaponCollision(j, delta);
                 this.knightCollision(j)
+
+                if (this.companions !== undefined){
+                    this.companionCollision(j, delta);
+                }
         }
     },
 

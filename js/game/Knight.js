@@ -33,7 +33,9 @@ Knight.prototype = {
     },
 
     levelUp: function() {
+        console.log('ticj')
         this.gameBoard.paused = true;
+        this.experience = 0;
         // this.gameBoard.inLevelUpScreen = true;
         
     },

@@ -33,7 +33,7 @@ GameBoard.prototype = {
         this.initKnight();
         this.initSwords();
         this.initSpear();
-        this.initCat();
+        // this.initCat();
         this.initGoblins();
         this.initHealth();
         this.initExperienceGage();
@@ -57,7 +57,7 @@ GameBoard.prototype = {
 
     initSwords: function() {
         this.swordRight = this.addChild(new Sword({
-            name: 'Sword Left',
+            name: 'Right Sword',
             x: this.knight.x + 24,
             y: this.knight.y + 1,
             rotation: 90,
@@ -65,7 +65,7 @@ GameBoard.prototype = {
             gameboard: this,
         }))
         this.swordLeft = this.addChild(new Sword({
-            name: 'Sword Right',
+            name: 'Left Sword',
             x: this.knight.x - 24,
             y: this.knight.y + 1,
             rotation: 90,
@@ -199,7 +199,10 @@ GameBoard.prototype = {
     },
 
     GetCompanions: function() {
-        return [this.cat]
+        if (this.cat !== undefined){
+            return [this.cat]
+        }
+        return undefined
     },
 
     GetHealth: function() {

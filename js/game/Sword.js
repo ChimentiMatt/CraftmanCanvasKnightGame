@@ -13,7 +13,7 @@ Sword.prototype = {
     attackInterval: 0,
     inSwing: false,
     attackSpeed: 150,
-    attackDuration: 35,
+    attackDuration: 10,
     xOffset: 20,
     yOffset: 7,
 
@@ -29,23 +29,41 @@ Sword.prototype = {
         }))
     },
 
+    // AttackPattern: function() {
+    //     // console.log('swing', this.inSwing)
+    //     if (this.equipped){
+    //         this.swords = CMP.DispatchGet({type: "GetSwords"});
+    //         this.attackInterval += 1;
+
+    //         if (this.attackInterval === this.attackSpeed){
+    //             this.inSwing = true;
+                
+    //             this.swords[0].visible = true;
+    //             this.swords[1].visible = true;
+    //             this.attackInterval = 0;
+    //         }
+    //         else if (this.attackInterval === this.attackDuration){
+    //             this.inSwing = false;
+    //             this.swords[0].visible = false;
+    //             this.swords[1].visible = false;
+    //         }
+    //     }
+    // },
+
     AttackPattern: function() {
         // console.log('swing', this.inSwing)
         if (this.equipped){
-            this.swords = CMP.DispatchGet({type: "GetSwords"});
             this.attackInterval += 1;
 
-            if (this.attackInterval === this.attackSpeed){
+            if (this.attackInterval >= this.attackSpeed){
                 this.inSwing = true;
                 
-                this.swords[0].visible = true;
-                this.swords[1].visible = true;
+                this.sword.visible = true;
                 this.attackInterval = 0;
             }
-            else if (this.attackInterval === this.attackDuration){
+            else if (this.attackInterval >= this.attackDuration){
                 this.inSwing = false;
-                this.swords[0].visible = false;
-                this.swords[1].visible = false;
+                this.sword.visible = false;
             }
         }
     },
