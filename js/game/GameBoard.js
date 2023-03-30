@@ -10,7 +10,7 @@ GameBoard.prototype = {
     goblins: [],
     expOrbs: [],
     spawnTick: 0,
-    spawnInterval: 30,
+    spawnInterval: 20,
     paused: false,
 
     customAssets: [
@@ -22,6 +22,7 @@ GameBoard.prototype = {
         CMP.ListenSet("GetGameBoard", this.GetGameBoard.bind(this));
         CMP.ListenSet("GetSwords", this.GetSwords.bind(this));
         CMP.ListenSet("GetWeapons", this.GetWeapons.bind(this));
+        CMP.ListenSet("GetCompanions", this.GetCompanions.bind(this));
         CMP.ListenSet("GetKnight", this.GetKnight.bind(this));
         CMP.ListenSet("GetGoblin", this.GetGoblin.bind(this));
         CMP.ListenSet("GetHealth", this.GetHealth.bind(this));
@@ -31,6 +32,7 @@ GameBoard.prototype = {
         this.initKnight();
         this.initSwords();
         this.initSpear();
+        this.initCat();
         this.initGoblins();
         this.initHealth();
         this.initExperienceGage();
@@ -46,8 +48,8 @@ GameBoard.prototype = {
 
     initKnight: function() {
         this.knight = this.addChild(new Knight({
-            x: 100,
-            y: 100,
+            x: this.width / 2,
+            y: this.height / 2,
             gameboard: this,
         }))
     },
@@ -76,11 +78,20 @@ GameBoard.prototype = {
         this.spear = this.addChild(new Spear({
             name: 'spear',
             x: this.knight.x,
-            y: this.knight.y - 22,
+            y: this.knight.y,
             visible: true,
             gameboard: this,
         }))
+    },
 
+    initCat: function() {
+        this.cat = this.addChild(new Cat({
+            name: 'cat',
+            x: this.width / 2 + 20,
+            y: this.height / 2,
+            visible: true,
+            gameboard: this,
+        }))
     },
     
     initGoblins: function() {
@@ -179,6 +190,10 @@ GameBoard.prototype = {
 
     GetGoblin: function() {
         return this.goblins;
+    },
+
+    GetCompanions: function() {
+        return [this.cat]
     },
 
     GetHealth: function() {

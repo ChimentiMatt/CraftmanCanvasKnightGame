@@ -13,6 +13,7 @@ Collisions.prototype = {
         this.knight = CMP.DispatchGet({type: "GetKnight"});
         this.swords = CMP.DispatchGet({type: "GetSwords"});
         this.weapons = CMP.DispatchGet({type: "GetWeapons"})
+        this.companions = CMP.DispatchGet({type: "GetCompanions"})
 
         this.goblins = CMP.DispatchGet({type: "GetGoblin"});
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
@@ -20,33 +21,80 @@ Collisions.prototype = {
         this.experienceGage = CMP.DispatchGet({type: "GetExperienceGage"});
     },
 
-    weaponCollision: function(delta) {
-        // let inSwing = CMP.DispatchGet({type: "GetInSwingSword"});
+    collision: function(delta) {
+        let check1;
+        let check2;
+        let check3;
 
+        for (let j = 0; j < this.goblins.length; j++){
+            check1 = this.weaponCollision(j, delta);
+            check2 = this.companionCollision(j, delta);
+            this.knightCollision(j)
+            // if (!check1){
+            //     if (!check2){
+            //     }
+            // }
+          
+        }
+    },
+
+    weaponCollision: function(j, delta) {
         for (let i = 0; i < this.weapons.length; i++){
-            for (let j = 0; j < this.goblins.length; j++){
-                if (this.goblins[j].x >= this.weapons[i].x - this.weapons[i].xOffset && this.goblins[j].x <= this.weapons[i].x + this.weapons[i].xOffset){
-                    if (this.goblins[j].y >= this.weapons[i].y - this.weapons[i].yOffset  && this.goblins[j].y <= this.weapons[i].y + this.weapons[i].yOffset ){
-                     
-                        if (this.weapons[i].inSwing){   
-                            if (!this.goblins[j].invulnerable)
-                            {
-                                setTimeout(() => {
-                                    this.goblins[j].invulnerable = false
-                                }, this.invulnerableTime)
+            if (this.goblins[j].x >= this.weapons[i].x - this.weapons[i].xOffset && this.goblins[j].x <= this.weapons[i].x + this.weapons[i].xOffset){
+                if (this.goblins[j].y >= this.weapons[i].y - this.weapons[i].yOffset  && this.goblins[j].y <= this.weapons[i].y + this.weapons[i].yOffset ){
+                 
+                    if (this.weapons[i].inSwing){   
+                        if (!this.goblins[j].invulnerable){
+                            setTimeout(() => {
+                                this.goblins[j].invulnerable = false
+                            }, this.invulnerableTime)
 
-                                this.goblins[j].invulnerable = true;
-                                this.goblins[j].health--;
-                                this.knockBack(this.goblins[j]), delta;
-
-                                if (this.goblins[j].health <= 0){
-                                    this.gameBoard.removeChild(this.goblins[j]); // remove goblin from canvas
-        
-                                    this.gameBoard.dropExpOrb(this.goblins[j].x, this.goblins[j].y);
-        
-                                    this.goblins.splice(j, 1) // remove goblins from their array
-                                }
+                            this.goblins[j].invulnerable = true;
+                            this.goblins[j].health--;
+                            this.goblins[j].health--;
+                            
+                            if (this.goblins[j].health <= 0){
+                                this.gameBoard.removeChild(this.goblins[j]); // remove goblin from canvas
+    
+                                this.gameBoard.dropExpOrb(this.goblins[j].x, this.goblins[j].y);
+    
+                                this.goblins.splice(j, 1) // remove goblins from their array
+                                return;
                             }
+                            else{
+                                // this.knockBack(this.goblins[j]), delta;
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    companionCollision: function(j, delta) {
+        for (let i = 0; i < this.companions.length; i++){
+            if (this.goblins[j].x >= this.companions[i].x - this.companions[i].xOffset && this.goblins[j].x <= this.companions[i].x + this.companions[i].xOffset){
+                if (this.goblins[j].y >= this.companions[i].y - this.companions[i].yOffset  && this.goblins[j].y <= this.companions[i].y + this.companions[i].yOffset ){
+                    if (!this.goblins[j].invulnerable){
+                        setTimeout(() => {
+                            this.goblins[j].invulnerable = false
+                        }, this.invulnerableTime)
+
+                        this.goblins[j].invulnerable = true;
+                        this.goblins[j].health = 0;
+
+                        if (this.goblins[j].health <= 0){
+                            this.gameBoard.removeChild(this.goblins[j]); // remove goblin from canvas
+
+                            this.gameBoard.dropExpOrb(this.goblins[j].x, this.goblins[j].y);
+
+                            this.goblins.splice(j, 1) // remove goblins from their array
+                            return;
+                        }
+                        else{
+                            // this.knockBack(this.goblins[j]), delta;
+                            return;
                         }
                     }
                 }
@@ -58,22 +106,21 @@ Collisions.prototype = {
         for (let i = 0; i < this.goblins.length; i++){
 
             if (goblin.x < this.knight.x){
-                goblin.x -= 1
+                goblin.x -= .1
             }
             if (goblin.x > this.knight.x){
-                goblin.x += 1
+                goblin.x += .1
             }
             if (goblin.y < this.knight.y){
-                goblin.y -= .5
+                goblin.y -= .2
             }
             if (goblin.y > this.knight.y){
-                goblin.y += .5
+                goblin.y += .2
             }
         }
     },
 
-    collisionMonsterToKnight: function() {
-        for (let i = 0; i < this.goblins.length; i++){
+    knightCollision: function(i) {
             if (this.goblins[i].x -4 >= this.knight.x - 8 && this.goblins[i].x + 4 <= this.knight.x + 8){
                 if (this.goblins[i].y -4 >= this.knight.y - 12 && this.goblins[i].y + 4 <= this.knight.y + 12){
                     
@@ -85,7 +132,6 @@ Collisions.prototype = {
                     if (parseInt(this.health.text) < 1) this.gameOver()
                 }
             }
-        }
     },
 
     collisionExpOrbs: function() {
@@ -111,9 +157,8 @@ Collisions.prototype = {
 
     onUpdate: function({delta}){
         this.collisionTick++;
-        this.collisionMonsterToKnight();
         this.collisionExpOrbs();
-        this.weaponCollision(delta);
+        this.collision(delta);
     },
 }
 extend("Collisions", "CMP.DisplayObjectContainer");

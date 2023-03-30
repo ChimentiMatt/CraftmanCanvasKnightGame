@@ -10,7 +10,6 @@ Goblin.prototype = {
     health: 2,
     invulnerable: false,
 
-    
     init: function() {
 
         this.goblin = this.addChild(new CMP.SizedSprite({

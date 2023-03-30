@@ -6,27 +6,28 @@ Knight = function (params) {
 };
 
 Knight.prototype = {
+    // backgroundColor: 'blue',
     level: 0,
     experience: 0,
+    pointsNeededToLevel: 10,
     health: 5,
     movementSpeed: .6,
 
     init: function() {
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
         this.addUpdate(this.onUpdate.bind(this));
-
+        
         this.knight = this.addChild(new CMP.SizedSprite({
             width: 8,
             height: 8,
             image: 'knight',
             x: this.percentageOfWidth(0.5),
             y: this.percentageOfHeight(0.5),
-            // scale: 30.75
         }))
     },
 
     levelUpCheck: function() {
-        if (this.experience === 2){
+        if (this.experience === this.pointsNeededToLevel){
             this.levelUp();
         }
     },

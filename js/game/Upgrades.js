@@ -14,7 +14,6 @@ Upgrades.prototype = {
         this.weapons = CMP.DispatchGet({type: "GetWeapons"});
         this.levelUpScreen = CMP.DispatchGet({type: "GetLevelUpScreen"});
         this.generateChoices();
-        console.log(this.weapons[0].name)
     },
 
     generateChoices: function() {

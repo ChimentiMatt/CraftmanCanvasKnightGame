@@ -6,6 +6,7 @@ ExpOrb = function (params) {
 };
 
 ExpOrb.prototype = {
+    // backgroundColor: 'yellow',
     level: 0,
     experience: 0,
     movementSpeed: .4,
