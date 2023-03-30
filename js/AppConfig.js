@@ -93,6 +93,7 @@ AppConfig = {
 		}
 	},
 	Image: [
+		{id: "background", src: "assets/images/background.png"},
 		{id: "knight", src: "assets/images/knight.png"},
 		{id: "sword", src: "assets/images/sword.png"},
 		{id: "spear", src: "assets/images/spear.png"},
@@ -105,7 +106,7 @@ AppConfig = {
 		{
 			id: "customizable_example",
 			enabled: true,
-			src: "customizable_example.png",
+			src: "",
 			name: "Customizable Image Example",
 			dimensions: {width: 400, height: 400},
 			suggestedSize: 13600,
@@ -149,9 +150,7 @@ AppConfig = {
 		{src: "js/game/Background.js"},
 
 		{src: "js/game/GameBoard.js"},
-		{src: "js/game/Logo.js"},
 		{src: "js/game/CTA.js"},
-		{src: "js/game/EndLogo.js"},
 		{src: "js/game/EndCTA.js"},
 		{src: "js/game/BGElement.js"},
 

@@ -9,6 +9,7 @@ Goblin.prototype = {
     // backgroundColor: 'teal',
     health: 2,
     invulnerable: false,
+    moveSpeed: .02,
 
     init: function() {
 

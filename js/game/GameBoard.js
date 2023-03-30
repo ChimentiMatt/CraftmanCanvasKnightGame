@@ -5,12 +5,13 @@ GameBoard = function (params) {
 };
 
 GameBoard.prototype = {
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
+    backgroundColor: '#b7a923',
     alpha: 0.1,
     goblins: [],
     expOrbs: [],
     spawnTick: 0,
-    spawnInterval: 5,
+    spawnInterval: 25,
     paused: false,
     inLevelUpScreen: false,
 
@@ -24,16 +25,18 @@ GameBoard.prototype = {
         CMP.ListenSet("GetSwords", this.GetSwords.bind(this));
         CMP.ListenSet("GetWeapons", this.GetWeapons.bind(this));
         CMP.ListenSet("GetCompanions", this.GetCompanions.bind(this));
+        CMP.ListenSet("GetBackground", this.GetBackground.bind(this));
         CMP.ListenSet("GetKnight", this.GetKnight.bind(this));
         CMP.ListenSet("GetGoblin", this.GetGoblin.bind(this));
         CMP.ListenSet("GetHealth", this.GetHealth.bind(this));
         CMP.ListenSet("GetExperienceGage", this.GetExperienceGage.bind(this));
         CMP.ListenSet("GetInSwingSword", this.GetInSwingSword.bind(this));
 
+        this.initBackGround();
         this.initKnight();
         this.initSwords();
         this.initSpear();
-        // this.initCat();
+        this.initCat();
         this.initGoblins();
         this.initHealth();
         this.initExperienceGage();
@@ -45,6 +48,14 @@ GameBoard.prototype = {
         this.upgrades = this.addChild(new Upgrades({gameboard: this}));  
 
         this.addUpdate(this.onUpdate.bind(this));
+    },
+
+    initBackGround: function() {
+        this.background = this.addChild(new Background({
+            x: this.width,
+            y: this.height,
+            gameboard: this,
+        }))
     },
 
     initKnight: function() {
@@ -190,6 +201,10 @@ GameBoard.prototype = {
         return this.swordRight.inSwing;
     },
 
+    GetBackground: function() {
+        return this.background;
+    },
+
     GetKnight: function() {
         return this.knight;
     },
@@ -224,7 +239,7 @@ GameBoard.prototype = {
     },
 
     layout: {
-        // useMinScale: false,
+        useMinScale: false,
         xPercentage: 0.5,
         yPercentage: 0.5,
         scaleToWidth: 1,

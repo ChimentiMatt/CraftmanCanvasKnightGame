@@ -16,6 +16,7 @@ Movements.prototype = {
         this.swords = CMP.DispatchGet({type: "GetSwords"})
         this.weapons = CMP.DispatchGet({type: "GetWeapons"})
         this.knight = CMP.DispatchGet({type: "GetKnight"})
+        this.background = CMP.DispatchGet({type: "GetBackground"})
         this.goblins = CMP.DispatchGet({type: "GetGoblin"})
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"})
 
@@ -84,30 +85,53 @@ Movements.prototype = {
     },
 
     movement: function() {
+            let expOrbs = this.gameBoard.expOrbs;
+
             if (this.pressedUp === 1){
-                this.knight.y -= this.knight.movementSpeed;
-                for (let i = 0; i < this.weapons.length; i++){
-                    this.weapons[i].y -= this.knight.movementSpeed;
+                for (let i = 0; i < this.background.backgroundArray.length; i++){
+                    this.background.backgroundArray[i].y += this.knight.movementSpeed;
+                }
+                for (let i = 0; i < this.goblins.length; i++){
+                    this.goblins[i].y += this.knight.movementSpeed
+                }
+
+                for (let i = 0; i < expOrbs.length; i++){
+                    expOrbs[i].y += this.knight.movementSpeed
                 }
             }
             if (this.pressedDown === 1){
-                this.knight.y += this.knight.movementSpeed
-                for (let i = 0; i < this.weapons.length; i++){
-                    this.weapons[i].y += this.knight.movementSpeed
+                for (let i = 0; i < this.background.backgroundArray.length; i++){
+                    this.background.backgroundArray[i].y -= this.knight.movementSpeed
+                }
+                for (let i = 0; i < this.goblins.length; i++){
+                    this.goblins[i].y -= this.knight.movementSpeed
+                }
+                for (let i = 0; i < expOrbs.length; i++){
+                    expOrbs[i].y -= this.knight.movementSpeed
                 }
             }
             if (this.pressedRight === 1){
                 this.knight.scaleX = 1;
-                this.knight.x += this.knight.movementSpeed;
-                for (let i = 0; i < this.weapons.length; i++){
-                    this.weapons[i].x += this.knight.movementSpeed
+                for (let i = 0; i < this.background.backgroundArray.length; i++){
+                    this.background.backgroundArray[i].x -= this.knight.movementSpeed;
+                }
+                for (let i = 0; i < this.goblins.length; i++){
+                    this.goblins[i].x -= this.knight.movementSpeed;
+                }
+                for (let i = 0; i < expOrbs.length; i++){
+                    expOrbs[i].x -= this.knight.movementSpeed
                 }
             }
             if (this.pressedLeft === 1){
-                this.knight.scaleX = -1,
-                this.knight.x -= this.knight.movementSpeed;
-                for (let i = 0; i < this.weapons.length; i++){
-                    this.weapons[i].x -= this.knight.movementSpeed
+                this.knight.scaleX = -1
+                for (let i = 0; i < this.background.backgroundArray.length; i++){
+                    this.background.backgroundArray[i].x += this.knight.movementSpeed;
+                }
+                for (let i = 0; i < this.goblins.length; i++){
+                    this.goblins[i].x += this.knight.movementSpeed;
+                }
+                for (let i = 0; i < expOrbs.length; i++){
+                    expOrbs[i].x += this.knight.movementSpeed
                 }
             }
     },
@@ -115,17 +139,17 @@ Movements.prototype = {
     moveTowardsKnight(delta) {
         for (let i = 0; i < this.goblins.length; i++){
             if (this.goblins[i].y < this.knight.y){
-                this.goblins[i].y += delta * 0.02;
+                this.goblins[i].y += delta * this.goblins[i].moveSpeed;
             }
             if (this.goblins[i].y > this.knight.y){
-                this.goblins[i].y -= delta * 0.02;
+                this.goblins[i].y -= delta * this.goblins[i].moveSpeed;
             }
             if (this.goblins[i].x < this.knight.x){
-                this.goblins[i].x += delta * 0.02;
+                this.goblins[i].x += delta * this.goblins[i].moveSpeed;
                 this.goblins[i].scaleX = 1;
             }
             if (this.goblins[i].x >this. knight.x){
-                this.goblins[i].x -= delta * 0.02;
+                this.goblins[i].x -= delta * this.goblins[i].moveSpeed;
                 this.goblins[i].scaleX = -1;
             }
         }
@@ -142,8 +166,23 @@ Movements.prototype = {
         }
     },
 
-    menuControls: function() {
+    repeatBackground: function() {
 
+        for (let i = 0; i < this.background.backgroundArray.length; i++){
+            if (this.background.backgroundArray[i].x <= 0){ // out of bounds left
+                this.background.backgroundArray[i].x = (450 * 2)
+            }
+            if (this.background.backgroundArray[i].x > 450 * 2){
+                this.background.backgroundArray[i].x = 0 
+            }
+            if (this.background.backgroundArray[i].y <= 0){ // out of bounds top
+                this.background.backgroundArray[i].y = 450 
+            }
+            if (this.background.backgroundArray[i].y >= 450){
+                this.background.backgroundArray[i].y = 0 -1
+            }
+        }
+  
     },
 
     onUpdate: function({delta}){
@@ -152,6 +191,7 @@ Movements.prototype = {
 
         if (!this.gameBoard.paused){
             this.movement();
+            this.repeatBackground();
             this.moveTowardsKnight(delta);
         }
         else{
@@ -160,9 +200,10 @@ Movements.prototype = {
                 this.gameBoard.createLevelUpScreen();
                 this.upgrades = CMP.DispatchGet({type: "GetUpgrades"})
                 this.upgrades.generateChoices();
-                this.menuControls();
+        
             }
         }
+
     },
 }
 extend("Movements", "CMP.DisplayObjectContainer");

@@ -24,13 +24,16 @@ Collisions.prototype = {
         this.companions = CMP.DispatchGet({type: "GetCompanions"})
 
         for (let j = 0; j < this.goblins.length; j++){
+            if (this.goblins[j].visible){
 
+                
                 this.weaponCollision(j, delta);
                 this.knightCollision(j)
-
+                
                 if (this.companions !== undefined){
                     this.companionCollision(j, delta);
                 }
+            }
         }
     },
 
@@ -53,6 +56,8 @@ Collisions.prototype = {
                                 this.gameBoard.removeChild(this.goblins[j]); // remove goblin from canvas
     
                                 this.gameBoard.dropExpOrb(this.goblins[j].x, this.goblins[j].y);
+
+                                this.goblins[j].visible = false; 
     
                                 // this.goblins.splice(j, 1) // remove goblins from their array
                                 return;
@@ -84,6 +89,8 @@ Collisions.prototype = {
                             this.gameBoard.removeChild(this.goblins[j]); // remove goblin from canvas
 
                             this.gameBoard.dropExpOrb(this.goblins[j].x, this.goblins[j].y);
+
+                            this.goblins[j].visible = false; 
 
                             // this.goblins.splice(j, 1) // remove goblins from their array
                             return;
@@ -124,6 +131,8 @@ Collisions.prototype = {
                     this.health.text = `health: ${this.knight.health}`;
                     this.gameBoard.removeChild(this.goblins[i]);
                     this.goblins.splice(i, 1) 
+
+                    this.goblins[i].visible = false; 
 
                     if (parseInt(this.health.text) < 1) this.gameOver()
                 }

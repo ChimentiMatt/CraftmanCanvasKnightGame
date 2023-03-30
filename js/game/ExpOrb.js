@@ -12,8 +12,6 @@ ExpOrb.prototype = {
     movementSpeed: .4,
 
     init: function() {
-        // this.addUpdate(this.onUpdate.bind(this));
-
         this.expOrb = this.addChild(new CMP.SizedSprite({
             width: 8,
             height: 8,
