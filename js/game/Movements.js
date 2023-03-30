@@ -14,7 +14,7 @@ Movements.prototype = {
     
     init: function() {
         this.swords = CMP.DispatchGet({type: "GetSwords"})
-        this.weapons = CMP.DispatchGet({type: "GetWeapons"})
+        // this.weapons = CMP.DispatchGet({type: "GetWeapons"})
         this.knight = CMP.DispatchGet({type: "GetKnight"})
         this.background = CMP.DispatchGet({type: "GetBackground"})
         this.goblins = CMP.DispatchGet({type: "GetGoblin"})
@@ -36,7 +36,6 @@ Movements.prototype = {
             }
             if (event.code === 'Space'){
                 this.pressedSpace = 1;
-                // this.gameBoard.initCat()
             }
           })
 

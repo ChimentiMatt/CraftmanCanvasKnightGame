@@ -18,12 +18,12 @@ Attack.prototype = {
 
     onUpdate: function({delta}){
         if (!this.gameBoard.paused){
-   
-
-            for (let i = 1; i < this.weapons.length; i++){
+            this.weapons = CMP.DispatchGet({type: "GetWeapons"})
+            for (let i = 0; i < this.weapons.length; i++){
                 this.weapons[i].AttackPattern();
             }
-            this.swords[0].AttackPattern()
+            // this.swords[0].AttackPattern()
+            // this.swords[1].AttackPattern()
         }
     },
 }

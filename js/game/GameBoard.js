@@ -35,8 +35,8 @@ GameBoard.prototype = {
         this.initBackGround();
         this.initKnight();
         this.initSwords();
-        this.initSpear();
-        this.initCat();
+        // this.initSpear();
+        // this.initCat();
         this.initGoblins();
         this.initHealth();
         this.initExperienceGage();
@@ -90,10 +90,11 @@ GameBoard.prototype = {
         this.spear = this.addChild(new Spear({
             name: 'spear',
             x: this.knight.x,
-            y: this.knight.y,
+            y: this.knight.y - 22,
             visible: true,
             gameboard: this,
         }))
+        
     },
 
     initCat: function() {
@@ -194,7 +195,10 @@ GameBoard.prototype = {
     },
 
     GetWeapons: function() {
-        return [this.swordRight, this.swordLeft, this.spear];
+        if (this.spear !== undefined){
+            return [this.swordRight, this.swordLeft, this.spear];
+        }
+        return [this.swordRight, this.swordLeft];
     },
 
     GetInSwingSword: function() {

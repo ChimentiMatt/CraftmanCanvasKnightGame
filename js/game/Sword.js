@@ -29,30 +29,12 @@ Sword.prototype = {
         }))
     },
 
-    // AttackPattern: function() {
-    //     // console.log('swing', this.inSwing)
-    //     if (this.equipped){
-    //         this.swords = CMP.DispatchGet({type: "GetSwords"});
-    //         this.attackInterval += 1;
 
-    //         if (this.attackInterval === this.attackSpeed){
-    //             this.inSwing = true;
-                
-    //             this.swords[0].visible = true;
-    //             this.swords[1].visible = true;
-    //             this.attackInterval = 0;
-    //         }
-    //         else if (this.attackInterval === this.attackDuration){
-    //             this.inSwing = false;
-    //             this.swords[0].visible = false;
-    //             this.swords[1].visible = false;
-    //         }
-    //     }
-    // },
 
     AttackPattern: function() {
         // console.log('swing', this.inSwing)
-        if (this.equipped){
+
+        // if (this.equipped){
             this.attackInterval += 1;
 
             if (this.attackInterval >= this.attackSpeed){
@@ -65,7 +47,7 @@ Sword.prototype = {
                 this.inSwing = false;
                 this.sword.visible = false;
             }
-        }
+        // }
     },
 
     potentialUpgrades: function() {

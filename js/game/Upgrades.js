@@ -6,11 +6,15 @@ Upgrades = function (params) {
 };
 
 Upgrades.prototype = {
+    
+    // weapons or companions not yet in kit
     potentialAdditions: [
         'cat companion',
         'spear',
-        'ninja start'
+        // 'ninja start'
     ],
+
+    potentialChoices: [],
 
 
     init: function() {
@@ -23,17 +27,29 @@ Upgrades.prototype = {
     },
 
     generateChoices: function() {
+        this.weapons = CMP.DispatchGet({type: "GetWeapons"})
+        this.potentialChoices = [...this.potentialAdditions]
+
         this.swordRightUpgrades = this.weapons[0].potentialUpgrades()
-        // alert(this.swordRightUpgrades[0][0].text)
+        for( let i = 0; i < this.swordRightUpgrades.length; i++){
+            this.potentialChoices.push(this.swordRightUpgrades[0][i].text)
+            console.log(this.swordRightUpgrades[0][i].text)
+        }
+
         this.swordLeftUpgrades = this.weapons[1].potentialUpgrades()
-        console.log(this.swordLeftUpgrades[0][0].text )
+        for( let i = 0; i < this.swordLeftUpgrades.length; i++){
+            this.potentialChoices.push(this.swordLeftUpgrades[0][i].text)
+        }
+
 
         this.levelUpScreen =  CMP.DispatchGet({type: "GetLevelUpScreen"});
+
+
         if (this.levelUpScreen !== undefined){
 
-            this.levelUpScreen.choiceOne.text = this.swordRightUpgrades[0][0].text
-            this.levelUpScreen.choiceTwo.text = this.potentialAdditions[0]
-            this.levelUpScreen.choiceThree.text = this.swordLeftUpgrades[0][0].text 
+            this.levelUpScreen.choiceOne.text = this.potentialChoices[0]
+            this.levelUpScreen.choiceTwo.text = this.potentialChoices[1]
+            this.levelUpScreen.choiceThree.text = this.potentialChoices[2]
         }
     },
 
@@ -57,11 +73,11 @@ Upgrades.prototype = {
         if (choice === 'Right Sword Attack Speed'){
             // this.weapons[0].attackInterval = 0; // resets interval so 
             this.weapons[0].attackSpeed -= 10;
-            console.log(choice)
-
-   
         }
-
+        if (choice === 'spear'){
+            // this.weapons[0].attackInterval = 0; // resets interval so 
+            this.gameBoard.initSpear();
+        }
 
         this.gameBoard.paused = false;
 

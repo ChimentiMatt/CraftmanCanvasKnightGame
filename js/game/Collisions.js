@@ -11,8 +11,9 @@ Collisions.prototype = {
     init: function() {
         this.addUpdate(this.onUpdate.bind(this));
         this.knight = CMP.DispatchGet({type: "GetKnight"});
-        this.swords = CMP.DispatchGet({type: "GetSwords"});
+        // this.swords = CMP.DispatchGet({type: "GetSwords"});
         this.weapons = CMP.DispatchGet({type: "GetWeapons"})
+        console.log(this.weapons)
 
         this.goblins = CMP.DispatchGet({type: "GetGoblin"});
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
@@ -38,6 +39,8 @@ Collisions.prototype = {
     },
 
     weaponCollision: function(j, delta) {
+        this.weapons = CMP.DispatchGet({type: "GetWeapons"})
+        
         for (let i = 0; i < this.weapons.length; i++){
             if (this.goblins[j].x >= this.weapons[i].x - this.weapons[i].xOffset && this.goblins[j].x <= this.weapons[i].x + this.weapons[i].xOffset){
                 if (this.goblins[j].y >= this.weapons[i].y - this.weapons[i].yOffset  && this.goblins[j].y <= this.weapons[i].y + this.weapons[i].yOffset ){
@@ -130,7 +133,7 @@ Collisions.prototype = {
                     this.knight.health --;
                     this.health.text = `health: ${this.knight.health}`;
                     this.gameBoard.removeChild(this.goblins[i]);
-                    this.goblins.splice(i, 1) 
+                    // this.goblins.splice(i, 1) 
 
                     this.goblins[i].visible = false; 
 

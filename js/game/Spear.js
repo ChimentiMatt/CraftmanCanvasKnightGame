@@ -9,11 +9,11 @@ Spear.prototype = {
     // backgroundColor: 'teal',
     name: 'spear',
     level: 0,
-    equipped: false,
+    // equipped: true,
     attackInterval: 0,
     inSwing: false,
     attackSpeed: 300,
-    attackDuration: 50,
+    attackDuration: 150,
     xOffset: 8,
     yOffset: 20,
     
@@ -31,19 +31,19 @@ Spear.prototype = {
     },
 
     AttackPattern: function() {
-        if (this.equipped){
+        // if (this.equipped){
             this.attackInterval += 1;
             
-            if (this.attackInterval === this.attackSpeed){
+            if (this.attackInterval >= this.attackSpeed){
                 this.inSwing = true;
                 this.spear.visible = true;
                 this.attackInterval = 0;
             }
-            else if (this.attackInterval === this.attackDuration){
+            else if (this.attackInterval >= this.attackDuration){
                 this.inSwing = false;
                 this.spear.visible = false;
             }
-        }
+        // }
     },
 
     GetInSwing: function() {
