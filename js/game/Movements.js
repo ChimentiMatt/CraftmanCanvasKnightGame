@@ -177,7 +177,7 @@ Movements.prototype = {
             if (this.background.backgroundArray[i].y <= 0){ // out of bounds top
                 this.background.backgroundArray[i].y = 450 
             }
-            if (this.background.backgroundArray[i].y >= 450){
+            if (this.background.backgroundArray[i].y > 450){
                 this.background.backgroundArray[i].y = 0 
             }
         }
