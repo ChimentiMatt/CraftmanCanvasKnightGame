@@ -13,10 +13,12 @@ Sword.prototype = {
     equipped: true,
     attackInterval: 0,
     inSwing: false,
-    attackSpeed: 350,
+    attackSpeed: 100,
     attackDuration: 10,
     xOffset: 20,
     yOffset: 7,
+    collisionCount: 0,
+    maxCollisions: 9999,
 
     init: function() {
         this.sword = this.addChild(new CMP.SizedSprite({
@@ -32,24 +34,23 @@ Sword.prototype = {
     },
 
 
-
     AttackPattern: function() {
         // console.log('swing', this.inSwing)
 
-        // if (this.equipped){
-            this.attackInterval += 1;
+        this.collisionCount = 0;
+        this.attackInterval += 1;
 
-            if (this.attackInterval >= this.attackSpeed){
-                this.inSwing = true;
-                
-                this.sword.visible = true;
-                this.attackInterval = 0;
-            }
-            else if (this.attackInterval >= this.attackDuration){
-                this.inSwing = false;
-                this.sword.visible = false;
-            }
-        // }
+        if (this.attackInterval >= this.attackSpeed){
+            this.inSwing = true;
+            
+            this.sword.visible = true;
+            this.attackInterval = 0;
+        }
+        else if (this.attackInterval >= this.attackDuration){
+            this.inSwing = false;
+            this.sword.visible = false;
+        }
+    // }
     },
 
     potentialUpgrades: function() {

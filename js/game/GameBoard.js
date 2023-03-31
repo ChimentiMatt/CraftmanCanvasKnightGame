@@ -11,7 +11,7 @@ GameBoard.prototype = {
     goblins: [],
     expOrbs: [],
     spawnTick: 0,
-    spawnInterval: 25,
+    spawnInterval: 10,
     paused: false,
     inLevelUpScreen: false,
 
@@ -38,7 +38,7 @@ GameBoard.prototype = {
         // this.initSpear();
         // this.initCat();
         // this.initNinjaStar();
-        this.initGoblins();
+        this.initGoblinWave();
         this.initHealth();
         this.initExperienceGage();
         
@@ -117,46 +117,6 @@ GameBoard.prototype = {
             visible: true,
             gameboard: this,
         }))
-    },
-    
-    initGoblins: function() {
-        let quadrant = Math.floor(Math.random() * (3 - 0 + 1) + 0);
-        let xLocation;
-        let yLocation;
-       
-        if (quadrant === 0){ // left of screen spawn
-            xLocation = 0;
-            yLocation = Math.floor(Math.random() * (this.height - 0) + 0);
-        }
-        else if (quadrant === 1){ // right of screen spawn
-            xLocation = this.width;
-            yLocation = Math.floor(Math.random() * (this.height - 0) + 0);
-        }
-        else if (quadrant === 2){ // top of screen spawn
-            xLocation = Math.floor(Math.random() * (this.width - 0 + 1) + 0);
-            yLocation = 0;
-        }
-        else if (quadrant === 3){ // bottom of screen spawn
-            xLocation = Math.floor(Math.random() * (this.width - 0 + 1) + 0);
-            yLocation = this.height
-        }
-  
-        this.spawnTick++;
-        if (this.spawnTick >= this.spawnInterval){
-            let goblin = this.addChild(new Goblin({
-                x: xLocation,
-                y: yLocation,
-                gameboard: this
-            }))
-            this.goblins.push(goblin)
-            this.spawnTick = 0;
-
-            if (this.spawnTick < 100) { // make more goblins appear over time
-                this.spawnTick ++
-                // console.log('tick increase')
-            }
-        }
-
     },
 
     initHealth: function() {
@@ -252,10 +212,87 @@ GameBoard.prototype = {
     GetGameBoard: function() {
         return this;
     },
+        
+    initGoblinWave: function() {
+        let quadrant = Math.floor(Math.random() * (3 - 0 + 1) + 0);
+        let xLocation;
+        let yLocation;
+       
+        if (quadrant === 0){ // left of screen spawn
+            xLocation = 0;
+            yLocation = Math.floor(Math.random() * (this.height - 0) + 0);
+        }
+        else if (quadrant === 1){ // right of screen spawn
+            xLocation = this.width;
+            yLocation = Math.floor(Math.random() * (this.height - 0) + 0);
+        }
+        else if (quadrant === 2){ // top of screen spawn
+            xLocation = Math.floor(Math.random() * (this.width - 0 + 1) + 0);
+            yLocation = 0;
+        }
+        else if (quadrant === 3){ // bottom of screen spawn
+            xLocation = Math.floor(Math.random() * (this.width - 0 + 1) + 0);
+            yLocation = this.height
+        }
+  
+        this.spawnTick++;
+        if (this.spawnTick >= this.spawnInterval){
+            let goblin = this.addChild(new Goblin({
+                x: xLocation,
+                y: yLocation,
+                gameboard: this
+            }))
+            this.goblins.push(goblin)
+            this.spawnTick = 0;
+
+            if (this.spawnTick < 100) { // make more goblins appear over time
+                this.spawnTick ++
+                // console.log('tick increase')
+            }
+        }
+
+    },
+
+    clearDeadGoblins: function() {
+        let aliveArray = []
+
+        for (let i = 0; i < this.goblins.length; i++){
+            if (this.goblins[i].visible){
+                aliveArray.push(this.goblins[i])
+            }  
+        }
+        // console.log('before', this.goblins.length)
+        this.goblins = aliveArray
+        // console.log('after', this.goblins.length)
+    },
+
+    clearExpiredOrbs: function() {
+        let aliveArray = []
+
+        for (let i = 0; i < this.expOrbs.length; i++){
+            if (this.expOrbs[i].visible){
+                aliveArray.push(this.expOrbs[i])
+            }  
+        }
+        console.log('before', this.expOrbs.length)
+        this.expOrbs = aliveArray
+        console.log('after', this.expOrbs.length)
+    },
 
     onUpdate: function({delta}){
         if (!this.paused){
-            this.initGoblins()
+            this.initGoblinWave()
+        }
+        else{ 
+            if (!this.inLevelUpScreen){
+                this.inLevelUpScreen = true;
+                this.clearDeadGoblins();
+                // this.clearExpiredOrbs();
+                this.createLevelUpScreen();
+                this.upgrades = CMP.DispatchGet({type: "GetUpgrades"})
+                this.upgrades.generateChoices();
+                
+            }
         }
     },
 

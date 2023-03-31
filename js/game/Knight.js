@@ -9,9 +9,9 @@ Knight.prototype = {
     // backgroundColor: 'blue',
     level: 0,
     experience: 0,
-    pointsNeededToLevel: 1,
+    pointsNeededToLevel: 5,
     health: 5,
-    movementSpeed: .6,
+    movementSpeed: 1,
 
     init: function() {
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
@@ -35,6 +35,7 @@ Knight.prototype = {
     levelUp: function() {
         this.gameBoard.paused = true;
         this.experience = 0;
+        this.pointsNeededToLevel *= 1.25
         // this.gameBoard.inLevelUpScreen = true;
         
     },

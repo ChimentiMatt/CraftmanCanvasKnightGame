@@ -19,8 +19,8 @@ Movements.prototype = {
         this.background = CMP.DispatchGet({type: "GetBackground"})
         this.goblins = CMP.DispatchGet({type: "GetGoblin"})
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"})
-
         this.addUpdate(this.onUpdate.bind(this));
+
         addEventListener('keydown', (event) => {
             if (event.code === 'ArrowUp'){
                 this.pressedUp = 1;
@@ -58,9 +58,11 @@ Movements.prototype = {
           })
 
 
-          addEventListener('keydown', (event) => {
+          addEventListener('keydown', (event) => { // level up screen
             if (this.gameBoard.inLevelUpScreen){
+                this.upgrades = CMP.DispatchGet({type: "GetUpgrades"})
                 this.levelUpScreen = CMP.DispatchGet({type: "GetLevelUpScreen"});
+                console.log('NOW')
 
                 if (event.code === 'ArrowUp'){
                     if (this.pointerUp < 1 ){
@@ -156,6 +158,7 @@ Movements.prototype = {
     },
 
     moveTowardsKnight(delta) {
+        this.goblins = CMP.DispatchGet({type: "GetGoblin"})
         for (let i = 0; i < this.goblins.length; i++){
             if (this.goblins[i].y < this.knight.y){
                 this.goblins[i].y += delta * this.goblins[i].moveSpeed;
@@ -213,16 +216,6 @@ Movements.prototype = {
             this.repeatBackground();
             this.moveTowardsKnight(delta);
         }
-        else{
-            if (!this.gameBoard.inLevelUpScreen){
-                this.gameBoard.inLevelUpScreen = true;
-                this.gameBoard.createLevelUpScreen();
-                this.upgrades = CMP.DispatchGet({type: "GetUpgrades"})
-                this.upgrades.generateChoices();
-        
-            }
-        }
-
     },
 }
 extend("Movements", "CMP.DisplayObjectContainer");

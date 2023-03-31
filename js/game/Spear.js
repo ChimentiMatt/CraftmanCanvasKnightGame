@@ -16,6 +16,8 @@ Spear.prototype = {
     attackDuration: 150,
     xOffset: 8,
     yOffset: 20,
+    collisionCount: 0,
+    maxCollisions: 9999,
     
     init: function() {
         this.spear = this.addChild(new CMP.SizedSprite({

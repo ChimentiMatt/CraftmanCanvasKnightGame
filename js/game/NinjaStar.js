@@ -16,6 +16,8 @@ NinjaStar.prototype = {
     attackDuration: 100,
     xOffset: 4.5,
     yOffset: 4.5,
+    collisionCount: 0,
+    maxCollisions: 2,
     
     init: function() {
         this.knight = CMP.DispatchGet({type: "GetKnight"});
@@ -52,6 +54,7 @@ NinjaStar.prototype = {
                         this.visible = false;
                         this.x = this.knight.x
                         this.y = this.knight.y
+                        this.collisionCount = 0;
                         this.movesWithPlayer = true;
                     }
                 });
@@ -67,14 +70,6 @@ NinjaStar.prototype = {
     },
 
     increaseSize: function(value) {
-        // this.width = 80
-        // this.height = 80
-        // this.xOffset = 40
-        // this.yOffset = 40
-
-        // this.ninjaStar.x = this.percentageOfWidth(0.5)
-        // this.ninjaStar.y = this.percentageOfHeight(0.5)
-
         this.width *= value
         this.height *= value
         this.ninjaStar.width *= value
