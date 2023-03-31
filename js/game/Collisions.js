@@ -40,34 +40,36 @@ Collisions.prototype = {
 
     weaponCollision: function(j, delta) {
         this.weapons = CMP.DispatchGet({type: "GetWeapons"})
-        
         for (let i = 0; i < this.weapons.length; i++){
-            if (this.goblins[j].x >= this.weapons[i].x - this.weapons[i].xOffset && this.goblins[j].x <= this.weapons[i].x + this.weapons[i].xOffset){
-                if (this.goblins[j].y >= this.weapons[i].y - this.weapons[i].yOffset  && this.goblins[j].y <= this.weapons[i].y + this.weapons[i].yOffset ){
-                 
-                    if (this.weapons[i].inSwing){   
-                        if (!this.goblins[j].invulnerable){
-                            setTimeout(() => {
-                                this.goblins[j].invulnerable = false
-                            }, this.invulnerableTime)
-
-                            this.goblins[j].invulnerable = true;
-                            this.goblins[j].health--;
-                            this.goblins[j].health--;
-                            
-                            if (this.goblins[j].health <= 0){
-                                this.gameBoard.removeChild(this.goblins[j]); // remove goblin from canvas
+       
+            if (this.weapons[i].visible){
+                if (this.goblins[j].x >= this.weapons[i].x - this.weapons[i].xOffset && this.goblins[j].x <= this.weapons[i].x + this.weapons[i].xOffset){
+                    if (this.goblins[j].y >= this.weapons[i].y - this.weapons[i].yOffset  && this.goblins[j].y <= this.weapons[i].y + this.weapons[i].yOffset ){
+                     
+                        if (this.weapons[i].inSwing){   
+                            if (!this.goblins[j].invulnerable){
+                                setTimeout(() => {
+                                    this.goblins[j].invulnerable = false
+                                }, this.invulnerableTime)
     
-                                this.gameBoard.dropExpOrb(this.goblins[j].x, this.goblins[j].y);
-
-                                this.goblins[j].visible = false; 
+                                this.goblins[j].invulnerable = true;
+                                this.goblins[j].health--;
+                                this.goblins[j].health--;
+                                
+                                if (this.goblins[j].health <= 0){
+                                    this.gameBoard.removeChild(this.goblins[j]); // remove goblin from canvas
+        
+                                    this.gameBoard.dropExpOrb(this.goblins[j].x, this.goblins[j].y);
     
-                                // this.goblins.splice(j, 1) // remove goblins from their array
-                                return;
-                            }
-                            else{
-                                // this.knockBack(this.goblins[j]), delta;
-                                return;
+                                    this.goblins[j].visible = false; 
+        
+                                    // this.goblins.splice(j, 1) // remove goblins from their array
+                                    return;
+                                }
+                                else{
+                                    // this.knockBack(this.goblins[j]), delta;
+                                    return;
+                                }
                             }
                         }
                     }

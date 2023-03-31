@@ -14,7 +14,7 @@ Movements.prototype = {
     
     init: function() {
         this.swords = CMP.DispatchGet({type: "GetSwords"})
-        // this.weapons = CMP.DispatchGet({type: "GetWeapons"})
+        this.weapons = CMP.DispatchGet({type: "GetWeapons"})
         this.knight = CMP.DispatchGet({type: "GetKnight"})
         this.background = CMP.DispatchGet({type: "GetBackground"})
         this.goblins = CMP.DispatchGet({type: "GetGoblin"})
@@ -85,7 +85,8 @@ Movements.prototype = {
 
     movement: function() {
             let expOrbs = this.gameBoard.expOrbs;
-
+            this.weapons = CMP.DispatchGet({type: "GetWeapons"})
+           
             if (this.pressedUp === 1){
                 for (let i = 0; i < this.background.backgroundArray.length; i++){
                     this.background.backgroundArray[i].y += this.knight.movementSpeed;
@@ -93,9 +94,13 @@ Movements.prototype = {
                 for (let i = 0; i < this.goblins.length; i++){
                     this.goblins[i].y += this.knight.movementSpeed
                 }
-
                 for (let i = 0; i < expOrbs.length; i++){
                     expOrbs[i].y += this.knight.movementSpeed
+                }
+                for (let i = 0; i < this.weapons.length; i++){
+                    if (!this.weapons[i].movesWithPlayer){
+                        this.weapons[i].y += this.knight.movementSpeed
+                    }
                 }
             }
             if (this.pressedDown === 1){
@@ -107,6 +112,11 @@ Movements.prototype = {
                 }
                 for (let i = 0; i < expOrbs.length; i++){
                     expOrbs[i].y -= this.knight.movementSpeed
+                }
+                for (let i = 0; i < this.weapons.length; i++){
+                    if (!this.weapons[i].movesWithPlayer){
+                        this.weapons[i].y -= this.knight.movementSpeed
+                    }
                 }
             }
             if (this.pressedRight === 1){
@@ -120,6 +130,11 @@ Movements.prototype = {
                 for (let i = 0; i < expOrbs.length; i++){
                     expOrbs[i].x -= this.knight.movementSpeed
                 }
+                for (let i = 0; i < this.weapons.length; i++){
+                    if (!this.weapons[i].movesWithPlayer){
+                        this.weapons[i].x -= this.knight.movementSpeed
+                    }
+                }
             }
             if (this.pressedLeft === 1){
                 this.knight.scaleX = -1
@@ -131,6 +146,11 @@ Movements.prototype = {
                 }
                 for (let i = 0; i < expOrbs.length; i++){
                     expOrbs[i].x += this.knight.movementSpeed
+                }
+                for (let i = 0; i < this.weapons.length; i++){
+                    if (!this.weapons[i].movesWithPlayer){
+                        this.weapons[i].x += this.knight.movementSpeed
+                    }
                 }
             }
     },

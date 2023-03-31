@@ -9,10 +9,11 @@ Sword.prototype = {
     // backgroundColor: 'teal',
     // name: 'swords',
     level: 0,
+    movesWithPlayer: true,
     equipped: true,
     attackInterval: 0,
     inSwing: false,
-    attackSpeed: 150,
+    attackSpeed: 350,
     attackDuration: 10,
     xOffset: 20,
     yOffset: 7,
@@ -25,8 +26,9 @@ Sword.prototype = {
             x: this.percentageOfWidth(.5),
             y: this.percentageOfHeight(0.5),
             rotation: 0,
-            // scale: 30.75
+            // scale: 2
         }))
+
     },
 
 

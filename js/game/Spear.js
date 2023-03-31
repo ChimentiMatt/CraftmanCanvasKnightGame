@@ -9,8 +9,8 @@ Spear.prototype = {
     // backgroundColor: 'teal',
     name: 'spear',
     level: 0,
-    // equipped: true,
-    attackInterval: 0,
+    movesWithPlayer: true,
+    attackInterval: 301,
     inSwing: false,
     attackSpeed: 300,
     attackDuration: 150,
@@ -25,13 +25,10 @@ Spear.prototype = {
             x: this.percentageOfWidth(.5),
             y: this.percentageOfHeight(0.5),
             rotation: 0,
-            visible: false,
-            // scale: 30.75
         }))
     },
 
     AttackPattern: function() {
-        // if (this.equipped){
             this.attackInterval += 1;
             
             if (this.attackInterval >= this.attackSpeed){

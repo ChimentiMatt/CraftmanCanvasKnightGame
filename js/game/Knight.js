@@ -9,7 +9,7 @@ Knight.prototype = {
     // backgroundColor: 'blue',
     level: 0,
     experience: 0,
-    pointsNeededToLevel: 10,
+    pointsNeededToLevel: 1,
     health: 5,
     movementSpeed: .6,
 
@@ -33,7 +33,6 @@ Knight.prototype = {
     },
 
     levelUp: function() {
-        console.log('ticj')
         this.gameBoard.paused = true;
         this.experience = 0;
         // this.gameBoard.inLevelUpScreen = true;

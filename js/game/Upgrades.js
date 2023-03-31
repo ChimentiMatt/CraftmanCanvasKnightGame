@@ -9,9 +9,9 @@ Upgrades.prototype = {
     
     // weapons or companions not yet in kit
     potentialAdditions: [
+        'ninja star',
         'cat companion',
         'spear',
-        // 'ninja start'
     ],
 
     potentialChoices: [],
@@ -66,22 +66,32 @@ Upgrades.prototype = {
     },
 
     handleChoice: function(choice) {
+        console.log(choice)
         if (choice === 'cat companion'){
             for( let i = 0; i < this.potentialAdditions.length; i++){
                 if (this.potentialAdditions[i] === choice){
                     this.potentialAdditions.splice(i, 1)
                 }
             }
-
             this.gameBoard.initCat();
         }
+
         if (choice === 'Right Sword Attack Speed'){
-            // this.weapons[0].attackInterval = 0; // resets interval so 
             this.weapons[0].attackSpeed -= 10;
         }
+
         if (choice === 'spear'){
-            // this.weapons[0].attackInterval = 0; // resets interval so 
             this.gameBoard.initSpear();
+            for( let i = 0; i < this.potentialAdditions.length; i++){
+                if (this.potentialAdditions[i] === choice){
+                    this.potentialAdditions.splice(i, 1)
+                }
+            }
+        }
+
+        if (choice === 'ninja star'){
+            console.log('here')
+            this.gameBoard.initNinjaStar();
             for( let i = 0; i < this.potentialAdditions.length; i++){
                 if (this.potentialAdditions[i] === choice){
                     this.potentialAdditions.splice(i, 1)
