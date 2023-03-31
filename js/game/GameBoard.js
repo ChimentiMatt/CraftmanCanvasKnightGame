@@ -6,7 +6,7 @@ GameBoard = function (params) {
 
 GameBoard.prototype = {
     // backgroundColor: 'red',
-    backgroundColor: '#b7a923',
+    // backgroundColor: '#b7a923',
     alpha: 0.1,
     goblins: [],
     expOrbs: [],

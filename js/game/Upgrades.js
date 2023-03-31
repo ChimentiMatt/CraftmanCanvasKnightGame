@@ -67,7 +67,12 @@ Upgrades.prototype = {
 
     handleChoice: function(choice) {
         if (choice === 'cat companion'){
-            this.potentialAdditions.splice(0, 1)
+            for( let i = 0; i < this.potentialAdditions.length; i++){
+                if (this.potentialAdditions[i] === choice){
+                    this.potentialAdditions.splice(i, 1)
+                }
+            }
+
             this.gameBoard.initCat();
         }
         if (choice === 'Right Sword Attack Speed'){
@@ -77,6 +82,11 @@ Upgrades.prototype = {
         if (choice === 'spear'){
             // this.weapons[0].attackInterval = 0; // resets interval so 
             this.gameBoard.initSpear();
+            for( let i = 0; i < this.potentialAdditions.length; i++){
+                if (this.potentialAdditions[i] === choice){
+                    this.potentialAdditions.splice(i, 1)
+                }
+            }
         }
 
         this.gameBoard.paused = false;
