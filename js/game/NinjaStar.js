@@ -18,6 +18,15 @@ NinjaStar.prototype = {
     yOffset: 4.5,
     collisionCount: 0,
     maxCollisions: 2,
+    size: 0,
+    equipped: false,
+    upgradable: true,
+    potentialUpgrades: [
+        'penetration',
+        // 'size'
+    ],
+    currentUpgrade: '',
+    currentUpgradeText: '',
     
     init: function() {
         this.knight = CMP.DispatchGet({type: "GetKnight"});
@@ -32,8 +41,9 @@ NinjaStar.prototype = {
             // scale: 2.0
         }))
 
+        this.equipped = true;
         this.visible = false
-        this.increaseSize(2)
+        // this.increaseSize(2)
     },
 
     AttackPattern: function() {
@@ -69,7 +79,22 @@ NinjaStar.prototype = {
 
     },
 
-    increaseSize: function(value) {
+    selectPotentialUpgrade:function (){
+        let option = Math.floor(Math.random() * (this.potentialUpgrades.length + 0 + 1) + 0);
+        this.currentUpgrade = 'penetration'
+        this.currentUpgradeText = `Ninja Star: Penetration ${this.maxCollisions} to ${this.maxCollisions + 1}`
+        return `${this.currentUpgrade}  ${this.currentUpgradeText}`;
+    },
+
+    implementUpgrade: function() {
+        if (this.currentUpgrade === 'penetration') this.upgradePenetration();
+    },
+
+    upgradePenetration: function() {
+        this.maxCollisions++
+    },
+
+    upgradeSize: function(value) {
         this.width *= value
         this.height *= value
         this.ninjaStar.width *= value

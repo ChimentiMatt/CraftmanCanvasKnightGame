@@ -46,7 +46,6 @@ GameBoard.prototype = {
         // this.levelUpScreen = this.addChild(new LevelUpScreen({gameboard: this}));  
         this.attack = this.addChild(new Attack({gameboard: this}));
         this.collisions = this.addChild(new Collisions({gameboard: this}));  
-        this.upgrades = this.addChild(new Upgrades({gameboard: this}));  
 
         this.addUpdate(this.onUpdate.bind(this));
     },
@@ -159,7 +158,7 @@ GameBoard.prototype = {
     createLevelUpScreen: function(){
         this.levelUpScreen = this.addChild(new LevelUpScreen({gameboard: this}));  
         this.inLevelUpScreen = true;
-
+        this.upgrades = this.addChild(new Upgrades({gameboard: this}));  
     },
 
     GetSwords: function() {

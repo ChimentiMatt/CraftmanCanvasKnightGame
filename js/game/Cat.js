@@ -14,6 +14,8 @@ Cat.prototype = {
     xOffset: 8,
     yOffset: 8,
     inAnimation: false,
+    equipped : false,
+    upgradable: true,
 
     init: function() {
         this.addUpdate(this.onUpdate.bind(this));
@@ -28,6 +30,7 @@ Cat.prototype = {
             y: this.percentageOfHeight(0.5),
             // scale: 30.75
         }))
+        this.equipped = true;
     },
     
     huntGoblins: function() {
@@ -56,7 +59,11 @@ Cat.prototype = {
             y: y,
             onComplete: () => {this.inAnimation = false}
         });
- 
+    },
+
+    getUpgrades: function() {
+
+        
     },
     
     onUpdate: function({delta}){

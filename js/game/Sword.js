@@ -19,6 +19,7 @@ Sword.prototype = {
     yOffset: 7,
     collisionCount: 0,
     maxCollisions: 9999,
+    equipped: true,
 
     init: function() {
         this.sword = this.addChild(new CMP.SizedSprite({
@@ -65,7 +66,5 @@ Sword.prototype = {
         return [potentialUpgradesArray]
     }
 
-
- 
 }
 extend("Sword", "CMP.DisplayObjectContainer");

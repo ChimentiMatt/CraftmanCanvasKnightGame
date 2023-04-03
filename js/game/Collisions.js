@@ -13,7 +13,6 @@ Collisions.prototype = {
         this.knight = CMP.DispatchGet({type: "GetKnight"});
         // this.swords = CMP.DispatchGet({type: "GetSwords"});
         this.weapons = CMP.DispatchGet({type: "GetWeapons"})
-        console.log(this.weapons)
 
         this.goblins = CMP.DispatchGet({type: "GetGoblin"});
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});

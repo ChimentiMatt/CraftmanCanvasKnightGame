@@ -62,7 +62,6 @@ Movements.prototype = {
             if (this.gameBoard.inLevelUpScreen){
                 this.upgrades = CMP.DispatchGet({type: "GetUpgrades"})
                 this.levelUpScreen = CMP.DispatchGet({type: "GetLevelUpScreen"});
-                console.log('NOW')
 
                 if (event.code === 'ArrowUp'){
                     if (this.pointerUp < 1 ){
