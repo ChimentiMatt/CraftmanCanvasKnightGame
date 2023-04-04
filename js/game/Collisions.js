@@ -63,6 +63,78 @@ Collisions.prototype = {
         }
     },
 
+    companionCollision: function(j, delta) {
+        this.goblins = CMP.DispatchGet({type: "GetGoblin"});
+        for (let i = 0; i < this.companions.length; i++){
+            if (this.goblins[j].x >= this.companions[i].x - this.companions[i].xOffset && this.goblins[j].x <= this.companions[i].x + this.companions[i].xOffset){
+                if (this.goblins[j].y >= this.companions[i].y - this.companions[i].yOffset  && this.goblins[j].y <= this.companions[i].y + this.companions[i].yOffset ){
+                    if (!this.goblins[j].invulnerable){
+                        setTimeout(() => {
+                            if (this.goblins[j] !== undefined){ // could be removed during level up screen
+                                this.goblins[j].invulnerable = false
+                            }
+                        }, this.invulnerableTime)
+
+                        this.goblins[j].invulnerable = true;
+                        this.goblins[j].health = 0;
+
+                        if (this.goblins[j].health <= 0){
+                            this.gameBoard.removeChild(this.goblins[j]); // remove goblin from canvas
+
+                            this.gameBoard.dropExpOrb(this.goblins[j].x, this.goblins[j].y);
+
+                            this.goblins[j].visible = false; 
+
+                            // this.goblins.splice(j, 1) // remove goblins from their array
+                            return;
+                        }
+                        else{
+                            // this.knockBack(this.goblins[j]), delta;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    
+    knightCollision: function(i) {
+        this.goblins = CMP.DispatchGet({type: "GetGoblin"});
+            if (this.goblins[i].x -4 >= this.knight.x - 8 && this.goblins[i].x + 4 <= this.knight.x + 8){
+                if (this.goblins[i].y -4 >= this.knight.y - 12 && this.goblins[i].y + 4 <= this.knight.y + 12){
+                    
+                    this.knight.health --;
+                    this.health.text = `health: ${this.knight.health}`;
+                    this.gameBoard.removeChild(this.goblins[i]);
+                    // this.goblins.splice(i, 1) 
+
+                    this.goblins[i].visible = false; 
+
+                    if (parseInt(this.health.text) < 1) this.gameOver()
+                }
+            }
+    },
+
+    collisionExpOrbs: function() {
+        this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
+        let expOrbs = this.gameBoard.expOrbs;
+        for (let i = 0; i < expOrbs.length; i++){
+            if (expOrbs[i].visible){
+                if (expOrbs[i].x -4 >= this.knight.x - 8 && expOrbs[i].x + 4 <= this.knight.x + 8){
+                    if (expOrbs[i].y -4 >= this.knight.y - 12 && expOrbs[i].y + 4 <= this.knight.y + 12){
+                        
+                        this.gameBoard.removeChild(expOrbs[i]);
+                        expOrbs[i].visible = false;
+
+                        this.knight.experience++;
+                        this.experienceGage.text = `exp: ${this.knight.experience}`
+                    }
+                }
+            }
+        }
+    },
+
     makeGoblinInvulnerable: function(goblin) {
         setTimeout(() => {
             if (goblin !== undefined){ // could be removed during level up screen
@@ -99,41 +171,6 @@ Collisions.prototype = {
     }
     },
 
-    companionCollision: function(j, delta) {
-        this.goblins = CMP.DispatchGet({type: "GetGoblin"});
-        for (let i = 0; i < this.companions.length; i++){
-            if (this.goblins[j].x >= this.companions[i].x - this.companions[i].xOffset && this.goblins[j].x <= this.companions[i].x + this.companions[i].xOffset){
-                if (this.goblins[j].y >= this.companions[i].y - this.companions[i].yOffset  && this.goblins[j].y <= this.companions[i].y + this.companions[i].yOffset ){
-                    if (!this.goblins[j].invulnerable){
-                        setTimeout(() => {
-                            if (this.goblins[j] !== undefined){ // could be removed during level up screen
-                                this.goblins[j].invulnerable = false
-                            }
-                        }, this.invulnerableTime)
-
-                        this.goblins[j].invulnerable = true;
-                        this.goblins[j].health = 0;
-
-                        if (this.goblins[j].health <= 0){
-                            this.gameBoard.removeChild(this.goblins[j]); // remove goblin from canvas
-
-                            this.gameBoard.dropExpOrb(this.goblins[j].x, this.goblins[j].y);
-
-                            this.goblins[j].visible = false; 
-
-                            // this.goblins.splice(j, 1) // remove goblins from their array
-                            return;
-                        }
-                        else{
-                            // this.knockBack(this.goblins[j]), delta;
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-    },
-
     knockBack: function(goblin, delta) {
         for (let i = 0; i < this.goblins.length; i++){
 
@@ -148,42 +185,6 @@ Collisions.prototype = {
             }
             if (goblin.y > this.knight.y){
                 goblin.y += .2
-            }
-        }
-    },
-
-    knightCollision: function(i) {
-        this.goblins = CMP.DispatchGet({type: "GetGoblin"});
-            if (this.goblins[i].x -4 >= this.knight.x - 8 && this.goblins[i].x + 4 <= this.knight.x + 8){
-                if (this.goblins[i].y -4 >= this.knight.y - 12 && this.goblins[i].y + 4 <= this.knight.y + 12){
-                    
-                    this.knight.health --;
-                    this.health.text = `health: ${this.knight.health}`;
-                    this.gameBoard.removeChild(this.goblins[i]);
-                    // this.goblins.splice(i, 1) 
-
-                    this.goblins[i].visible = false; 
-
-                    if (parseInt(this.health.text) < 1) this.gameOver()
-                }
-            }
-    },
-
-    collisionExpOrbs: function() {
-        this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
-        let expOrbs = this.gameBoard.expOrbs;
-        for (let i = 0; i < expOrbs.length; i++){
-            if (expOrbs[i].visible){
-                if (expOrbs[i].x -4 >= this.knight.x - 8 && expOrbs[i].x + 4 <= this.knight.x + 8){
-                    if (expOrbs[i].y -4 >= this.knight.y - 12 && expOrbs[i].y + 4 <= this.knight.y + 12){
-                        
-                        this.gameBoard.removeChild(expOrbs[i]);
-                        expOrbs[i].visible = false;
-
-                        this.knight.experience++;
-                        this.experienceGage.text = `exp: ${this.knight.experience}`
-                    }
-                }
             }
         }
     },

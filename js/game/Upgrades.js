@@ -15,7 +15,6 @@ Upgrades.prototype = {
         // 'Cat Companion',
     ],
     
-
     choiceOne: {
         'text': '',
         'weapon': ''
@@ -41,93 +40,76 @@ Upgrades.prototype = {
     generateChoices: function() {
         this.levelUpScreen =  CMP.DispatchGet({type: "GetLevelUpScreen"});
         this.duplicatesArray = [...this.potentialAdditions]
-        // this.choiceOne = 'Spear'
-        // this.choiceTwo = 'Ninja Star'
 
-        
         let randomIndex = Math.floor(Math.random() * (this.duplicatesArray.length - 0 ) + 0);
-        console.log(randomIndex)
-
-        this.choiceOne = this.duplicatesArray[randomIndex]
+        this.choiceOne.weapon = this.duplicatesArray[randomIndex]
         this.duplicatesArray.splice(randomIndex, 1)
-        this.choiceOneLogin();
-        
-        console.log(this.duplicatesArray)
         
         randomIndex = Math.floor(Math.random() * (this.duplicatesArray.length - 0 ) + 0);
-        console.log(randomIndex)
-
-        this.choiceTwo = this.duplicatesArray[randomIndex]
+        this.choiceTwo.weapon = this.duplicatesArray[randomIndex]
         this.duplicatesArray.splice(randomIndex, 1)
-        this.choiceTwoLogin();
+
+        for (let i = 0; i < 3; i++){
+            if (i === 0) this.menuLogics(this.choiceOne.weapon, i)
+            if (i === 1) this.menuLogics(this.choiceTwo.weapon, i)
+        }
 
         this.duplicatesArray = []
     },
 
-    choiceOneLogin: function() {
-        if (this.choiceOne === 'Ninja Star'){
-            this.levelUpScreen.choiceOne.weapon =  'Ninja Star'
-            
-            // if ninja star does not exist yet. default to adding it
-            if (this.gameBoard.ninjaStar === undefined){
-                this.levelUpScreen.choiceOne.text =  'Ninja Star'
-            }
-            
-            // else get potential upgrades
-            else{
-                this.levelUpScreen.choiceOne.text = this.gameBoard.ninjaStar.selectPotentialUpgrade();
-            }
-        }
-        else if (this.choiceOne === 'Spear'){
-            this.levelUpScreen.choiceOne.weapon =  'Spear'
-            
-            // if ninja star does not exist yet. default to adding it
-            if (this.gameBoard.spear === undefined){
-                this.levelUpScreen.choiceOne.text =  'Spear'
-            }
-            
-            // else get potential upgrades
-            else{
-                this.levelUpScreen.choiceOne.text = this.gameBoard.spear.selectPotentialUpgrade();
-            }
-        }
-    },
+    menuLogics: function(choice, slot) {
+        let text = '';
+        let newEquipment = false;
 
-    choiceTwoLogin: function() {
-        if (this.choiceTwo === 'Ninja Star'){
-            this.levelUpScreen.choiceTwo.weapon =  'Ninja Star'
-            
-            // if ninja star does not exist yet. default to adding it
+
+        if (choice === 'Ninja Star'){
+            text = 'Ninja Star'
             if (this.gameBoard.ninjaStar === undefined){
-                this.levelUpScreen.choiceTwo.text =  'Ninja Star'
-            }
-            
-            // else get potential upgrades
-            else{
-                this.levelUpScreen.choiceTwo.text = this.gameBoard.ninjaStar.selectPotentialUpgrade();
+                newEquipment = true
             }
         }
-        else if (this.choiceTwo === 'Spear'){
-            this.levelUpScreen.choiceTwo.weapon =  'Spear'
-            
-            // if ninja star does not exist yet. default to adding it
+        if (choice === 'Spear'){
+            text = 'Spear'
             if (this.gameBoard.spear === undefined){
-                this.levelUpScreen.choiceTwo.text =  'Spear'
+                newEquipment = true
             }
-            
-            // else get potential upgrades
+        }
+
+        if (slot === 0){
+            if (newEquipment){
+                this.levelUpScreen.choiceOne.text =  text
+            }
             else{
-                this.levelUpScreen.choiceTwo.text = this.gameBoard.spear.selectPotentialUpgrade();
+                if (text === 'Ninja Star') this.levelUpScreen.choiceOne.text = this.gameBoard.ninjaStar.selectPotentialUpgrade();
+                if (text === 'Spear') this.levelUpScreen.choiceOne.text = this.gameBoard.spear.selectPotentialUpgrade();
+            }
+        }
+        else if (slot === 1){
+            if (newEquipment){
+                this.levelUpScreen.choiceTwo.text =  text
+            }
+            else{
+                if (text === 'Ninja Star') this.levelUpScreen.choiceTwo.text = this.gameBoard.ninjaStar.selectPotentialUpgrade();
+                if (text === 'Spear') this.levelUpScreen.choiceTwo.text = this.gameBoard.spear.selectPotentialUpgrade();
+            }
+        }
+        else if (slot === 2){
+            if (newEquipment){
+                this.levelUpScreen.choiceThree.text =  text
+            }
+            else{
+                if (text === 'Ninja Star')  this.levelUpScreen.choiceThree.text = this.gameBoard.ninjaStar.selectPotentialUpgrade();
+                if (text === 'Spear')  this.levelUpScreen.choiceThree.text = this.gameBoard.spear.selectPotentialUpgrade();
             }
         }
     },
 
     selectChoice: function(pointerSelection) {
         if (pointerSelection === 1){ // top selection
-            this.handleChoice(this.levelUpScreen.choiceOne.weapon) 
+            this.handleChoice(this.choiceOne.weapon) 
         }
         if (pointerSelection === 0){ // top selection
-            this.handleChoice(this.levelUpScreen.choiceTwo.weapon) 
+            this.handleChoice(this.choiceTwo.weapon) 
         }
     },
     
@@ -152,7 +134,6 @@ Upgrades.prototype = {
         }
       
         this.gameBoard.paused = false;
-
         this.gameBoard.removeChild(this.levelUpScreen);
         this.gameBoard.inLevelUpScreen = false;
     },

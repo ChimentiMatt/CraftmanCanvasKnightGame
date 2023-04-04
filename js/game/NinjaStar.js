@@ -18,12 +18,12 @@ NinjaStar.prototype = {
     yOffset: 4.5,
     collisionCount: 0,
     maxCollisions: 2,
-    size: 0,
+    size: 1,
     equipped: false,
     upgradable: true,
     potentialUpgrades: [
         'penetration',
-        // 'size'
+        'size'
     ],
     currentUpgrade: '',
     currentUpgradeText: '',
@@ -43,7 +43,7 @@ NinjaStar.prototype = {
 
         this.equipped = true;
         this.visible = false
-        // this.increaseSize(2)
+        // this.upgradeSize(5)
     },
 
     AttackPattern: function() {
@@ -80,30 +80,62 @@ NinjaStar.prototype = {
     },
 
     selectPotentialUpgrade:function (){
-        let option = Math.floor(Math.random() * (this.potentialUpgrades.length + 0 + 1) + 0);
-        this.currentUpgrade = 'penetration'
-        this.currentUpgradeText = `Ninja Star: Penetration ${this.maxCollisions} to ${this.maxCollisions + 1}`
-        return `${this.currentUpgrade}  ${this.currentUpgradeText}`;
+        let option = Math.floor(Math.random() * (this.potentialUpgrades.length + 0 ) + 0);
+        this.currentUpgrade = this.potentialUpgrades[option]
+        this.textForUpgrade(this.currentUpgrade)
+
+        // this.currentUpgrade = 'penetration'
+        // this.currentUpgradeText = `Ninja Star: penetration ${this.maxCollisions} -> ${this.maxCollisions + 1}`
+        return `${this.currentUpgradeText}`;
+    },
+
+    textForUpgrade: function(upgradeName) {
+        if (upgradeName === 'penetration'){
+            this.currentUpgradeText = `Ninja Star: penetration ${this.maxCollisions} -> ${this.maxCollisions + 1} `
+        }
+        else if (upgradeName === 'size'){
+            this.currentUpgradeText = `Ninja Star: increase size ${this.size} -> ${this.size +1} (max 4)` 
+        }
     },
 
     implementUpgrade: function() {
         if (this.currentUpgrade === 'penetration') this.upgradePenetration();
+        if (this.currentUpgrade === 'size') this.upgradeSize();
     },
 
     upgradePenetration: function() {
         this.maxCollisions++
     },
 
-    upgradeSize: function(value) {
-        this.width *= value
-        this.height *= value
-        this.ninjaStar.width *= value
-        this.ninjaStar.height *= value
-        this.xOffset *= value /2
-        this.yOffset *= value  /2
+    upgradeSize: function() {
+        let originalOffset = 4.5
 
+        this.size++;
+        this.ninjaStar.scale += this.size;
+        this.xOffset = originalOffset * this.size
+        this.yOffset = originalOffset * this.size
+        this.height = originalOffset * this.size
+        this.width = originalOffset * this.size
         this.ninjaStar.x = this.percentageOfWidth(0.5)
         this.ninjaStar.y = this.percentageOfHeight(0.5)
+
+        if (this.size === 4){
+            for(let i = 0; i < this.potentialUpgrades.length; i++){
+                if (this.potentialUpgrades[i] === 'size'){
+                    this.potentialUpgrades.splice(i, 1)
+                }
+            }
+        }
+
+        // this.width *= value
+        // this.height *= value
+        // this.ninjaStar.width *= value
+        // this.ninjaStar.height *= value
+        // this.xOffset *= value /2
+        // this.yOffset *= value  /2
+
+        // this.ninjaStar.x = this.percentageOfWidth(0.5)
+        // this.ninjaStar.y = this.percentageOfHeight(0.5)
     },
 
     GetInSwing: function() {

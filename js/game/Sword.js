@@ -8,18 +8,17 @@ Sword = function (params) {
 Sword.prototype = {
     // backgroundColor: 'teal',
     // name: 'swords',
-    level: 0,
+    // level: 0,
     movesWithPlayer: true,
     equipped: true,
-    attackInterval: 0,
     inSwing: false,
+    attackInterval: 0,
     attackSpeed: 100,
     attackDuration: 10,
     xOffset: 20,
     yOffset: 7,
     collisionCount: 0,
     maxCollisions: 9999,
-    equipped: true,
 
     init: function() {
         this.sword = this.addChild(new CMP.SizedSprite({

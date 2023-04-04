@@ -50,16 +50,16 @@ Background.prototype = {
 
     },
 
-    addCenterRight: function() {
+    // addCenterRight: function() {
 
-       this.centerRight = this.addChild(new CMP.SizedSprite({
-            width: this.width,
-            height: this.height,
-            image: 'background',
-            x: this.percentageOfWidth(2),
-            y: this.percentageOfHeight(0.5)
-        }));
-    },
+    //    this.centerRight = this.addChild(new CMP.SizedSprite({
+    //         width: this.width,
+    //         height: this.height,
+    //         image: 'background',
+    //         x: this.percentageOfWidth(2),
+    //         y: this.percentageOfHeight(0.5)
+    //     }));
+    // },
 
     onUpdate: function({delta}){
 

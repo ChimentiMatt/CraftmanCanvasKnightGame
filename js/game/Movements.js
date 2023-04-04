@@ -176,16 +176,16 @@ Movements.prototype = {
         }
     },
 
-    collisionMonsterToKnight: function() {
-        for (let i = 0; i < this.goblins.length; i++){
-            if (this.goblins[i].x -4 >= this.knight.x - 8 && this.goblins[i].x + 4 <= this.knight.x + 8){
-                if (this.goblins[i].y -4 >= this.knight.y - 8 && this.goblins[i].y + 4 <= this.knight.y + 8){
-                    console.log('hit')
-                    gameBoard.removeChild(this.goblins[i]);
-                }
-            }
-        }
-    },
+    // collisionMonsterToKnight: function() {
+    //     for (let i = 0; i < this.goblins.length; i++){
+    //         if (this.goblins[i].x -4 >= this.knight.x - 8 && this.goblins[i].x + 4 <= this.knight.x + 8){
+    //             if (this.goblins[i].y -4 >= this.knight.y - 8 && this.goblins[i].y + 4 <= this.knight.y + 8){
+    //                 console.log('hit')
+    //                 gameBoard.removeChild(this.goblins[i]);
+    //             }
+    //         }
+    //     }
+    // },
 
     repeatBackground: function() {
 

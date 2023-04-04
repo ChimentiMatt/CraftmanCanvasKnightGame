@@ -7,9 +7,6 @@ LevelUpScreen = function (params) {
 LevelUpScreen.prototype = {
     backgroundColor: 'teal',
     prompt: '',
-    choiceOne: '',
-    choiceTwo: '',
-    choiceThree: '',
 
     customAssets: [
     ],
@@ -38,7 +35,7 @@ LevelUpScreen.prototype = {
             text: 'na',
             textAlign: "center",
             textBaseline: "middle",
-            font: "5pt arial",
+            font: "2pt arial",
             color: "black"
         }));
 
@@ -49,7 +46,7 @@ LevelUpScreen.prototype = {
             text: 'na',
             textAlign: "center",
             textBaseline: "middle",
-            font: "5pt arial",
+            font: "2pt arial",
             color: "black"
         }));
 
@@ -60,7 +57,7 @@ LevelUpScreen.prototype = {
             text: 'na',
             textAlign: "center",
             textBaseline: "middle",
-            font: "5pt arial",
+            font: "2pt arial",
             color: "black"
         }));
 
