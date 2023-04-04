@@ -39,6 +39,9 @@ Upgrades.prototype = {
     
     generateChoices: function() {
         this.levelUpScreen =  CMP.DispatchGet({type: "GetLevelUpScreen"});
+        this.levelUpScreen.choiceOne.text = '';
+        this.levelUpScreen.choiceTwo.text = '';
+        this.levelUpScreen.choiceThree.text = '';
         this.duplicatesArray = [...this.potentialAdditions]
 
         let randomIndex = Math.floor(Math.random() * (this.duplicatesArray.length - 0 ) + 0);

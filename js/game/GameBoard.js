@@ -37,7 +37,7 @@ GameBoard.prototype = {
         this.initSwords();
         // this.initSpear();
         // this.initCat();
-        // this.initNinjaStar();
+        this.initNinjaStar();
         this.initGoblinWave();
         this.initHealth();
         this.initExperienceGage();
@@ -98,6 +98,7 @@ GameBoard.prototype = {
     },
 
     initNinjaStar: function() {
+        this.numberOfNinjaStars = 1;
         this.ninjaStar = this.addChild(new NinjaStar({
             name: 'ninja start',
             x: this.knight.x,
@@ -105,7 +106,31 @@ GameBoard.prototype = {
             visible: true,
             gameboard: this,
         }))
-        
+    },
+
+    initNinjaStarTwo: function() {
+        this.numberOfNinjaStars = 2;
+        this.ninjaStarTwo = this.addChild(new NinjaStar({
+            name: 'ninja start',
+            x: this.knight.x ,
+            y: this.knight.y,
+            visible: true,
+            gameboard: this,
+        }))
+        this.ninjaStar.attackInterval = 151; // sync up stars
+    },
+    
+    initNinjaStarThree: function() {
+        this.numberOfNinjaStars = 3;
+        this.ninjaStarThree = this.addChild(new NinjaStar({
+            name: 'ninja start',
+            x: this.knight.x,
+            y: this.knight.y,
+            visible: true,
+            gameboard: this,
+        }))
+        this.ninjaStar.attackInterval = 151; // sync up stars
+        this.ninjaStarTwo.attackInterval = 151; // sync up stars
     },
 
     initCat: function() {
@@ -173,6 +198,12 @@ GameBoard.prototype = {
         }
         if (this.ninjaStar !== undefined){
             buildingArray.push(this.ninjaStar)
+        }
+        if (this.ninjaStarTwo !== undefined){
+            buildingArray.push(this.ninjaStarTwo)
+        }
+        if (this.ninjaStarThree !== undefined){
+            buildingArray.push(this.ninjaStarThree)
         }
         return [this.swordRight, this.swordLeft, ...buildingArray];
     },

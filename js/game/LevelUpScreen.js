@@ -69,8 +69,6 @@ LevelUpScreen.prototype = {
             y: this.percentageOfHeight(0.5),
             // scale: 30.75
         }))
-
-        // console.log(this.pointer)
     },
 
     GetLevelUpScreen: function() {
