@@ -37,7 +37,7 @@ GameBoard.prototype = {
         this.initSwords();
         // this.initSpear();
         // this.initCat();
-        this.initNinjaStar();
+        // this.initNinjaStar();
         this.initGoblinWave();
         this.initHealth();
         this.initExperienceGage();

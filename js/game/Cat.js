@@ -16,6 +16,10 @@ Cat.prototype = {
     inAnimation: false,
     equipped : false,
     upgradable: true,
+    movementDelayMax: 6,
+    potentialUpgrades: [
+        'less lazy',
+    ],
 
     init: function() {
         this.addUpdate(this.onUpdate.bind(this));
@@ -46,12 +50,11 @@ Cat.prototype = {
 
         x = Math.floor(Math.random() * (this.gameBoard.width + 0 + 1) + 0);
         y = Math.floor(Math.random() * (this.gameBoard.height + 0 + 1) + 0);
-        duration = Math.floor(Math.random() * ( 3 - 1 + 1) + 1 )
-        delay = Math.floor(Math.random() * ( 3 - 2 + 1 ) + 1 )
+        duration = Math.floor(Math.random() * ( 3 - 1) + 1 )
+        delay = Math.floor(Math.random() * ( this.movementDelayMax - 2) + 1 )
         if (x < 0) x = 10;
         if (y < 0) y = 10;
 
-        
         this.tweenTo({
             delay: delay,
             duration: duration,
@@ -61,10 +64,27 @@ Cat.prototype = {
         });
     },
 
-    getUpgrades: function() {
-
-        
+    selectPotentialUpgrade:function (){
+        let option = Math.floor(Math.random() * (this.potentialUpgrades.length + 0 ) + 0);
+        this.currentUpgrade = this.potentialUpgrades[option]
+        this.textForUpgrade(this.currentUpgrade)
+        return `${this.currentUpgradeText}`;
     },
+    
+    textForUpgrade: function(upgradeName) {
+        if (upgradeName === 'less lazy'){
+            this.currentUpgradeText = `Cat Companion: less lazy`
+        }
+    },
+
+    implementUpgrade: function() {
+        if (this.currentUpgrade === 'less lazy') this.upgradeLazy();
+    },
+
+    upgradeLazy: function() {
+        this.movementDelayMax--
+    },
+
     
     onUpdate: function({delta}){
         if (!this.inAnimation){   

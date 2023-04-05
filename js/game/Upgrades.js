@@ -11,8 +11,8 @@ Upgrades.prototype = {
     potentialAdditions: [
         'Ninja Star',
         'Spear',
+        'Cat Companion',
         // 'sword',
-        // 'Cat Companion',
     ],
     
     choiceOne: {
@@ -44,17 +44,28 @@ Upgrades.prototype = {
         this.levelUpScreen.choiceThree.text = '';
         this.duplicatesArray = [...this.potentialAdditions]
 
-        let randomIndex = Math.floor(Math.random() * (this.duplicatesArray.length - 0 ) + 0);
-        this.choiceOne.weapon = this.duplicatesArray[randomIndex]
-        this.duplicatesArray.splice(randomIndex, 1)
-        
-        randomIndex = Math.floor(Math.random() * (this.duplicatesArray.length - 0 ) + 0);
-        this.choiceTwo.weapon = this.duplicatesArray[randomIndex]
-        this.duplicatesArray.splice(randomIndex, 1)
+        console.log(this.duplicatesArray, this.potentialAdditions)
 
+        if (this.duplicatesArray.length > 0){
+            let randomIndex = Math.floor(Math.random() * (this.duplicatesArray.length - 0 ) + 0);
+            this.choiceOne.weapon = this.duplicatesArray[randomIndex]
+            this.duplicatesArray.splice(randomIndex, 1)
+        }
+
+        if (this.duplicatesArray.length > 0){
+            randomIndex = Math.floor(Math.random() * (this.duplicatesArray.length - 0 ) + 0);
+            this.choiceTwo.weapon = this.duplicatesArray[randomIndex]
+            this.duplicatesArray.splice(randomIndex, 1)
+        }
+        if (this.duplicatesArray.length > 0){ 
+            randomIndex = Math.floor(Math.random() * (this.duplicatesArray.length - 0 ) + 0);
+            this.choiceThree.weapon = this.duplicatesArray[randomIndex]
+            this.duplicatesArray.splice(randomIndex, 1)
+        }
         for (let i = 0; i < 3; i++){
             if (i === 0) this.menuLogics(this.choiceOne.weapon, i)
             if (i === 1) this.menuLogics(this.choiceTwo.weapon, i)
+            if (i === 2) this.menuLogics(this.choiceThree.weapon, i)
         }
 
         this.duplicatesArray = []
@@ -77,6 +88,12 @@ Upgrades.prototype = {
                 newEquipment = true
             }
         }
+        if (choice === 'Cat Companion'){
+            text = 'Cat Companion'
+            if (this.gameBoard.cat === undefined){
+                newEquipment = true
+            }
+        }
 
         if (slot === 0){
             if (newEquipment){
@@ -85,6 +102,7 @@ Upgrades.prototype = {
             else{
                 if (text === 'Ninja Star') this.levelUpScreen.choiceOne.text = this.gameBoard.ninjaStar.selectPotentialUpgrade();
                 if (text === 'Spear') this.levelUpScreen.choiceOne.text = this.gameBoard.spear.selectPotentialUpgrade();
+                if (text === 'Cat Companion') this.levelUpScreen.choiceOne.text = this.gameBoard.cat.selectPotentialUpgrade();
             }
         }
         else if (slot === 1){
@@ -94,6 +112,7 @@ Upgrades.prototype = {
             else{
                 if (text === 'Ninja Star') this.levelUpScreen.choiceTwo.text = this.gameBoard.ninjaStar.selectPotentialUpgrade();
                 if (text === 'Spear') this.levelUpScreen.choiceTwo.text = this.gameBoard.spear.selectPotentialUpgrade();
+                if (text === 'Cat Companion') this.levelUpScreen.choiceTwo.text = this.gameBoard.cat.selectPotentialUpgrade();
             }
         }
         else if (slot === 2){
@@ -103,6 +122,7 @@ Upgrades.prototype = {
             else{
                 if (text === 'Ninja Star')  this.levelUpScreen.choiceThree.text = this.gameBoard.ninjaStar.selectPotentialUpgrade();
                 if (text === 'Spear')  this.levelUpScreen.choiceThree.text = this.gameBoard.spear.selectPotentialUpgrade();
+                if (text === 'Cat Companion')  this.levelUpScreen.choiceThree.text = this.gameBoard.cat.selectPotentialUpgrade();
             }
         }
     },
@@ -111,8 +131,11 @@ Upgrades.prototype = {
         if (pointerSelection === 1){ // top selection
             this.handleChoice(this.choiceOne.weapon) 
         }
-        if (pointerSelection === 0){ // top selection
+        if (pointerSelection === 0){ // middle selection
             this.handleChoice(this.choiceTwo.weapon) 
+        }
+        if (pointerSelection === -1){ // bottom selection
+            this.handleChoice(this.choiceThree.weapon) 
         }
     },
     
@@ -133,6 +156,14 @@ Upgrades.prototype = {
             }
             else{   
                 this.gameBoard.spear.implementUpgrade();
+            }
+        }
+        if (choice === 'Cat Companion'){
+            if (this.gameBoard.cat === undefined){
+                this.gameBoard.initCat();
+            }
+            else{   
+                this.gameBoard.cat.implementUpgrade();
             }
         }
       

@@ -54,8 +54,8 @@ NinjaStar.prototype = {
                 y: this.percentageOfHeight(0.5),
             }))
             this.id = 2
-            this.x = this.knight.x + 5
-            this.y = this.knight.y + 5
+            this.x = this.knight.x - 5
+            this.y = this.knight.y + 2
         }
         if (this.gameBoard.numberOfNinjaStars === 3){
             this.ninjaStar = this.addChild(new CMP.SizedSprite({
@@ -66,8 +66,8 @@ NinjaStar.prototype = {
                 y: this.percentageOfHeight(0.5),
             }))
             this.id = 3
-            this.x = this.knight.x + 7
-            this.y = this.knight.y -6
+            this.x = this.knight.x - 7
+            this.y = this.knight.y - 3
 
         }
         
@@ -87,9 +87,6 @@ NinjaStar.prototype = {
             // scale: 2.0
         }))
 
-        // this.ninjaStarTwo.scale += this.size;
-        // this.ninjaStarTwo.x = this.percentageOfWidth(1)
-        // this.ninjaStarTwo.y = this.percentageOfHeight(1.5)
     },
 
     addThirdProjectileTwo: function() {
@@ -102,10 +99,6 @@ NinjaStar.prototype = {
             rotation: 0,
             // scale: 2.0
         }))
-
-        // this.ninjaStarThree.scale += this.size;
-        // this.ninjaStarThree.x = this.percentageOfWidth(1.5)
-        // this.ninjaStarThree.y = this.percentageOfHeight(-0.5)
     },
 
     AttackPattern: function() {
@@ -119,8 +112,7 @@ NinjaStar.prototype = {
 
                 this.attackInterval = 0;
                 this.tweenTo({
-
-                    x:  this.knight.x + this.throwDirection(),
+                    x:  this.knight.x + this.throwDirection() + this.endPointOffset(),
                     onComplete: () => {
                         this.inSwing = false;
                         this.visible = false;
@@ -128,13 +120,15 @@ NinjaStar.prototype = {
                         this.movesWithPlayer = true;
                         this.x = this.knight.x
                         this.y = this.knight.y
+                        
+                        // reset positions
                         if (this.id === 2){
                             this.x = this.knight.x + 5
-                            this.y = this.knight.y + 5
+                            this.y = this.knight.y + 2
                         }
                         if (this.id === 3){
                             this.x = this.knight.x + 7
-                            this.y = this.knight.y - 6
+                            this.y = this.knight.y - 3
                         }
                     }
                 });
@@ -146,7 +140,16 @@ NinjaStar.prototype = {
             return -200
         }
         return 200
+    },
 
+    endPointOffset: function() {
+        if (this.id === 2){
+            return +5;
+        }
+        if (this.id === 3){
+            return +7;
+        }
+        return 0;
     },
 
     selectPotentialUpgrade:function (){
