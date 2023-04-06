@@ -40,7 +40,6 @@ Collisions.prototype = {
         this.goblins = CMP.DispatchGet({type: "GetGoblin"});
         this.weapons = CMP.DispatchGet({type: "GetWeapons"})
 
-        console.log(this.weapons)
         for (let i = 0; i < this.weapons.length; i++){
        
             if (this.weapons[i].visible){

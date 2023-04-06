@@ -12,6 +12,7 @@ Upgrades.prototype = {
         'Ninja Star',
         'Spear',
         'Cat Companion',
+        'Hammer',
         // 'sword',
     ],
     
@@ -88,6 +89,12 @@ Upgrades.prototype = {
                 newEquipment = true
             }
         }
+        if (choice === 'Hammer'){
+            text = 'Hammer'
+            if (this.gameBoard.hanner === undefined){
+                newEquipment = true
+            }
+        }
         if (choice === 'Cat Companion'){
             text = 'Cat Companion'
             if (this.gameBoard.cat === undefined){
@@ -102,6 +109,7 @@ Upgrades.prototype = {
             else{
                 if (text === 'Ninja Star') this.levelUpScreen.choiceOne.text = this.gameBoard.ninjaStar.selectPotentialUpgrade();
                 if (text === 'Spear') this.levelUpScreen.choiceOne.text = this.gameBoard.spear.selectPotentialUpgrade();
+                if (text === 'Hammer') this.levelUpScreen.choiceOne.text = this.gameBoard.hammer.selectPotentialUpgrade();
                 if (text === 'Cat Companion') this.levelUpScreen.choiceOne.text = this.gameBoard.cat.selectPotentialUpgrade();
             }
         }
@@ -112,6 +120,7 @@ Upgrades.prototype = {
             else{
                 if (text === 'Ninja Star') this.levelUpScreen.choiceTwo.text = this.gameBoard.ninjaStar.selectPotentialUpgrade();
                 if (text === 'Spear') this.levelUpScreen.choiceTwo.text = this.gameBoard.spear.selectPotentialUpgrade();
+                if (text === 'Hammer') this.levelUpScreen.choiceTwo.text = this.gameBoard.hammer.selectPotentialUpgrade();
                 if (text === 'Cat Companion') this.levelUpScreen.choiceTwo.text = this.gameBoard.cat.selectPotentialUpgrade();
             }
         }
@@ -122,6 +131,7 @@ Upgrades.prototype = {
             else{
                 if (text === 'Ninja Star')  this.levelUpScreen.choiceThree.text = this.gameBoard.ninjaStar.selectPotentialUpgrade();
                 if (text === 'Spear')  this.levelUpScreen.choiceThree.text = this.gameBoard.spear.selectPotentialUpgrade();
+                if (text === 'Hammer')  this.levelUpScreen.choiceThree.text = this.gameBoard.hammer.selectPotentialUpgrade();
                 if (text === 'Cat Companion')  this.levelUpScreen.choiceThree.text = this.gameBoard.cat.selectPotentialUpgrade();
             }
         }
@@ -156,6 +166,15 @@ Upgrades.prototype = {
             }
             else{   
                 this.gameBoard.spear.implementUpgrade();
+            }
+        }
+        if (choice === 'Hammer'){
+        
+            if (this.gameBoard.hammer === undefined){
+                this.gameBoard.initHammer();
+            }
+            else{   
+                this.gameBoard.hammer.implementUpgrade();
             }
         }
         if (choice === 'Cat Companion'){

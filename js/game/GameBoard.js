@@ -35,7 +35,7 @@ GameBoard.prototype = {
         this.initBackGround();
         this.initKnight();
         this.initSwords();
-        this.initHammer();
+        // this.initHammer();
         // this.initSpear();
         // this.initCat();
         // this.initNinjaStar();
