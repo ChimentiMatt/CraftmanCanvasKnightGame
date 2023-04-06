@@ -7,8 +7,7 @@ Sword = function (params) {
 
 Sword.prototype = {
     // backgroundColor: 'teal',
-    // name: 'swords',
-    // level: 0,
+    name: 'sword',
     movesWithPlayer: true,
     equipped: true,
     inSwing: false,

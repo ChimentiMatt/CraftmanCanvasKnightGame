@@ -35,6 +35,7 @@ GameBoard.prototype = {
         this.initBackGround();
         this.initKnight();
         this.initSwords();
+        this.initHammer();
         // this.initSpear();
         // this.initCat();
         // this.initNinjaStar();
@@ -101,6 +102,16 @@ GameBoard.prototype = {
         this.numberOfNinjaStars = 1;
         this.ninjaStar = this.addChild(new NinjaStar({
             name: 'ninja start',
+            x: this.knight.x,
+            y: this.knight.y ,
+            visible: true,
+            gameboard: this,
+        }))
+    },
+
+    initHammer: function() {
+        this.hammer = this.addChild(new Hammer({
+            name: 'hammer',
             x: this.knight.x,
             y: this.knight.y ,
             visible: true,
@@ -205,6 +216,9 @@ GameBoard.prototype = {
         if (this.ninjaStarThree !== undefined){
             buildingArray.push(this.ninjaStarThree)
         }
+        if (this.hammer !== undefined){
+            buildingArray.push(this.hammer)   
+        }
         return [this.swordRight, this.swordLeft, ...buildingArray];
     },
 
@@ -291,9 +305,9 @@ GameBoard.prototype = {
                 aliveArray.push(this.goblins[i])
             }  
         }
-        // console.log('before', this.goblins.length)
+        console.log('goblins before', this.goblins.length)
         this.goblins = aliveArray
-        // console.log('after', this.goblins.length)
+        console.log('after', this.goblins.length)
     },
 
     clearExpiredOrbs: function() {
@@ -304,7 +318,7 @@ GameBoard.prototype = {
                 aliveArray.push(this.expOrbs[i])
             }  
         }
-        console.log('before', this.expOrbs.length)
+        console.log('orbs before', this.expOrbs.length)
         this.expOrbs = aliveArray
         console.log('after', this.expOrbs.length)
     },

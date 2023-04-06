@@ -24,8 +24,8 @@ NinjaStar.prototype = {
     upgradable: true,
     potentialUpgrades: [
         'penetration',
-        // 'size',
         'count'
+        // 'size',
     ],
     currentUpgrade: '',
     currentUpgradeText: '',
@@ -76,18 +76,6 @@ NinjaStar.prototype = {
 
     },
     
-    addSecondProjectileTwo: function() {
-        this.ninjaStarTwo = this.addChild(new CMP.SizedSprite({
-            width: 4,
-            height: 4,
-            image: 'ninjaStar',
-            x: this.percentageOfWidth(1),
-            y: this.percentageOfHeight(1.5),
-            rotation: 0,
-            // scale: 2.0
-        }))
-
-    },
 
     addThirdProjectileTwo: function() {
         this.ninjaStarTwo = this.addChild(new CMP.SizedSprite({
@@ -230,11 +218,9 @@ NinjaStar.prototype = {
 
         this.projectiles++
         if (this.projectiles === 2){
-            // this.addSecondProjectileTwo();
             this.gameBoard.initNinjaStarTwo();
         }
         else if (this.projectiles === 3){
-            // this.addThirdProjectileTwo();
             this.gameBoard.initNinjaStarThree();
             for(let i = 0; i < this.potentialUpgrades.length; i++){
                 if (this.potentialUpgrades[i] === 'count'){
