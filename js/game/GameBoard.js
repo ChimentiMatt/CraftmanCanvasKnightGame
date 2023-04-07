@@ -35,7 +35,11 @@ GameBoard.prototype = {
         this.initBackGround();
         this.initKnight();
         this.initSwords();
-        // this.initHammer();
+        this.initHammer();
+        // setTimeout(()=> {
+        //     this.initHammerTwo();
+
+        // }, 100)
         // this.initSpear();
         // this.initCat();
         // this.initNinjaStar();
@@ -109,16 +113,6 @@ GameBoard.prototype = {
         }))
     },
 
-    initHammer: function() {
-        this.hammer = this.addChild(new Hammer({
-            name: 'hammer',
-            x: this.knight.x,
-            y: this.knight.y ,
-            visible: true,
-            gameboard: this,
-        }))
-    },
-
     initNinjaStarTwo: function() {
         this.numberOfNinjaStars = 2;
         this.ninjaStarTwo = this.addChild(new NinjaStar({
@@ -142,6 +136,29 @@ GameBoard.prototype = {
         }))
         this.ninjaStar.attackInterval = 151; // sync up stars
         this.ninjaStarTwo.attackInterval = 151; // sync up stars
+    },
+
+    initHammer: function() {
+        this.numberOfHammers = 1;
+        this.hammer = this.addChild(new Hammer({
+            name: 'hammer',
+            x: this.knight.x,
+            y: this.knight.y ,
+            visible: true,
+            gameboard: this,
+        }))
+    },
+
+    initHammerTwo: function() {
+        this.numberOfHammers = 2;
+        this.hammerTwo = this.addChild(new Hammer({
+            name: 'hammer',
+            x: this.knight.x,
+            y: this.knight.y ,
+            visible: true,
+            gameboard: this,
+        }))
+        this.hammerTwo.resetHammerPositions();
     },
 
     initCat: function() {
@@ -204,6 +221,13 @@ GameBoard.prototype = {
     GetWeapons: function() {
         let buildingArray = []
 
+        
+        if (this.swordLeft !== undefined){
+            buildingArray.push(this.swordLeft)
+        }
+        if (this.swordRight !== undefined){
+            buildingArray.push(this.swordRight)
+        }
         if (this.spear !== undefined){
             buildingArray.push(this.spear)
         }
@@ -219,7 +243,11 @@ GameBoard.prototype = {
         if (this.hammer !== undefined){
             buildingArray.push(this.hammer)   
         }
-        return [this.swordRight, this.swordLeft, ...buildingArray];
+        if (this.hammerTwo !== undefined){
+            buildingArray.push(this.hammerTwo)   
+        }
+
+        return [...buildingArray];
     },
 
     GetInSwingSword: function() {

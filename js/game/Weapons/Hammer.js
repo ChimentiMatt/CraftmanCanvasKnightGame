@@ -6,7 +6,7 @@ Hammer = function (params) {
 };
 
 Hammer.prototype = {
-    // backgroundColor: 'teal',
+    backgroundColor: 'teal',
     name: 'hammer',
     movesWithPlayer: true,
     attackInterval: 151,
@@ -15,14 +15,13 @@ Hammer.prototype = {
     attackDuration: 100,
     projectiles: 1,
     id: 1,
-    xOffset: 4.5,
-    yOffset: 4.5,
+    xOffset: 4,
+    yOffset: 4,
     collisionCount: 0,
     maxCollisions: 999,
     equipped: false,
     upgradable: true,
     potentialUpgrades: [
-        'penetration',
         'count'
     ],
     currentUpgrade: '',
@@ -40,28 +39,43 @@ Hammer.prototype = {
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
         this.knight = CMP.DispatchGet({type: "GetKnight"});
 
-        this.hammer = this.addChild(new CMP.SizedSprite({
-            width: 6,
-            height: 6,
-            image: 'hammer',
-            x: this.percentageOfWidth(0.5),
-            y: this.percentageOfHeight(0.5),
-        }))
+        if (this.gameBoard.numberOfHammers === 1){
+            this.hammer = this.addChild(new CMP.SizedSprite({
+                width: 6,
+                height: 6,
+                image: 'hammer',
+                x: this.percentageOfWidth(0.5),
+                y: this.percentageOfHeight(0.5),
+            }))
+            this.id = 1;
+
+        }
+
+        if (this.gameBoard.numberOfHammers === 2){
+            this.hammerTwo = this.addChild(new CMP.SizedSprite({
+                width: 6,
+                height: 6,
+                image: 'hammer',
+                x: this.percentageOfWidth(0.5),
+                y: this.percentageOfHeight(0.5),
+            }))
+            this.id = 2;
+        }
 
         // centerX and centerY are how far away the orbit is from the knight
         this.centerX = this.percentageOfWidth(0.5) + 20
         this.centerY = this.percentageOfHeight(0.5) - 20
         this.radius = Math.min(this.centerX, this.centerY) * 0.8
-
+    
 
     },
 
     AttackPattern: function() {
+
         this.angle += this.speed;
   
         this.x = this.knight.x + (this.centerX * Math.cos(this.angle + Math.PI));
         this.y = this.knight.y + (this.centerY * Math.sin(this.angle + Math.PI));
-
         
         this.tweenTo({
             loop: true,
@@ -71,31 +85,53 @@ Hammer.prototype = {
 
     },
 
-    addThirdProjectileTwo: function() {
-        this.ninjaStarTwo = this.addChild(new CMP.SizedSprite({
-            width: 4,
-            height: 4,
-            image: 'ninjaStar',
-            x: this.percentageOfWidth(1.5),
-            y: this.percentageOfHeight(-0.5),
-            rotation: 0,
-            // scale: 2.0
-        }))
+    upgradeSize: function(value) {
+        this.height *= value
+        this.width *= value
+        this.hammer.width *=  value
+        this.hammer.height *= value
+        this.hammer.x = this.percentageOfWidth(0.5)
+        this.hammer.y = this.percentageOfHeight(0.5)
+        this.xOffset *= value
+        this.yOffset *= value
     },
 
-    // AttackPattern: function() {
-    //         this.attackInterval += 1;
-    //         this.inSwing = true;
-        
-    //         if (this.attackInterval >= this.attackSpeed){
-    //             this.inSwing = true;
-    //             this.visible = true;
-    //             this.movesWithPlayer = true;
+    upgradeProjectileCount: function() {
+        this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
 
-    //             this.attackInterval = 0;
+        this.projectiles++
+        if (this.projectiles === 2){
+            this.gameBoard.initHammerTwo();
+            this.resetHammerPositions();
+            // for(let i = 0; i < this.potentialUpgrades.length; i++){
+            //     if (this.potentialUpgrades[i] === 'count'){
+            //         this.potentialUpgrades.splice(i, 1)
+            //     }
+            // }
 
+        }
+    //     else if (this.projectiles === 3){
+    //         this.gameBoard.initNinjaStarThree();
+    //         for(let i = 0; i < this.potentialUpgrades.length; i++){
+    //             if (this.potentialUpgrades[i] === 'count'){
+    //                 this.potentialUpgrades.splice(i, 1)
+    //             }
     //         }
-    // },
+    //         this.currentUpgradeText = ''
+    //     }
+    },
+
+    resetHammerPositions: function() {
+        console.log('test', this.id)
+        if (this.id  === 1){
+            
+        }
+        else if (this.id === 2){
+            this.x = this.knight.x - (this.centerX * Math.cos(this.angle + Math.PI));
+            this.y = this.knight.y - (this.centerY * Math.sin(this.angle + Math.PI));
+        }
+
+    },
 
     throwDirection: function() {
         if (this.knight.scaleX === -1){
@@ -128,15 +164,15 @@ Hammer.prototype = {
         // else if (upgradeName === 'size'){
         //     this.currentUpgradeText = `Ninja Star: size ${this.size} -> ${this.size + 2} (max 3)` 
         // }
-        // else if (upgradeName === 'count'){
-        //     this.currentUpgradeText = `Ninja Star: projectiles ${this.projectiles} -> ${this.projectiles +1} (max 3)` 
-        // }
+        if (upgradeName === 'count'){
+            this.currentUpgradeText = `Hammer Count:  ${this.projectiles} -> ${this.projectiles +1} (max 2)` 
+        }
     },
 
     implementUpgrade: function() {
         // if (this.currentUpgrade === 'penetration') this.upgradePenetration();
         // if (this.currentUpgrade === 'size') this.upgradeSize();
-        // if (this.currentUpgrade === 'count') this.upgradeProjectileCount();
+        if (this.currentUpgrade === 'count') this.upgradeProjectileCount();
     },
 
 

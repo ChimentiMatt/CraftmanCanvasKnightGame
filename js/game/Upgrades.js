@@ -91,7 +91,7 @@ Upgrades.prototype = {
         }
         if (choice === 'Hammer'){
             text = 'Hammer'
-            if (this.gameBoard.hanner === undefined){
+            if (this.gameBoard.hammer === undefined){
                 newEquipment = true
             }
         }
