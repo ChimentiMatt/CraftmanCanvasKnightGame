@@ -36,10 +36,6 @@ GameBoard.prototype = {
         this.initKnight();
         this.initSwords();
         this.initHammer();
-        // setTimeout(()=> {
-        //     this.initHammerTwo();
-
-        // }, 100)
         // this.initSpear();
         // this.initCat();
         // this.initNinjaStar();
@@ -333,9 +329,9 @@ GameBoard.prototype = {
                 aliveArray.push(this.goblins[i])
             }  
         }
-        console.log('goblins before', this.goblins.length)
+        // console.log('goblins before', this.goblins.length)
         this.goblins = aliveArray
-        console.log('after', this.goblins.length)
+        // console.log('after', this.goblins.length)
     },
 
     clearExpiredOrbs: function() {
@@ -346,9 +342,9 @@ GameBoard.prototype = {
                 aliveArray.push(this.expOrbs[i])
             }  
         }
-        console.log('orbs before', this.expOrbs.length)
+        // console.log('orbs before', this.expOrbs.length)
         this.expOrbs = aliveArray
-        console.log('after', this.expOrbs.length)
+        // console.log('after', this.expOrbs.length)
     },
 
     onUpdate: function({delta}){

@@ -6,7 +6,7 @@ Hammer = function (params) {
 };
 
 Hammer.prototype = {
-    backgroundColor: 'teal',
+    // backgroundColor: 'teal',
     name: 'hammer',
     movesWithPlayer: true,
     attackInterval: 151,
@@ -32,8 +32,6 @@ Hammer.prototype = {
     centerY: 0,
     radius: 0,
     angle: 0,
-
-
     
     init: function() {
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
@@ -71,7 +69,6 @@ Hammer.prototype = {
     },
 
     AttackPattern: function() {
-
         this.angle += this.speed;
   
         this.x = this.knight.x + (this.centerX * Math.cos(this.angle + Math.PI));
@@ -103,34 +100,26 @@ Hammer.prototype = {
         if (this.projectiles === 2){
             this.gameBoard.initHammerTwo();
             this.resetHammerPositions();
-            // for(let i = 0; i < this.potentialUpgrades.length; i++){
-            //     if (this.potentialUpgrades[i] === 'count'){
-            //         this.potentialUpgrades.splice(i, 1)
-            //     }
-            // }
-
+            for(let i = 0; i < this.potentialUpgrades.length; i++){
+                if (this.potentialUpgrades[i] === 'count'){
+                    this.potentialUpgrades.splice(i, 1)
+                }
+            }
         }
-    //     else if (this.projectiles === 3){
-    //         this.gameBoard.initNinjaStarThree();
-    //         for(let i = 0; i < this.potentialUpgrades.length; i++){
-    //             if (this.potentialUpgrades[i] === 'count'){
-    //                 this.potentialUpgrades.splice(i, 1)
-    //             }
-    //         }
-    //         this.currentUpgradeText = ''
-    //     }
     },
 
     resetHammerPositions: function() {
         console.log('test', this.id)
         if (this.id  === 1){
-            
+            this.angle = 0;
+            this.x = this.knight.x + (this.centerX * Math.cos(this.angle + Math.PI));
+            this.y = this.knight.y + (this.centerY * Math.sin(this.angle + Math.PI));
         }
         else if (this.id === 2){
+            this.angle = 180;
             this.x = this.knight.x - (this.centerX * Math.cos(this.angle + Math.PI));
             this.y = this.knight.y - (this.centerY * Math.sin(this.angle + Math.PI));
         }
-
     },
 
     throwDirection: function() {
@@ -151,30 +140,41 @@ Hammer.prototype = {
     },
 
     selectPotentialUpgrade:function (){
-        let option = Math.floor(Math.random() * (this.potentialUpgrades.length + 0 ) + 0);
+        let option = Math.floor(Math.random() * (this.potentialUpgrades.length ) + 0);
         this.currentUpgrade = this.potentialUpgrades[option]
         this.textForUpgrade(this.currentUpgrade)
         return `${this.currentUpgradeText}`;
     },
 
     textForUpgrade: function(upgradeName) {
-        // if (upgradeName === 'penetration'){
-        //     this.currentUpgradeText = `Ninja Star: penetration ${this.maxCollisions} -> ${this.maxCollisions + 1} `
-        // }
-        // else if (upgradeName === 'size'){
-        //     this.currentUpgradeText = `Ninja Star: size ${this.size} -> ${this.size + 2} (max 3)` 
-        // }
         if (upgradeName === 'count'){
             this.currentUpgradeText = `Hammer Count:  ${this.projectiles} -> ${this.projectiles +1} (max 2)` 
         }
     },
 
     implementUpgrade: function() {
-        // if (this.currentUpgrade === 'penetration') this.upgradePenetration();
-        // if (this.currentUpgrade === 'size') this.upgradeSize();
         if (this.currentUpgrade === 'count') this.upgradeProjectileCount();
+        this.removeIfNoMoreUpgrades();
     },
 
+    removeIfNoMoreUpgrades: function() {
+        this.upgrades = CMP.DispatchGet({type: "GetUpgrades"}) 
+        if (this.potentialUpgrades.length === 0){
+
+            // this.currentUpgrade = '';
+            // this.currentUpgradeText = '';
+
+
+            for( let i = 0; i < this.upgrades.potentialAdditions.length; i++){
+                console.log(this.upgrades.potentialAdditions[i])
+                if (this.upgrades.potentialAdditions[i] === "Hammer"){
+                    this.upgrades.potentialAdditions.splice(i, 1);
+                }
+            }
+            this.upgrades.potentialAdditions.splice(3, 1);
+            console.log(this.upgrades.potentialAdditions)
+        }
+    },
 
 
     GetInSwing: function() {
