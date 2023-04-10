@@ -44,13 +44,13 @@ Upgrades.prototype = {
         this.levelUpScreen.choiceTwo.text = '';
         this.levelUpScreen.choiceThree.text = '';
         this.duplicatesArray = [...this.potentialAdditions]
+        console.log("DA", this.duplicatesArray)
 
         if (this.duplicatesArray.length > 0){
             let randomIndex = Math.floor(Math.random() * (this.duplicatesArray.length - 0 ) + 0);
             this.choiceOne.weapon = this.duplicatesArray[randomIndex]
             this.duplicatesArray.splice(randomIndex, 1)
         }
-
         if (this.duplicatesArray.length > 0){
             randomIndex = Math.floor(Math.random() * (this.duplicatesArray.length - 0 ) + 0);
             this.choiceTwo.weapon = this.duplicatesArray[randomIndex]

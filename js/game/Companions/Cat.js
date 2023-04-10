@@ -7,6 +7,7 @@ Cat = function (params) {
 
 Cat.prototype = {
     // backgroundColor: 'teal',
+    name: 'Cat Companion',
     level: 0,
     experience: 0,
     health: 5,
@@ -18,7 +19,7 @@ Cat.prototype = {
     upgradable: true,
     movementDelayMax: 6,
     potentialUpgrades: [
-        'less lazy',
+        // 'less lazy',
     ],
 
     init: function() {
@@ -35,6 +36,8 @@ Cat.prototype = {
             // scale: 30.75
         }))
         this.equipped = true;
+
+        this.removeIfNoMoreUpgrades();
     },
     
     huntGoblins: function() {
@@ -75,10 +78,23 @@ Cat.prototype = {
         if (upgradeName === 'less lazy'){
             this.currentUpgradeText = `Cat Companion: less lazy`
         }
+        this.removeIfNoMoreUpgrades();
     },
 
     implementUpgrade: function() {
         if (this.currentUpgrade === 'less lazy') this.upgradeLazy();
+    },
+
+    removeIfNoMoreUpgrades: function() {
+        this.upgrades = CMP.DispatchGet({type: "GetUpgrades"}) 
+        if (this.potentialUpgrades.length === 0){
+
+            for( let i = 0; i < this.upgrades.potentialAdditions.length; i++){
+                if (this.upgrades.potentialAdditions[i] === 'Cat Companion'){
+                    this.upgrades.potentialAdditions.splice(i, 1);
+                }
+            }
+        }
     },
 
     upgradeLazy: function() {

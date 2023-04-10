@@ -65,7 +65,7 @@ Hammer.prototype = {
         this.centerY = this.percentageOfHeight(0.5) - 20
         this.radius = Math.min(this.centerX, this.centerY) * 0.8
     
-
+        this.removeIfNoMoreUpgrades();
     },
 
     AttackPattern: function() {
@@ -100,6 +100,7 @@ Hammer.prototype = {
         if (this.projectiles === 2){
             this.gameBoard.initHammerTwo();
             this.resetHammerPositions();
+            
             for(let i = 0; i < this.potentialUpgrades.length; i++){
                 if (this.potentialUpgrades[i] === 'count'){
                     this.potentialUpgrades.splice(i, 1)
@@ -161,10 +162,6 @@ Hammer.prototype = {
         this.upgrades = CMP.DispatchGet({type: "GetUpgrades"}) 
         if (this.potentialUpgrades.length === 0){
 
-            // this.currentUpgrade = '';
-            // this.currentUpgradeText = '';
-
-
             for( let i = 0; i < this.upgrades.potentialAdditions.length; i++){
                 console.log(this.upgrades.potentialAdditions[i])
                 if (this.upgrades.potentialAdditions[i] === "Hammer"){
@@ -172,7 +169,6 @@ Hammer.prototype = {
                 }
             }
             this.upgrades.potentialAdditions.splice(3, 1);
-            console.log(this.upgrades.potentialAdditions)
         }
     },
 

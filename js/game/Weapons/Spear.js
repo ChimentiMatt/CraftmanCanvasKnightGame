@@ -7,7 +7,7 @@ Spear = function (params) {
 
 Spear.prototype = {
     // backgroundColor: 'teal',
-    name: 'spear',
+    name: 'Spear',
     level: 0,
     movesWithPlayer: true,
     attackInterval: 301,
@@ -21,7 +21,7 @@ Spear.prototype = {
     equipped: false,
     upgradable: true,
     potentialUpgrades: [
-        'duration',
+        // 'duration',
         // 'size'
     ],
 
@@ -36,6 +36,7 @@ Spear.prototype = {
         }))
 
         this.equipped = true;
+        this.removeIfNoMoreUpgrades();
     },
 
     AttackPattern: function() {
@@ -54,21 +55,27 @@ Spear.prototype = {
     },
 
     selectPotentialUpgrade:function (){
+        let option = Math.floor(Math.random() * (this.potentialUpgrades.length + 0 ) + 0);
+        this.currentUpgrade = this.potentialUpgrades[option]
+        this.textForUpgrade(this.currentUpgrade)
 
-        let option = Math.floor(Math.random() * (this.potentialUpgrades.length + 0 + 1) + 0);
-        this.currentUpgrade = 'duration'
-        this.currentUpgradeText = `+ time`
-        return `${this.currentUpgrade}  ${this.currentUpgradeText}`;
     },
 
     implementUpgrade: function() {
-        console.log('dur', this.currentUpgrade)
+        if (this.currentUpgrade === 'duration') this.upgradeDuration();
+        this.removeIfNoMoreUpgrades();
+    },
 
-        if (this.currentUpgrade === 'duration') {
-         
-            this.upgradeDuration();
+    removeIfNoMoreUpgrades: function() {
+        this.upgrades = CMP.DispatchGet({type: "GetUpgrades"}) 
+        if (this.potentialUpgrades.length === 0){
+
+            for( let i = 0; i < this.upgrades.potentialAdditions.length; i++){
+                if (this.upgrades.potentialAdditions[i] === "Spear"){
+                    this.upgrades.potentialAdditions.splice(i, 1);
+                }
+            }
         }
-
     },
 
     upgradeDuration: function() {

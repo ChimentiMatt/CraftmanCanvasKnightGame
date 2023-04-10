@@ -7,7 +7,7 @@ NinjaStar = function (params) {
 
 NinjaStar.prototype = {
     // backgroundColor: 'teal',
-    name: 'ninja star',
+    name: 'Ninja Star',
     level: 0,
     movesWithPlayer: true,
     attackInterval: 151,
@@ -25,7 +25,6 @@ NinjaStar.prototype = {
     potentialUpgrades: [
         'penetration',
         'count'
-        // 'size',
     ],
     currentUpgrade: '',
     currentUpgradeText: '',
@@ -68,12 +67,11 @@ NinjaStar.prototype = {
             this.id = 3
             this.x = this.knight.x - 7
             this.y = this.knight.y - 3
-
         }
-        
         this.equipped = true;
         this.visible = false
 
+        this.removeIfNoMoreUpgrades();
     },
     
 
@@ -145,6 +143,7 @@ NinjaStar.prototype = {
         this.currentUpgrade = this.potentialUpgrades[option]
         this.textForUpgrade(this.currentUpgrade)
 
+
         // this.currentUpgrade = 'penetration'
         // this.currentUpgradeText = `Ninja Star: penetration ${this.maxCollisions} -> ${this.maxCollisions + 1}`
         return `${this.currentUpgradeText}`;
@@ -152,7 +151,7 @@ NinjaStar.prototype = {
 
     textForUpgrade: function(upgradeName) {
         if (upgradeName === 'penetration'){
-            this.currentUpgradeText = `Ninja Star: penetration ${this.maxCollisions} -> ${this.maxCollisions + 1} `
+            this.currentUpgradeText = `Ninja Star: penetration ${this.maxCollisions} -> ${this.maxCollisions + 1} (max 5) `
         }
         else if (upgradeName === 'size'){
             this.currentUpgradeText = `Ninja Star: size ${this.size} -> ${this.size + 2} (max 3)` 
@@ -166,6 +165,19 @@ NinjaStar.prototype = {
         if (this.currentUpgrade === 'penetration') this.upgradePenetration();
         if (this.currentUpgrade === 'size') this.upgradeSize();
         if (this.currentUpgrade === 'count') this.upgradeProjectileCount();
+        this.removeIfNoMoreUpgrades();
+    },
+
+    removeIfNoMoreUpgrades: function() {
+        this.upgrades = CMP.DispatchGet({type: "GetUpgrades"}) 
+        if (this.potentialUpgrades.length === 0){
+
+            for( let i = 0; i < this.upgrades.potentialAdditions.length; i++){
+                if (this.upgrades.potentialAdditions[i] === "Ninja Star"){
+                    this.upgrades.potentialAdditions.splice(i, 1);
+                }
+            }
+        }
     },
 
     upgradePenetration: function() {
@@ -177,6 +189,14 @@ NinjaStar.prototype = {
         }
         if (this.gameBoard.numberOfNinjaStars === 3){
             this.gameBoard.ninjaStarThree.maxCollisions++
+        }
+
+        if (this.maxCollisions >= 5){
+            for(let i = 0; i < this.potentialUpgrades.length; i++){
+                if (this.potentialUpgrades[i] === 'penetration'){
+                    this.potentialUpgrades.splice(i, 1)
+                }
+            }
         }
     },
 
@@ -209,7 +229,6 @@ NinjaStar.prototype = {
                     this.potentialUpgrades.splice(i, 1)
                 }
             }
-
         }
     },
 
@@ -222,12 +241,12 @@ NinjaStar.prototype = {
         }
         else if (this.projectiles === 3){
             this.gameBoard.initNinjaStarThree();
+
             for(let i = 0; i < this.potentialUpgrades.length; i++){
                 if (this.potentialUpgrades[i] === 'count'){
                     this.potentialUpgrades.splice(i, 1)
                 }
             }
-            this.currentUpgradeText = ''
         }
     },
 
