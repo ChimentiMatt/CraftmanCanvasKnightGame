@@ -20,9 +20,51 @@ Knight.prototype = {
         this.knight = this.addChild(new CMP.SizedSprite({
             width: 8,
             height: 8,
-            image: 'knight',
+            // image: 'knight',
             x: this.percentageOfWidth(0.5),
             y: this.percentageOfHeight(0.5),
+        }))
+
+        this.initAnimations();
+        // this.walkingAnimation.playFromFrame(1);
+    },
+
+    handleWalkAnimations: function(walkingBool) {
+        if (walkingBool) {
+            this.standingAnimation.visible = false;
+            this.walkingAnimation.visible = true;
+        }
+        else {
+            this.standingAnimation.visible = true;
+            this.walkingAnimation.visible = false;
+        }
+    },
+
+    initAnimations: function() {
+        this.walkingAnimation = this.addChild(new CMP.ImageSequence({
+            prepend: "walk_",
+            totalFrames: 1,
+            fps: 1,
+            width: 8,
+            height: 8,
+            x: this.percentageOfWidth(0.5),
+            y: this.percentageOfHeight(0.5),
+            startAtOne: true,
+            addZero: false,
+            visible: false,
+            loop: true,
+        }))
+        this.standingAnimation = this.addChild(new CMP.ImageSequence({
+            prepend: "stand_",
+            totalFrames: 1,
+            fps: 1,
+            width: 8,
+            height: 8,
+            x: this.percentageOfWidth(0.5),
+            y: this.percentageOfHeight(0.5),
+            startAtOne: true,
+            addZero: false,
+            visible: true
         }))
     },
 

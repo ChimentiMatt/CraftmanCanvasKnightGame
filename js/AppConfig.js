@@ -103,6 +103,12 @@ AppConfig = {
 		{id: "goblin", src: "assets/images/goblin.png"},
 		{id: "exp", src: "assets/images/exp.png"},
 		{id: "pointer", src: "assets/images/pointer.png"},
+
+		{id: "walk_1", src: "assets/images/knight/walk/walk_1.png"},
+		{id: "stand_1", src: "assets/images/knight/stand/stand_1.png"},
+		{id: "gWalk_1", src: "assets/images/goblin/gWalk_1.png"},
+		{id: "gWalk_2", src: "assets/images/goblin/gWalk_2.png"},
+
 	],
 	CUSTOMIZABLE: [
 		{
@@ -120,7 +126,8 @@ AppConfig = {
 	},
 	PLUGINS: [
 		"CMP.CustomShape.js",
-		"CMP.ImageNumber.js"
+		"CMP.ImageNumber.js",
+		"CMP.ImageSequence.js"
 	],
 	DevFiles: [
 		"AutomatedTester.js"

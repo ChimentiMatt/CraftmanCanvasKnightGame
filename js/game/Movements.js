@@ -22,6 +22,9 @@ Movements.prototype = {
         this.addUpdate(this.onUpdate.bind(this));
 
         addEventListener('keydown', (event) => {
+            this.knight = CMP.DispatchGet({type: "GetKnight"})
+            this.knight.handleWalkAnimations(true)
+
             if (event.code === 'ArrowUp'){
                 this.pressedUp = 1;
             }
@@ -40,6 +43,9 @@ Movements.prototype = {
           })
 
           addEventListener('keyup', (event) => {
+            this.knight = CMP.DispatchGet({type: "GetKnight"})
+            this.knight.handleWalkAnimations(false)
+
             if (event.code === 'ArrowUp'){
                 this.pressedUp = 0;
             }
@@ -87,7 +93,7 @@ Movements.prototype = {
     movement: function() {
             let expOrbs = this.gameBoard.expOrbs;
             this.weapons = CMP.DispatchGet({type: "GetWeapons"})
-           
+        
             if (this.pressedUp === 1){
                 for (let i = 0; i < this.background.backgroundArray.length; i++){
                     this.background.backgroundArray[i].y += this.knight.movementSpeed;
@@ -176,6 +182,8 @@ Movements.prototype = {
         }
     },
 
+
+
     // collisionMonsterToKnight: function() {
     //     for (let i = 0; i < this.goblins.length; i++){
     //         if (this.goblins[i].x -4 >= this.knight.x - 8 && this.goblins[i].x + 4 <= this.knight.x + 8){
@@ -188,7 +196,6 @@ Movements.prototype = {
     // },
 
     repeatBackground: function() {
-
         for (let i = 0; i < this.background.backgroundArray.length; i++){
             if (this.background.backgroundArray[i].x <= 0){ // out of bounds left
                 this.background.backgroundArray[i].x = (450 * 2)

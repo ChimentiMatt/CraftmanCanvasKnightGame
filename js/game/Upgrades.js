@@ -44,7 +44,6 @@ Upgrades.prototype = {
         this.levelUpScreen.choiceTwo.text = '';
         this.levelUpScreen.choiceThree.text = '';
         this.duplicatesArray = [...this.potentialAdditions]
-        console.log("DA", this.duplicatesArray)
 
         if (this.duplicatesArray.length > 0){
             let randomIndex = Math.floor(Math.random() * (this.duplicatesArray.length - 0 ) + 0);

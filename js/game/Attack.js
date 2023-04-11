@@ -12,7 +12,6 @@ Attack.prototype = {
     init: function() {
         this.addUpdate(this.onUpdate.bind(this));
         this.weapons = CMP.DispatchGet({type: "GetWeapons"})
-        console.log(this.weapons)
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
     },
 

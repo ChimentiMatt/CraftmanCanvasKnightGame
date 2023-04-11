@@ -20,16 +20,6 @@ SceneConfig = {
 			name: 'tutorial',
 			description: 'Tutorial',
 			children: [
-				// {
-				// 	class_name: Background,
-				// 	status: 'enabled',
-				// 	layer: 0
-				// },
-				// {
-				// 	class_name: GameBoard,
-				// 	status: 'enabled',
-				// 	layer: 1
-				// },
 				{
 					class_name: GameBoard,
 					status: 'enabled',

@@ -110,7 +110,6 @@ Hammer.prototype = {
     },
 
     resetHammerPositions: function() {
-        console.log('test', this.id)
         if (this.id  === 1){
             this.angle = 0;
             this.x = this.knight.x + (this.centerX * Math.cos(this.angle + Math.PI));
