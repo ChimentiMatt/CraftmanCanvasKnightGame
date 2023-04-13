@@ -12,6 +12,7 @@ Knight.prototype = {
     pointsNeededToLevel: 5,
     health: 5,
     movementSpeed: 1,
+    walking: false,
 
     init: function() {
         this.gameBoard = CMP.DispatchGet({type: "GetGameBoard"});
@@ -26,25 +27,31 @@ Knight.prototype = {
         }))
 
         this.initAnimations();
-        // this.walkingAnimation.playFromFrame(1);
     },
 
-    handleWalkAnimations: function(walkingBool) {
-        if (walkingBool) {
+    handleWalkAnimations: function(walkingPressed, multipleKeysDown) {
+        if (walkingPressed) {
             this.standingAnimation.visible = false;
             this.walkingAnimation.visible = true;
+            if (!this.walkingAnimation._playing)
+            {
+                this.walkingAnimation.playFromFrame(0);
+            }
         }
         else {
-            this.standingAnimation.visible = true;
-            this.walkingAnimation.visible = false;
+            if (this.walkingAnimation._playing && !multipleKeysDown)
+            {
+                this.standingAnimation.visible = true;
+                this.walkingAnimation.visible = false;
+            }
         }
     },
 
     initAnimations: function() {
         this.walkingAnimation = this.addChild(new CMP.ImageSequence({
             prepend: "walk_",
-            totalFrames: 1,
-            fps: 1,
+            totalFrames: 2,
+            fps: 6,
             width: 8,
             height: 8,
             x: this.percentageOfWidth(0.5),

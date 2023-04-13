@@ -23,7 +23,6 @@ Movements.prototype = {
 
         addEventListener('keydown', (event) => {
             this.knight = CMP.DispatchGet({type: "GetKnight"})
-            this.knight.handleWalkAnimations(true)
 
             if (event.code === 'ArrowUp'){
                 this.pressedUp = 1;
@@ -40,6 +39,9 @@ Movements.prototype = {
             if (event.code === 'Space'){
                 this.pressedSpace = 1;
             }
+
+            this.knight.handleWalkAnimations(true, true)
+            
           })
 
           addEventListener('keyup', (event) => {
@@ -61,6 +63,18 @@ Movements.prototype = {
             if (event.code === 'Space'){
                 this.pressedSpace = 0;
             }
+
+            if (this.pressedUp || this.pressedDown || this.pressedLeft || this.pressedRight ){
+                
+                // if two or more inputs (such as top and right) do not restart walking animation
+                if (this.pressedUp + this.pressedDown + this.pressedLeft + this.pressedRight > 1){
+                    this.knight.handleWalkAnimations(true, true)
+                }
+                else{
+                    this.knight.handleWalkAnimations(true, false)
+                }
+            }
+
           })
 
 

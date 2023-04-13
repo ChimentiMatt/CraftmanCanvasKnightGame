@@ -105,6 +105,7 @@ AppConfig = {
 		{id: "pointer", src: "assets/images/pointer.png"},
 
 		{id: "walk_1", src: "assets/images/knight/walk/walk_1.png"},
+		{id: "walk_2", src: "assets/images/knight/walk/walk_2.png"},
 		{id: "stand_1", src: "assets/images/knight/stand/stand_1.png"},
 		{id: "gWalk_1", src: "assets/images/goblin/gWalk_1.png"},
 		{id: "gWalk_2", src: "assets/images/goblin/gWalk_2.png"},
