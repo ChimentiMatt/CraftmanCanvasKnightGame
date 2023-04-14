@@ -1,6 +1,6 @@
 Spear = function (params) {
     params.width = 4;
-    params.height = 33;
+    params.height = 16;
     this.construct(params);
     this.init();
 };
@@ -15,7 +15,7 @@ Spear.prototype = {
     attackSpeed: 300,
     attackDuration: 50,
     xOffset: 8,
-    yOffset: 20,
+    yOffset: 8,
     collisionCount: 0,
     maxCollisions: 9999,
     equipped: false,
@@ -28,7 +28,7 @@ Spear.prototype = {
     init: function() {
         this.spear = this.addChild(new CMP.SizedSprite({
             width: 4,
-            height: 33,
+            height: 16,
             image: 'spear',
             x: this.percentageOfWidth(.5),
             y: this.percentageOfHeight(0.5),
@@ -68,7 +68,8 @@ Spear.prototype = {
 
     removeIfNoMoreUpgrades: function() {
         this.upgrades = CMP.DispatchGet({type: "GetUpgrades"}) 
-        if (this.potentialUpgrades.length === 0){
+   
+        if (this.potentialUpgrades.length === 0 && this.upgrades !== undefined){
 
             for( let i = 0; i < this.upgrades.potentialAdditions.length; i++){
                 if (this.upgrades.potentialAdditions[i] === "Spear"){

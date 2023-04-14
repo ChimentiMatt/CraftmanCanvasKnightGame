@@ -70,7 +70,7 @@ GameBoard.prototype = {
     initSwords: function() {
         this.swordRight = this.addChild(new Sword({
             name: 'Right Sword',
-            x: this.knight.x + 24,
+            x: this.knight.x + 12,
             y: this.knight.y + 1,
             rotation: 90,
             visible: true,
@@ -78,7 +78,7 @@ GameBoard.prototype = {
         }))
         this.swordLeft = this.addChild(new Sword({
             name: 'Left Sword',
-            x: this.knight.x - 24,
+            x: this.knight.x - 12,
             y: this.knight.y + 1,
             rotation: 90,
             scaleY: -1,
@@ -90,9 +90,10 @@ GameBoard.prototype = {
     initSpear: function() {
         this.spear = this.addChild(new Spear({
             name: 'spear',
-            x: this.knight.x,
-            y: this.knight.y - 22,
+            x: this.knight.x + 13,
+            y: this.knight.y - 13,
             visible: true,
+            rotation: 50,
             gameboard: this,
         }))
         

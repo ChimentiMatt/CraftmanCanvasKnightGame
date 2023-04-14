@@ -1,6 +1,6 @@
 Sword = function (params) {
-    params.width = 16;
-    params.height = 32;
+    params.width = 8;
+    params.height = 16;
     this.construct(params);
     this.init();
 };
@@ -14,15 +14,15 @@ Sword.prototype = {
     attackInterval: 0,
     attackSpeed: 100,
     attackDuration: 10,
-    xOffset: 20,
-    yOffset: 7,
+    xOffset: 10,
+    yOffset: 5,
     collisionCount: 0,
     maxCollisions: 9999,
 
     init: function() {
         this.sword = this.addChild(new CMP.SizedSprite({
-            width: 16,
-            height: 32,
+            width: 8,
+            height: 16,
             image: 'sword',
             x: this.percentageOfWidth(.5),
             y: this.percentageOfHeight(0.5),
