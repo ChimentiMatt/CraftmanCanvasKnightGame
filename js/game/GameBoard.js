@@ -14,6 +14,7 @@ GameBoard.prototype = {
     spawnInterval: 10,
     paused: false,
     inLevelUpScreen: false,
+    timer: 0,
 
     customAssets: [
     ],
@@ -42,6 +43,7 @@ GameBoard.prototype = {
         this.initGoblinWave();
         this.initHealth();
         this.initExperienceGage();
+        this.initTimer();
         
         this.movements = this.addChild(new Movements({gameboard: this}));
         // this.levelUpScreen = this.addChild(new LevelUpScreen({gameboard: this}));  
@@ -192,6 +194,26 @@ GameBoard.prototype = {
             font: "5pt arial",
             color: "black"
         }));
+    },
+
+    initTimer: function() {
+        this.timerText = this.addChild(new CMP.Text({
+            x: this.percentageOfWidth(0.5),
+            y: this.percentageOfHeight(0.1),
+            lineWidth: 290,
+            text: 'Time:' + this.timer,
+            textAlign: "center",
+            textBaseline: "middle",
+            font: "5pt arial",
+            color: "black"
+        }));
+
+      setInterval(() => {
+        if (!this.paused){
+            this.timer++
+            this.timerText.text = 'Time:' + this.timer;
+        }
+      }, 1000)  
     },
 
     dropExpOrb: function(x, y) {
