@@ -92,10 +92,10 @@ GameBoard.prototype = {
     initSpear: function() {
         this.spear = this.addChild(new Spear({
             name: 'spear',
-            x: this.knight.x + 13,
+            x: this.knight.x,
             y: this.knight.y - 13,
             visible: true,
-            rotation: 50,
+            // rotation: 50,
             gameboard: this,
         }))
         

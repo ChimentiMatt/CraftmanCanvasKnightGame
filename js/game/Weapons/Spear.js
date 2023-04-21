@@ -15,7 +15,7 @@ Spear.prototype = {
     attackSpeed: 300,
     attackDuration: 50,
     xOffset: 8,
-    yOffset: 8,
+    yOffset: 12,
     collisionCount: 0,
     maxCollisions: 9999,
     equipped: false,

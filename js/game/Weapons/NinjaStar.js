@@ -172,7 +172,7 @@ NinjaStar.prototype = {
         this.upgrades = CMP.DispatchGet({type: "GetUpgrades"}) 
         if (this.potentialUpgrades.length === 0){
 
-            for( let i = 0; i < this.upgrades.potentialAdditions.length; i++){
+            for (let i = 0; i < this.upgrades.potentialAdditions.length; i++){
                 if (this.upgrades.potentialAdditions[i] === "Ninja Star"){
                     this.upgrades.potentialAdditions.splice(i, 1);
                 }
@@ -239,7 +239,7 @@ NinjaStar.prototype = {
         if (this.projectiles === 2){
             this.gameBoard.initNinjaStarTwo();
         }
-        else if (this.projectiles === 3){
+        else if (this.projectiles >= 3){
             this.gameBoard.initNinjaStarThree();
 
             for(let i = 0; i < this.potentialUpgrades.length; i++){

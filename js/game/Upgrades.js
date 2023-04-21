@@ -43,7 +43,11 @@ Upgrades.prototype = {
         this.levelUpScreen.choiceOne.text = '';
         this.levelUpScreen.choiceTwo.text = '';
         this.levelUpScreen.choiceThree.text = '';
+        let possibleChoiceTwo = false;
+        let possibleChoiceThree = false;
         this.duplicatesArray = [...this.potentialAdditions]
+        console.log('!!!!!!!!!!!', this.potentialAdditions)
+        
 
         if (this.duplicatesArray.length > 0){
             let randomIndex = Math.floor(Math.random() * (this.duplicatesArray.length - 0 ) + 0);
@@ -54,16 +58,18 @@ Upgrades.prototype = {
             randomIndex = Math.floor(Math.random() * (this.duplicatesArray.length - 0 ) + 0);
             this.choiceTwo.weapon = this.duplicatesArray[randomIndex]
             this.duplicatesArray.splice(randomIndex, 1)
+            possibleChoiceTwo = true;
         }
         if (this.duplicatesArray.length > 0){ 
             randomIndex = Math.floor(Math.random() * (this.duplicatesArray.length - 0 ) + 0);
             this.choiceThree.weapon = this.duplicatesArray[randomIndex]
             this.duplicatesArray.splice(randomIndex, 1)
+            possibleChoiceThree = true;
         }
         for (let i = 0; i < 3; i++){
             if (i === 0) this.menuLogics(this.choiceOne.weapon, i)
-            if (i === 1) this.menuLogics(this.choiceTwo.weapon, i)
-            if (i === 2) this.menuLogics(this.choiceThree.weapon, i)
+            if (i === 1 && possibleChoiceTwo) this.menuLogics(this.choiceTwo.weapon, i)
+            if (i === 2 && possibleChoiceThree) this.menuLogics(this.choiceThree.weapon, i)
         }
 
         this.duplicatesArray = []
@@ -72,7 +78,6 @@ Upgrades.prototype = {
     menuLogics: function(choice, slot) {
         let text = '';
         let newEquipment = false;
-
 
         if (choice === 'Ninja Star'){
             text = 'Ninja Star'
