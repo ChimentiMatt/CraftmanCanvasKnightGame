@@ -8,8 +8,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="">
 	<meta name="author" content="">
+	<link rel="stylesheet" type="text/css" href="style.css" />
 
-	<title>Goblin Invasion</title>
+	<title>Game Collection</title>
 
 	<script type="text/javascript" src="js/lib/cml.min.js"></script>
 </head>
@@ -31,7 +32,35 @@
 		<div id="app">
 			<canvas id="gcanvas" tabindex="1" class="canvas" width="800" height="600"></canvas>
 		</div>
+		<div id="container">
+			<div id="container">
+				<h1 id="title">Game Collection!</h1>
+				<div id="cardContainer">
+					<a>	
+						<h1>Goblin-Invasion</h1>
+						<img class="card" onclick="showGoblin()" src="./assets/coverart.jpg" alt="Guy fighting Goblins" width="500" height="600">
+					</a>
+					<a href="https://invaders-canvas.herokuapp.com/" target="_blank">
+						<h1>Invaders</h1>
+						<img class="card" src="./assets/invaders.png" alt="Aliens" width="500" height="600">
+
+					</a>
+					<a href="https://bee-hive-frontend-6a962880db42.herokuapp.com/" target="_blank">
+						<h1>Bee Hive</h1>
+						<img class="card" src="./assets/bee.avif" alt="Girl in a jacket" width="500" height="600">
+					</a>
+				</div>
+
+			</div>
+		</div>
 	</div>
 </body>
 
 </html>
+
+<script>
+	function showGoblin() {
+		document.getElementById('gcanvas').style.display = 'block'
+		document.getElementById('container').style.display = 'none'
+	}
+</script>

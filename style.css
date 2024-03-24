@@ -1,0 +1,50 @@
+#container {
+    font-family: 'CourierCourier New', Courier, monospace;
+}
+
+#app {
+    position: absolute;
+    z-index: 1;
+}
+
+#title {
+    padding-top: 5rem;
+    font-weight: bold;
+    font-size: 5rem;
+}
+
+#container{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+    background-color: teal;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+#cardContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10rem;
+    padding-top: 5rem;
+}
+
+.card { 
+    border: 2px solid black;
+    height: 15rem;
+    width: 15rem;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+    object-fit: cover;
+}
+
+a:hover {
+    opacity: 70%;
+    cursor: pointer;
+}
